@@ -1,0 +1,538 @@
+// Layout Properties
+$grid-base: 4px;
+$grid-base-2x: $grid-base * 2;
+$grid-base-3x: $grid-base * 3;
+$grid-base-4x: $grid-base * 4;
+$grid-base-5x: $grid-base * 5;
+$grid-base-6x: $grid-base * 6;
+$grid-standard: $grid-base-3x;
+$grid-block-spacing: $grid-standard * 2;
+
+// Font Sizes
+$font-small-1:  12px;
+$font-standard: 14px;
+$font-normal-1: 16px;
+$font-normal-2: 18px;
+
+// Border Properties
+$border-radius-standard: 4px;
+
+// Timings
+$animation-standard: 0.25s;
+
+// Colors
+$turquoise-blue: 			rgb(0, 173, 183);
+$dark-seafoam: 				rgb(26, 188, 134);
+$green-blue: 					rgb(0, 188, 129);
+$turquoise-blue-two: 	rgb(1, 172, 183);
+$topaz: 							rgb(21, 206, 171);
+$green-teal: 					rgb(19, 190, 117);
+$green-teal-30: 			rgba(19, 190, 117, 0.3);
+$light-navy: 					rgb(20, 78, 147);
+$teal-blue-30: 				rgba(4, 151, 159, 0.3);
+
+$faded-pink: 					rgb(242, 224, 226);
+$light-mustard: 			rgb(250, 217, 97);
+$butterscotch: 				rgb(250, 182, 80);
+$mango: 							rgb(252, 157, 34);
+$light-orange: 				rgb(248, 165, 64);
+$mango-two: 					rgb(255, 191, 50);
+$orangeish-30: 				rgba(250, 152, 61, 0.3);
+$pumpkin-orange: 			rgb(250, 117, 40);
+$watermelon: 					rgb(246, 70, 90);
+
+
+$white: 							rgb(255, 255, 255);
+$white-three: 				rgb(250, 250, 250);
+$white-four: 					rgb(245, 245, 245);
+$white-eight: 				rgb(248, 248, 248);
+$white-nine: 					rgb(243, 243, 243);
+$white-ten: 					rgb(244, 244, 244);
+$white-seven: 				rgb(242, 242, 242);
+$white-eleven: 				rgb(232, 232, 232);
+$white-two: 					rgb(227, 227, 227);
+$white-five: 					rgb(225, 225, 225);
+$white-six: 					rgb(216, 216, 216);
+$pale-grey: 					rgb(233, 248, 249);
+$light-blue-grey: 		rgb(228, 247, 248);
+$silver: 							rgb(199, 211, 216);
+$greyish: 						rgb(179, 179, 179);
+$warm-grey-three: 		rgb(151, 151, 151);
+$cool-grey: 					rgb(150, 168, 176);
+$warm-grey: 					rgb(128, 128, 128);
+$warm-grey-two: 			rgb(131, 131, 131);
+$greyish-two: 				rgb(164, 164, 164);
+$greyish-three: 			rgb(163, 163, 163);
+$greyish-brown-two: 	rgb(65, 65, 65);
+$greyish-brown: 			rgb(87, 87, 87);
+$grey-black: 					rgb(74, 74, 74);
+$dark-grey-blue: 			rgb(52, 67, 94);
+$black--10: 					rgba(0, 0, 0, 0.1);
+$black-two: 					rgb(38, 38, 38);
+$black--40: 					rgba(0, 0, 0, 0.4);
+$black--50: 					rgba(0, 0, 0, 0.5);
+$black--0: 						rgba(0, 0, 0, 0);
+$black--52: 					rgba(0, 0, 0, 0.52);
+$black--18: 					rgba(0, 0, 0, 0.18);
+$black--14: 					rgba(0, 0, 0, 0.14);
+$black--80: 					rgba(0, 0, 0, 0.8);
+$black--31: 					rgba(0, 0, 0, 0.31);
+$black--5: 						rgba(0, 0, 0, 0.05);
+$black: 							rgb(0, 0, 0);
+$black--70: 					rgba(0, 0, 0, 0.7);
+
+/* Text styles */
+.Text-Style-21 {
+	font-family: OpenSans;
+	font-size: 36px;
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $black;
+}
+
+.Text-Style-23 {
+	font-family: OpenSans;
+	font-size: 24px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $black;
+}
+
+.Text-Style-32 {
+	font-family: OpenSans;
+	font-size: 22px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $black;
+}
+
+.Text-Style-2 {
+	font-family: OpenSans;
+	font-size: 20px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $white;
+}
+
+.Text-Style-13 {
+	font-family: OpenSans;
+	font-size: 20px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: center;
+	color: $grey-black;
+}
+
+.Text-Style-25 {
+	font-family: OpenSans;
+	font-size: 20px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $black;
+}
+
+.Text-Style-41 {
+	font-family: OpenSans;
+	font-size: 18px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $grey-black;
+}
+
+.Text-Style-30 {
+	font-family: OpenSans;
+	font-size: 18px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $black;
+}
+
+.Text-Style-31 {
+	font-family: OpenSans;
+	font-size: 18px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: right;
+	color: $green-blue;
+}
+
+.Text-Style-29 {
+	font-family: OpenSans;
+	font-size: 18px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: right;
+	color: $black;
+}
+
+.Text-Style-39 {
+	font-family: OpenSans;
+	font-size: 16px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.25;
+	letter-spacing: 0.2px;
+	color: $turquoise-blue;
+}
+
+.Text-Style-27 {
+	font-family: OpenSans;
+	font-size: 16px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $grey-black;
+}
+
+.Text-Style-9 {
+	font-family: OpenSans;
+	font-size: 16px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.25;
+	letter-spacing: 0.2px;
+	text-align: center;
+	color: $turquoise-blue;
+}
+
+.Text-Style-36 {
+	font-family: OpenSans;
+	font-size: 16px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.25;
+	letter-spacing: 0.2px;
+	color: $white;
+}
+
+.Text-Style-24 {
+	font-family: OpenSans;
+	font-size: 16px;
+	font-weight: 600;
+	font-style: italic;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.3px;
+	color: $dark-seafoam;
+}
+
+.Text-Style-26 {
+	font-family: PingFangSC;
+	font-size: 16px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $grey-black;
+}
+
+.Text-Style-40 {
+	font-family: OpenSans;
+	font-size: 16px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.5;
+	letter-spacing: 0.3px;
+	color: $grey-black;
+}
+
+.Text-Style-18 {
+	font-family: OpenSans;
+	font-size: 14px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 1px;
+	color: $black;
+}
+
+.Text-Style-19 {
+	font-family: OpenSans;
+	font-size: 14px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $grey-black;
+}
+
+.Text-Style-37 {
+	font-family: OpenSans;
+	font-size: 14px;
+	font-weight: bold;
+	font-style: italic;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.3px;
+	color: $black;
+}
+
+.Text-Style-3 {
+	font-family: OpenSans;
+	font-size: 14px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+}
+.Text-Style-5 {
+
+	font-family: OpenSans;
+	font-size: 14px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $black;
+}
+
+.Text-Style-8 {
+	font-family: OpenSans;
+	font-size: 14px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $turquoise-blue;
+}
+
+.Text-Style-34 {
+	font-family: OpenSans;
+	font-size: 14px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $grey-black;
+}
+
+.Text-Style-22 {
+	font-family: OpenSans;
+	font-size: 14px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+}
+.Text-Style-14 {
+
+	font-family: OpenSans;
+	font-size: 14px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $grey-black;
+}
+
+.Text-Style-7 {
+	font-family: OpenSans;
+	font-size: 14px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.5;
+	letter-spacing: normal;
+	color: $black;
+}
+
+.Text-Style-11 {
+	font-family: OpenSans;
+	font-size: 14px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $black;
+}
+
+.Text-Style-38 {
+	font-family: PingFangSC;
+	font-size: 14px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: right;
+	color: $grey-black;
+}
+
+.Text-Style {
+	font-family: OpenSans;
+	font-size: 12.7px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.2px;
+	color: $white;
+}
+
+.Text-Style-17 {
+	font-family: OpenSans;
+	font-size: 12px;
+	font-weight: 800;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: center;
+	color: $white;
+}
+
+.Text-Style-15 {
+	font-family: OpenSans;
+	font-size: 12px;
+	font-weight: 800;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 1px;
+	color: $black;
+}
+
+.Text-Style-10 {
+	font-family: OpenSans;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.6px;
+	color: $turquoise-blue;
+}
+
+.Text-Style-12 {
+	font-family: OpenSans;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.6px;
+	color: $warm-grey-two;
+}
+
+.Text-Style-6 {
+	font-family: OpenSans;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $greyish;
+}
+
+.Text-Style-28 {
+	font-family: OpenSans;
+	font-size: 12px;
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.3px;
+	color: $turquoise-blue;
+}
+
+.Text-Style-20 {
+	font-family: OpenSans;
+	font-size: 12px;
+	font-weight: 600;
+	font-style: italic;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.2px;
+	color: $white;
+}
+
+.Text-Style-16 {
+	font-family: OpenSans;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.2px;
+	color: $black;
+}
+
+.Text-Style-35 {
+	font-family: OpenSans;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: $grey-black;
+}
+
+.Text-Style-4 {
+	font-family: OpenSans;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.2px;
+	color: $turquoise-blue;
+}
+
+.Text-Style-33 {
+	font-family: OpenSans;
+	font-size: 10px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.8px;
+	color: $light-navy;
+}

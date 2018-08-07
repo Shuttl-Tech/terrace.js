@@ -1,0 +1,10 @@
+@mixin centered {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@mixin expanded {
+	height: 100%;
+	width: 100%;
+}

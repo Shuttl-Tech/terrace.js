@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component tree looks like how it should 1`] = `
+<div>
+  <span>
+    Welcome to view 1
+  </span>
+  <div
+    className={undefined}
+  >
+    <button
+      onClick={[Function]}
+    >
+      Change to DE
+    </button>
+    <button
+      onClick={[Function]}
+    >
+      Change to EN
+    </button>
+  </div>
+</div>
+`;

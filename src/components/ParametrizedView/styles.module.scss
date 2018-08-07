@@ -1,0 +1,10 @@
+@import 'globals/_variables';
+@import 'globals/_mixins';
+
+.lang-toggle {
+	display: flex;
+	margin-top: $grid-base-2x;
+	button:not(:last-of-type) {
+		margin-right: $grid-base;
+	}
+}

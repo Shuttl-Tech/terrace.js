@@ -1,0 +1,13 @@
+@import 'globals/_variables';
+@import 'globals/_mixins';
+
+.primary-layout-container {
+	@include expanded;
+	@include centered;
+}
+
+.routes-wrapper {
+	@include expanded;
+	display: flex;
+	flex-direction: column;
+}
