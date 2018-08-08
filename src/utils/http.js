@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { SCHEMA, normalize, serialize } from 'adapters/application';
-import { handleFailedResponses } from './error-handlers';
 
 // Functions here are intended to return promises.
 // Any async/await or similar handling should be done at a level higher than here.
@@ -15,10 +14,11 @@ const namespacedUrl = (url) => NAMESPACE + url;
 /**
  * Return `fetch` API resource.
  * @param {String} url
+ * @param options
  * @returns {Promise} `Promise<Response>`
  */
 export const getRaw = (url: string, options: Object = {}): Promise<Response> => {
-	return fetch(namespacedUrl(url), { credentials: 'include' }).then(response => {
+	return fetch(namespacedUrl(url), { credentials: 'include', ...options }).then(response => {
 		try {
 			if (!response.ok)	return Promise.reject({status: response.status, data: response});
 		}
@@ -28,7 +28,7 @@ export const getRaw = (url: string, options: Object = {}): Promise<Response> => 
 		}
 		return response;
 	});
-}
+};
 
 /**
  * Return `axios` API resource.
@@ -42,7 +42,7 @@ export const get = async (url: string, options: Object = {}, schema: string = SC
 	options = modifyRequestOptions(options, schema);
 	let response = await axios.request({ url: namespacedUrl(url), method: 'get', ...options });
 	return response.data;
-}
+};
 
 /**
  * Return `axios` API resource.
@@ -56,7 +56,7 @@ export const post = async (url: string, options: Object = {}, schema: string = S
 	options = modifyRequestOptions(options, schema);
 	let response = await axios.request({ url: namespacedUrl(url), method: 'post', ...options });
 	return response.data;
-}
+};
 
 // Other utility functions
 /**

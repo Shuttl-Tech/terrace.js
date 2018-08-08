@@ -9,10 +9,10 @@ export const SCHEMA = {
  */
 export const serialize = (payload: Object, schema: string = SCHEMA.GENERIC) => {
 	switch(schema) {
-		case SCHEMA.GENERIC: return payload;
+		case SCHEMA.GENERIC: return serialize_GENERIC(payload);
 		default: return payload;
 	}
-}
+};
 
 /**
  * Transform outgoing payloads to fit a model
@@ -21,7 +21,15 @@ export const serialize = (payload: Object, schema: string = SCHEMA.GENERIC) => {
  */
 export const normalize = (payload: Object, schema: string = SCHEMA.GENERIC) => {
 	switch(schema) {
-		case SCHEMA.GENERIC: return payload;
+		case SCHEMA.GENERIC: return normalize_GENERIC(payload);
 		default: return payload;
 	}
-}
+};
+
+export const serialize_GENERIC = (payload) => {
+	return {...payload};
+};
+
+export const normalize_GENERIC = (payload) => {
+	return {...payload};
+};

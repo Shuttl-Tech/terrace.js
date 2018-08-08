@@ -25,7 +25,7 @@ export class component extends Component<Props> {
 	}
 
 	render() {
-		const { t, i18n } = this.props;
+		const { t } = this.props;
 
 		switch(this.props.sessionStatus) {
 			case SESSION_STATE.AUTHENTICATED:

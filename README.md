@@ -20,6 +20,7 @@ yarn start
 brew install watchman # https://github.com/facebook/create-react-app/issues/3006
 ```
 > Note: `NODE_ENV=src` is in effect. Use that to specify import paths in any files.
+> Note: In `WebStorm`, mark `./src` as Resources Root. _(Rt. click > Mark directory as > Resources root)_
 
 ### File layout plan [.js]
 ```
@@ -61,10 +62,58 @@ Now, how it works:
 6. Read http://jsonapi.org/ for an idea about how to construct and establish resources and relationships.
 7. Authentication is cookie based.
 
+> Note: Use status code constants from package `http-status-codes` to handle request errors.
+
+> Note: Add logic to `handleFailedResponses` from `utils/error-handlers` to handle weird API error cases. You would however, need to plug it into the HTTP call methods yourself. It's not being used yet.
+
 ### Routes
 1. All routes (with parameters, or otherwise) are defined in `src/routes.js`.
 2. We use `react-router` `v4`. The usage is as indicated by the documentation.
 3. Any usages of link tags to parametrized routes **must be** processed through the `parametrizeRoute` function in `src/utils/transition.js` (docs at source).
+
+### Request Caching
+To locally store and fetch request payloads, use `{ cache, load }` from `utils/request-cache`.
+There is a very thin wrapper on top of `sessionStorage` to make this happen.
+
+_This needs improvements._
+
+`import { cache, load } from 'utils/request-cache';`;
+
+You can do stuff like:
+
+```js
+import { cache, load } from 'utils/request-cache';
+import { get } from 'utils/http';
+import API from 'apis';
+
+async function getResource() {
+	let response = load(API.DUMMY) || await get(API.DUMMY);
+  cache(API.DUMMY, response);
+}
+```
+
+### Requesting new resource types
+Ideally, there should be a schema defined for each different type of request.
+
+New schemas should be added to `const SCHEMA` in `adapters/application.js`.
+Normalizers and Serializers for those should be added to `switch-case` entry in the same file, and functions for them defined somewhere in the format described in `serialize_GENERIC` and `normalize_GENERIC` in the same file.
+
+They are automatically handled in the `http` util by `axios`.
+
+> Note: Use `getRaw` from `utils/http` only for requests where you need low-level request API access. **Not for general purpose HTTP resource request.**
+
+However, for them to be automatically handled in the first place, you need to specify the SCHEMA a request will follow, in the `get, post, ...` calls in this manner:
+
+```js
+import { SCHEMA } from 'adapters/application';
+import { get } from 'utils/http';
+import API from 'apis';
+
+async function getResource() {
+	let resource = await get(API.DUMMY, { /* options */ }, SCHEMA.GENERIC);
+	// ...
+}
+```
 
 ---
 

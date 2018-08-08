@@ -15,10 +15,13 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.idea
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
 src/components/**/*.css
+src/views/**/*.css
+generators/**/*.css
 src/App.css

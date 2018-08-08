@@ -1,0 +1,9 @@
+@import 'globals/_variables';
+@import 'globals/_mixins';
+
+.container {
+	@include expanded;
+	@include centered;
+	background-color: $greyish-two;
+	color: $black-two;
+}

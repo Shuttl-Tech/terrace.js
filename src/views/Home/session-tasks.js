@@ -2,23 +2,22 @@ import { put } from 'redux-saga/effects';
 import { UNAUTHORIZED } from 'http-status-codes';
 import cookie from 'js-cookie';
 
-import { get, getRaw, post } from 'utils/http';
+import { getRaw } from 'utils/http';
 import { refreshSessionToken } from 'utils/session';
 import { removeQueryParams } from 'utils/router-query-params';
-import { parametrizePath } from 'utils/transition';
-import { cache, load } from 'utils/request-cache';
-import { SCHEMA } from 'adapters/application';
 import { store } from 'index';
 import API from 'apis';
 import {
 	SESSION_FETCH_SUCCESS, SESSION_FETCH_FAILURE
-} from 'views/Home/session-actions';
+} from './session-actions';
 
 export function* validateToken() {
 	const SSO_URL = `http://qa.sso.goplus.in:8080/login?targetUrl=${window.location.origin}${window.location.pathname}`;
 
 	return yield put(SESSION_FETCH_SUCCESS({ token: '123' })); // NOTE: Remove this line to get this function to work.
-	try {
+
+	// noinspection UnreachableCodeJS
+	try { // eslint-disable-line no-unreachable
 		const { session: { token: urlToken } } = store.getState();
 		let token = urlToken || cookie.get('authToken');
 		refreshSessionToken(token);

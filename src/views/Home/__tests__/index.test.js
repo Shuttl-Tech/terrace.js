@@ -1,8 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Route } from 'react-router-dom';
-// import ShallowRenderer from 'react-test-renderer/shallow';
-import Renderer from 'react-test-renderer/shallow';
 import { shallow } from 'enzyme';
 import i18n from 'i18n';
 

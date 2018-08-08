@@ -6,7 +6,7 @@ exports[`component tree looks like how it should 1`] = `
     Welcome to view 1
   </span>
   <div
-    className={undefined}
+    className="lang-toggle"
   >
     <button
       onClick={[Function]}
