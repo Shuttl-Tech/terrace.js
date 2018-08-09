@@ -26,6 +26,7 @@ generators/**/*.css
 src/App.css
 
 .idea/workspace.xml
+bin/_index.generated.js
 # ----------
 # Extra npmignore content
 
