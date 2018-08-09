@@ -58,7 +58,7 @@ Now, how it works:
 1. HTTP actions are defined in `src/utils/http.js`.
 2. We use `axios`.
 3. All API calls are defined in `src/apis.js`.
-4. Parametrized URLs/routes can be processed with `parametrizeRoute` in `src/utils/transition.js`.
+4. Parametrized URLs/routes can be processed with `parametrizePath` in `src/utils/transition.js`.
 3. All outgoing payloads are sent through the `normalizer` defined in `src/adapters/application.js`.
 4. Add incoming payloads are received through the `serializer` defined in `src/adapters/application.js`.
 5. If custom handling for a resource is required, add a resource type to the `schema` defined in `src/adapters/application.js`.
@@ -91,7 +91,7 @@ import API from 'apis';
 
 async function getResource() {
 	let response = load(API.DUMMY) || await get(API.DUMMY);
-  cache(API.DUMMY, response);
+	cache(API.DUMMY, response);
 }
 ```
 

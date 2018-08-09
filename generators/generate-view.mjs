@@ -15,12 +15,13 @@ export const generateView = ({ name, reducerName }) => {
 		checkIfFolderExists(resourcePath, data.titleCaseName);
 	}
 	catch (e) {
-		runGenerator(data, { reducerName });
+		runGenerator(data, { reducerName: data.lowerCaseResourceName });
 	}
 };
 
 const prepareTemplateData = ({ name, reducerName }) => {
 	let titleCaseName = v.titleCase(name).replace(/-/g,'');
+	console.log(reducerName, typeof reducerName, reducerName.length, reducerName || name);
 	let _resourceName = reducerName || name;
 	let resourceName = v.upperCase(_resourceName).replace(/-/g,'_');
 	let lowerCaseResourceName = v.lowerCase(_resourceName);
@@ -40,8 +41,8 @@ const checkIfFolderExists = (resourcePath, titleCaseName) => {
 
 const runGenerator = (data, { reducerName }) => {
 	const templatePath = 				'./generators/templates';
-	const resourcePath =				`./src/components/${data.titleCaseName}`;
-	const type =								'component';
+	const resourcePath =				`./src/views/${data.titleCaseName}`;
+	const type =								'view';
 	const indexFileName = 			'index.js';
 	const actionsFileName = 		'actions.js';
 	const reducerFileName = 		'reducer.js';
