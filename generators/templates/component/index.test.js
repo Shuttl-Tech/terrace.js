@@ -1,9 +1,9 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { ParametrizedView } from './';
+import { ___componentName___ } from './';
 
-it('component tree looks like how it should', () => {
+it('___componentName___ tree looks like how it should', () => {
 	let props = {
 		match: {
 			params: {
@@ -12,7 +12,7 @@ it('component tree looks like how it should', () => {
 		}
 	};
 
-	const component = renderer.create(<ParametrizedView {...props} />);
+	const component = renderer.create(<___componentName___ {...props} />);
 	let tree = component.toJSON();
 	expect(tree).toMatchSnapshot();
 });

@@ -3,7 +3,7 @@ import { translate } from 'react-i18next';
 
 import css from './styles.module.css';
 
-export class ParametrizedView extends Component {
+export class ___componentName___ extends Component {
 	render() {
     const changeLanguage = lng => {
       i18n.changeLanguage(lng);
@@ -23,4 +23,4 @@ export class ParametrizedView extends Component {
 	}
 }
 
-export default translate()(ParametrizedView);
+export default translate()(___componentName___);

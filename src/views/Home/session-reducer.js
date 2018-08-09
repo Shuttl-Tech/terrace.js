@@ -6,12 +6,12 @@ export const SESSION_STATE : {} = {
 	AUTHENTICATED: "AUTHENTICATED",
 	AUTH_FAILED: "AUTH_FAILED",
 	LOGGED_OUT: "LOGGED_OUT"
-}
+};
 
-const defaultState = {
+export const defaultState = {
 	token: null,
 	status: SESSION_STATE.UNAUTHENTICATED
-}
+};
 
 const reducer = (state = defaultState, action) => {
 	switch (action.type) {
@@ -23,6 +23,6 @@ const reducer = (state = defaultState, action) => {
 			return {...state, token: null, status: SESSION_STATE.AUTH_FAILED };
 	  default: return state;
 	}
-}
+};
 
 export default reducer;

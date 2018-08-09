@@ -12,7 +12,7 @@ export const ACTIONS = {
 	___resourceName____FETCH_REQUEST: "___resourceName____FETCH_REQUEST",
 	___resourceName____FETCH_SUCCESS: "___resourceName____FETCH_SUCCESS",
 	___resourceName____FETCH_FAILURE: "___resourceName____FETCH_FAILURE"
-}
+};
 
 /*
  * Action Creator Template

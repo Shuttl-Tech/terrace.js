@@ -4,8 +4,8 @@ import { parse } from 'query-string';
 import { withRouter } from 'react-router-dom';
 import { translate } from 'react-i18next';
 
-import { ___resourceName____FETCH_REQUEST } from './actions';
-import { REQUEST_STATE } from './reducer';
+import { ___resourceName____FETCH_REQUEST } from './___lowerCaseResourceName___-actions';
+import { REQUEST_STATE } from './___lowerCaseResourceName___-reducer';
 
 import css from './styles.module.css';
 

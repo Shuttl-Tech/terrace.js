@@ -5,9 +5,9 @@ import { get } from 'utils/http';
 import API from 'apis';
 import {
 	___resourceName____FETCH_SUCCESS, ___resourceName____FETCH_FAILURE
-} from './actions';
+} from './___lowerCaseResourceName___-actions';
 
-export function* ___fetchViewData___() {
+export function* fetchViewData() {
 	try {
 		let data = yield get(API.DUMMY);
 		return yield put(___resourceName____FETCH_SUCCESS({ data }));
