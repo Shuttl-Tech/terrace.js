@@ -4,6 +4,7 @@
 	"private": false,
 	"scripts": {
 		"write-npmignore": "cat .gitignore > .npmignore && cat .extra.npmignore >> .npmignore ",
+		"prepublish": "yarn write-npmignore",
 		"test": "react-scripts test --env=jsdom",
 		"eject": "react-scripts eject",
 		"build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
@@ -26,8 +27,10 @@
 		"i18next": "^11.5.0",
 		"i18next-browser-languagedetector": "^2.2.3",
 		"js-cookie": "^2.2.0",
+		"ls": "^0.2.1",
 		"material-design-icons": "^3.0.1",
 		"mock-local-storage": "^1.0.5",
+		"ncp": "^2.0.0",
 		"node-sass-chokidar": "^1.3.0",
 		"npm-run-all": "^4.1.3",
 		"query-string": "5",
@@ -54,5 +57,8 @@
 	"main": "build/index.html",
 	"repository": "https://github.com/Shuttl-Tech/terrace.js",
 	"author": "jayantbh <bhawal.jayant@gmail.com>",
-	"license": "MIT"
+	"license": "MIT",
+	"bin": {
+		"terrace": "bin/index.js"
+	}
 }
