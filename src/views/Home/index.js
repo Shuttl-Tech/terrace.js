@@ -42,7 +42,7 @@ export class component extends Component<Props> {
 					</div>
 				);
 			case SESSION_STATE.AUTH_FAILED:
-				return (t('auth-failed-msg'));
+				return (<h3>{t('auth-failed-msg')}<br />{t('re-auth-needed')}</h3>);
 			default:
 				return (t('auth-pending-msg'));
 		}

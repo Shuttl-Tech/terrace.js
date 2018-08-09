@@ -1,5 +1,7 @@
-# Shuttl - Frontend Starter
-Re-making the supply panel frontend, properly.
+# Frontend Starter
+A `create-react-app` based frontend starter project, using `custom-react-scripts`.
+
+You can get started right-away with testing, files generation, http calls, state-management (with store immutability checks via a plugin), internationalization, etc. handled for you right from the start.
 
 Built on Environment:
 ```
@@ -20,6 +22,7 @@ yarn start
 brew install watchman # https://github.com/facebook/create-react-app/issues/3006
 ```
 > Note: `NODE_ENV=src` is in effect. Use that to specify import paths in any files.
+
 > Note: In `WebStorm`, mark `./src` as Resources Root. _(Rt. click > Mark directory as > Resources root)_
 
 ### File layout plan [.js]
@@ -122,4 +125,4 @@ async function getResource() {
 2. Project Directory Structure is opinionated.
 3. Internationalization is enabled, and optional.
 4. Initial testing setup has been prepared, and some unit and integration tests added.
-5. File generators are yet to be added.
+5. File generators for components and views have been added.
