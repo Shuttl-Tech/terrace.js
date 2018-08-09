@@ -5,6 +5,7 @@
 	"scripts": {
 		"write-npmignore": "cat .gitignore > .npmignore && cat .extra.npmignore >> .npmignore ",
 		"prepare": "yarn write-npmignore",
+		"postinstall": "yarn install",
 		"test": "react-scripts test --env=jsdom",
 		"eject": "react-scripts eject",
 		"build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",

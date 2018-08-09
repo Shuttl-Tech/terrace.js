@@ -24,6 +24,8 @@ src/components/**/*.css
 src/views/**/*.css
 generators/**/*.css
 src/App.css
+
+.idea/workspace.xml
 # ----------
 # Extra npmignore content
 
