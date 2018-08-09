@@ -1,0 +1,6 @@
+# ----------
+# Extra npmignore content
+
+# npm package lock
+package-lock.json
+yarn.lock
