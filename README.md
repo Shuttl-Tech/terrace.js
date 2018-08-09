@@ -128,3 +128,8 @@ async function getResource() {
 3. Internationalization is enabled, and optional.
 4. Initial testing setup has been prepared, and some unit and integration tests added.
 5. File generators for components and views have been added.
+
+### Todo
+- [ ] Make this an installable project from npm.
+- [ ] Make this project configurable during installation.
+- [ ] Improve flow integration.
