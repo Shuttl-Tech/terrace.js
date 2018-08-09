@@ -5,7 +5,7 @@
 	"scripts": {
 		"write-npmignore": "cat .gitignore > .npmignore && cat .extra.npmignore >> .npmignore ",
 		"prepare": "yarn write-npmignore",
-		"build-bin": "wp ./bin/index.js -o ./bin/_index.js --target='node'",
+		"build-bin": "bash ./bin/build-bin.sh",
 		"test": "react-scripts test --env=jsdom",
 		"eject": "react-scripts eject",
 		"build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
@@ -60,6 +60,6 @@
 	"author": "jayantbh <bhawal.jayant@gmail.com>",
 	"license": "MIT",
 	"bin": {
-		"terrace": "bin/_index.js"
+		"terrace": "bin/index.generated.js"
 	}
 }
