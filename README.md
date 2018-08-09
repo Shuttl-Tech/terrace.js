@@ -1,4 +1,4 @@
-# Frontend Starter
+# Terrace.js
 A `create-react-app` based frontend starter project, using `custom-react-scripts`.
 
 You can get started right-away with testing, files generation, http calls, state-management (with store immutability checks via a plugin), internationalization, etc. handled for you right from the start.

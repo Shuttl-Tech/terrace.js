@@ -1,5 +1,5 @@
 const strings = {
-	"hello-world": "Hello World! Welcome to Frontend Starter!",
+	"hello-world": "Hello World! Welcome to the Terrace!",
 	"welcome-to-view": "Welcome to view {{view}}",
 	"change-to-de": "Change to DE",
 	"change-to-en": "Change to EN",
