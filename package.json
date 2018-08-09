@@ -1,6 +1,6 @@
 {
 	"name": "terrace.js",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"private": false,
 	"scripts": {
 		"write-npmignore": "cat .gitignore > .npmignore && cat .extra.npmignore >> .npmignore ",
