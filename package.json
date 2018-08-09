@@ -1,10 +1,7 @@
 {
   "name": "terrace.js",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "custom-react-scripts": "^0.2.2"
-  },
+  "private": false,
   "scripts": {
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
@@ -19,6 +16,7 @@
   "devDependencies": {
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
+    "custom-react-scripts": "^0.2.2",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "file-system": "^2.2.2",
@@ -50,5 +48,10 @@
     "storage.io": "^1.2.0",
     "voca": "^1.4.0",
     "yargs": "^12.0.0"
-  }
+  },
+  "description": "A `create-react-app` based frontend starter project, using `custom-react-scripts`.",
+  "main": "index.js",
+  "repository": "https://github.com/Shuttl-Tech/terrace.js",
+  "author": "jayantbh <bhawal.jayant@gmail.com>",
+  "license": "MIT"
 }
