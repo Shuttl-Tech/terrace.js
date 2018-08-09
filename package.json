@@ -50,7 +50,7 @@
     "yargs": "^12.0.0"
   },
   "description": "A `create-react-app` based frontend starter project, using `custom-react-scripts`.",
-  "main": "index.js",
+  "main": "build/index.html",
   "repository": "https://github.com/Shuttl-Tech/terrace.js",
   "author": "jayantbh <bhawal.jayant@gmail.com>",
   "license": "MIT"
