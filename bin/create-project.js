@@ -32,7 +32,6 @@ module.exports = async ({ name }) => {
 
 	fs.mkdirSync(destination);
 
-	console.log('>>>>', source, loadAllFiles(source));
 	let i = 1;
 	let files = loadAllFiles(source).filter(file => {
 		try {
