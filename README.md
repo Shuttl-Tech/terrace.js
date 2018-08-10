@@ -12,6 +12,12 @@ terrace create project-name
 ```
 ⚠️ `Yarn` is an important pre-requisite.
 
+#### More project commands
+```bash
+yarn generate component component-name
+yarn generate view view-name
+```
+
 Built on Environment:
 ```
 MacOS 10.13.3 (17D47)
