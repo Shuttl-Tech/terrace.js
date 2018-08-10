@@ -2,6 +2,7 @@ const { spawnSync } = require('child_process');
 const ls = require('ls');
 const fs = require('file-system');
 const _fs = require('fs');
+const v = require('voca');
 const { ncp } = require('ncp');
 ncp.limit = 16;
 
@@ -57,6 +58,7 @@ module.exports = async ({ name }) => {
 		}
 		else {
 			let _file = fs.readFileSync(file.full).toString();
+			let processedFile;
 
 			switch (file.file) {
 				case 'package.json':
@@ -72,7 +74,14 @@ module.exports = async ({ name }) => {
 					jsonFile.private = true;
 					jsonFile.version = '0.1.0';
 
-					let processedFile = JSON.stringify(jsonFile, null, '\t');
+					processedFile = JSON.stringify(jsonFile, null, '\t');
+					fs.writeFileSync(_destination, processedFile);
+					break;
+				case 'README.md':
+					let mdFile = _file.split('\n');
+					mdFile[0] = `# ${v.titleCase(name)}`;
+					mdFile.splice(1, 2);
+					processedFile = mdFile.join('\n');
 					fs.writeFileSync(_destination, processedFile);
 					break;
 				default: fs.writeFileSync(_destination, _file);
