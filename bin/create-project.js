@@ -11,7 +11,6 @@ const excludedPaths = [
 	'node_modules',
 	'.npmignore',
 	'.extra.npmignore',
-	'.extra.gitignore',
 	'.header.gitignore',
 	'bin',
 	'yarn.lock'
@@ -92,6 +91,7 @@ module.exports = async ({ name }) => {
 					txtFile.splice(0, 2);
 					processedFile = txtFile.join('\n');
 					fs.writeFileSync(_destination, processedFile);
+					file.file = '.gitignore';
 					break;
 				default: fs.writeFileSync(_destination, _file);
 			}
