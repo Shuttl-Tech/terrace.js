@@ -4,8 +4,10 @@
 	"private": false,
 	"scripts": {
 		"write-npmignore": "cat .gitignore > .npmignore && cat .extra.npmignore >> .npmignore ",
+		"write-gitignore-extra": "cat .header.gitignore > .extra.gitignore && cat .gitignore >> .extra.gitignore",
 		"prepare": "yarn write-npmignore",
 		"build-bin": "bash ./bin/build-bin.sh",
+		"preupdate": "yarn prepare && yarn build-bin && yarn write-gitignore-extra",
 		"test": "react-scripts test --env=jsdom",
 		"eject": "react-scripts eject",
 		"build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",

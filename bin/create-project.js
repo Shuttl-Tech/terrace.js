@@ -11,6 +11,8 @@ const excludedPaths = [
 	'node_modules',
 	'.npmignore',
 	'.extra.npmignore',
+	'.extra.gitignore',
+	'.header.gitignore',
 	'bin',
 	'yarn.lock'
 ];
@@ -58,11 +60,11 @@ module.exports = async ({ name }) => {
 		}
 		else {
 			let _file = fs.readFileSync(file.full).toString();
-			let processedFile;
+			let processedFile, jsonFile, mdFile, txtFile;
 
 			switch (file.file) {
 				case 'package.json':
-					let jsonFile = JSON.parse(_file);
+					jsonFile = JSON.parse(_file);
 					delete jsonFile.devDependencies['ncp'];
 					delete jsonFile.scripts['write-npmignore'];
 					delete jsonFile.scripts['prepare'];
@@ -78,10 +80,17 @@ module.exports = async ({ name }) => {
 					fs.writeFileSync(_destination, processedFile);
 					break;
 				case 'README.md':
-					let mdFile = _file.split('\n');
+					mdFile = _file.split('\n');
 					mdFile[0] = `# ${v.titleCase(name)}`;
 					mdFile.splice(1, 2);
 					processedFile = mdFile.join('\n');
+					fs.writeFileSync(_destination, processedFile);
+					break;
+				case '.extra.gitignore':
+					_destination = `${destination}/.gitignore`;
+					txtFile = _file.split('\n');
+					txtFile.splice(0, 2);
+					processedFile = txtFile.join('\n');
 					fs.writeFileSync(_destination, processedFile);
 					break;
 				default: fs.writeFileSync(_destination, _file);
