@@ -68,6 +68,8 @@ module.exports = async ({ name }) => {
 					delete jsonFile.scripts['write-npmignore'];
 					delete jsonFile.scripts['prepare'];
 					delete jsonFile.scripts['build-bin'];
+					delete jsonFile.scripts['write-gitignore-extra'];
+					delete jsonFile.scripts['preupdate'];
 					delete jsonFile.repository;
 					delete jsonFile.author;
 					delete jsonFile.bin;

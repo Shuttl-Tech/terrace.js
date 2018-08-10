@@ -29,4 +29,5 @@ generators/**/*.css
 src/App.css
 
 .idea/workspace.xml
+.idea/dictionaries/*
 bin/_index.generated.js
