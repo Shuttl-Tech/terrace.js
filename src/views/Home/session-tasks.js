@@ -16,6 +16,9 @@ export function* validateToken() {
 	// Replace this with your logic.
 	// This logic receives the authToken value from the query param, and then removes it from the URL.
 	try {
+		// TODO: On your created project, remove the next two lines to make this task function correctly.
+		return yield put(SESSION_FETCH_SUCCESS({ token: 'some-token' }));
+		// noinspection UnreachableCodeJS
 		const { session: { token: urlToken } } = store.getState();
 		let token = urlToken || cookie.get('authToken');
 		refreshSessionToken(token);
