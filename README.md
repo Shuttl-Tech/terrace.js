@@ -5,6 +5,13 @@ A `create-react-app` based frontend starter project, using `custom-react-scripts
 
 You can get started right-away with testing, files generation, http calls, state-management (with store immutability checks via a plugin), internationalization, etc. handled for you right from the start.
 
+## Project Init
+```bash
+yarn global add terrace.js
+terrace create project-name
+```
+⚠️ `Yarn` is an important pre-requisite.
+
 Built on Environment:
 ```
 MacOS 10.13.3 (17D47)
