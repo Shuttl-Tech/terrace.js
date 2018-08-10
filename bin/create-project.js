@@ -57,7 +57,27 @@ module.exports = async ({ name }) => {
 		}
 		else {
 			let _file = fs.readFileSync(file.full).toString();
-			fs.writeFileSync(_destination, _file);
+
+			switch (file.file) {
+				case 'package.json':
+					let jsonFile = JSON.parse(_file);
+					delete jsonFile.devDependencies['ncp'];
+					delete jsonFile.scripts['write-npmignore'];
+					delete jsonFile.scripts['prepare'];
+					delete jsonFile.scripts['build-bin'];
+					delete jsonFile.repository;
+					delete jsonFile.author;
+					delete jsonFile.bin;
+					jsonFile.name = name;
+					jsonFile.private = true;
+					jsonFile.version = '0.1.0';
+
+					let processedFile = JSON.stringify(jsonFile, null, '\t');
+					fs.writeFileSync(_destination, processedFile);
+					break;
+				default: fs.writeFileSync(_destination, _file);
+			}
+
 			console.log(`Added ${i++}/${acceptedFilesLength} ${file.file}`);
 		}
 
