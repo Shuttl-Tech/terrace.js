@@ -26,7 +26,7 @@ export default async ({ name }) => {
 	if (!name) throw new Error('Missing project name.');
 
 	const terracePackage = spawnSync('which', ['terrace']).stdout.toString().slice(0, -1);	// Removed newline at the end of output
-	const destination = getProjectRoot();	// Destination Project Root path
+	const destination = `${process.cwd()}/${name}`;	// Destination Project Root path
 	const source = getProjectRoot(_fs.realpathSync(terracePackage));	// Project Root path
 
 	if (fs.existsSync(destination)) {
