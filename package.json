@@ -20,6 +20,7 @@
 	"devDependencies": {
 		"axios": "^0.18.0",
 		"classnames": "^2.2.6",
+		"cli-progress": "^2.1.0",
 		"custom-react-scripts": "^0.2.2",
 		"enzyme": "^3.3.0",
 		"enzyme-adapter-react-16": "^1.1.1",

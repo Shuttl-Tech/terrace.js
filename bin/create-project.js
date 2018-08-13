@@ -1,8 +1,9 @@
 import fs from 'file-system';
 import v from 'voca';
 import { ncp } from 'ncp';
-import { spawnSync } from "child_process";
-import _fs from "fs";
+import { spawnSync, spawn } from 'child_process';
+import _fs from 'fs';
+import CliProgress from 'cli-progress';
 import { getProjectRoot, loadAllFiles } from './generators/utils/files';
 
 ncp.limit = 16;
@@ -35,7 +36,6 @@ export default async ({ name }) => {
 
 	fs.mkdirSync(destination);
 
-	let i = 1;
 	let files = loadAllFiles(`${source}/`).filter(file => {
 		try {
 			return ![...excludedPaths, ...excludedSpecialPaths].includes(file.file) && fs.existsSync(file.full);
@@ -45,7 +45,13 @@ export default async ({ name }) => {
 		}
 	});
 
+	let i = 0;
 	let acceptedFilesLength = files.length;
+
+	console.log('🛠 Creating Terrace project. 🛠');
+
+	const progressBar = new CliProgress.Bar({}, CliProgress.Presets.shades_classic);
+	progressBar.start(acceptedFilesLength, 0);
 
 	for(let file of files) {
 		let isDirectory = fs.lstatSync(file.full).isDirectory();
@@ -55,17 +61,20 @@ export default async ({ name }) => {
 			fs.mkdirSync(_destination);
 			ncp(file.full, _destination, function (err) {
 				if (err) return console.error(err);
-				console.log(`Added ${i++}/${acceptedFilesLength} ${file.file}`);
+				trackGeneratorProgress({ currentIndex: ++i, acceptedFilesLength, fileName: file.file, projectName: name, destination, source, progressBar });
 			});
 		}
 		else {
-			let _file = fs.readFileSync(file.full).toString();
+			let _file = _fs.readFileSync(file.full).toString();
 			let processedFile, jsonFile, mdFile, txtFile;
 
 			switch (file.file) {
 				case 'package.json':
 					jsonFile = JSON.parse(_file);
 					delete jsonFile.devDependencies['ncp'];
+					delete jsonFile.devDependencies['cli-progress'];
+					delete jsonFile.devDependencies['file-system'];
+					delete jsonFile.devDependencies['yargs'];
 					delete jsonFile.scripts['write-npmignore'];
 					delete jsonFile.scripts['prepare'];
 					delete jsonFile.scripts['build-bin'];
@@ -99,11 +108,31 @@ export default async ({ name }) => {
 				default: fs.writeFileSync(_destination, _file);
 			}
 
-			console.log(`Added ${i++}/${acceptedFilesLength} ${file.file}`);
-		}
-
-		if (i > acceptedFilesLength) {
-			console.log(`🎉 Enjoy your terrace at ${name}! 🎉`);
+			trackGeneratorProgress({ currentIndex: ++i, acceptedFilesLength, fileName: file.file, projectName: name, destination, source, progressBar });
 		}
 	}
 };
+
+function trackGeneratorProgress({ currentIndex, acceptedFilesLength, fileName, projectName, destination, source, progressBar }) {
+	if (currentIndex < acceptedFilesLength) {
+		progressBar.increment();
+	}
+	else {
+		progressBar.update(acceptedFilesLength);
+		progressBar.stop();
+
+		let postInstall = spawn('bash', [`${source}/bin/post-install.sh`, destination], { stdio: 'inherit' });
+		postInstall.on('close', (code) => {
+			if (code === 0) installCompleteHandler({ projectName, destination });
+		});
+	}
+}
+
+function installCompleteHandler({ projectName, destination}) {
+	console.log(`🎉 Enjoy your terrace at ${projectName}! 🎉`);
+
+	spawnSync(process.env.SHELL, ['-i'], {
+		cwd: destination,
+		stdio: 'inherit'
+	});
+}

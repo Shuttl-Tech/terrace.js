@@ -9,6 +9,8 @@ You can get started right-away with testing, files generation, http calls, state
 ```bash
 yarn global add terrace.js
 terrace create project-name
+# ^ this takes care of project generation, packages installation, and directory change.
+yarn start
 ```
 ⚠️ `Yarn` is an important pre-requisite.
 
@@ -148,3 +150,5 @@ async function getResource() {
 - [x] Move generators to terrace cli.
 - [ ] Improve flow integration.
 - [ ] Make terrace projects upgradable using the terrace cli.
+- [ ] Compatible with Windows.
+- [ ] Test that it works on Linux Distros.
