@@ -15,8 +15,7 @@
 		"start-js": "react-scripts start",
 		"start": "npm-run-all -p watch-css start-js",
 		"build-js": "react-scripts build",
-		"build": "npm-run-all build-css build-js",
-		"generate": "node $NODE_DEBUG_OPTION --experimental-modules generators/generate.mjs"
+		"build": "npm-run-all build-css build-js"
 	},
 	"devDependencies": {
 		"axios": "^0.18.0",

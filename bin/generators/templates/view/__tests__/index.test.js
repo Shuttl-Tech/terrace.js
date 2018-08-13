@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import i18n from 'i18n';
+import i18n from 'i18n/index';
 
 import { REQUEST_STATE } from '../___lowerCaseResourceName___-reducer';
-import { ___componentName___ } from '../';
+import { ___componentName___ } from '../../../../.';
 
 const t = (...args) => i18n.t(...args);
 

@@ -15,7 +15,7 @@ terrace create project-name
 #### More project commands
 ```bash
 yarn generate component component-name
-yarn generate view view-name
+yarn generate view view-name [--reducer-name=some-reducer] [--without-reducer]
 ```
 
 Built on Environment:
@@ -143,6 +143,8 @@ async function getResource() {
 5. File generators for components and views have been added.
 
 ### Todo
-- [ ] Make this an installable project from npm.
-- [ ] Make this project configurable during installation.
+- [x] Make this an installable project from npm.
+- [x] Make this project configurable during installation. (partly done)
+- [x] Move generators to terrace cli.
 - [ ] Improve flow integration.
+- [ ] Make terrace projects upgradable using the terrace cli.

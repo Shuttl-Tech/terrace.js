@@ -22,7 +22,7 @@ yarn-error.log*
 
 src/components/**/*.css
 src/views/**/*.css
-generators/**/*.css
+bin/generators/**/*.css
 src/App.css
 
 .idea/workspace.xml

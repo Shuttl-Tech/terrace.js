@@ -1,9 +1,10 @@
-const { spawnSync } = require('child_process');
-const ls = require('ls');
-const fs = require('file-system');
-const _fs = require('fs');
-const v = require('voca');
-const { ncp } = require('ncp');
+import fs from 'file-system';
+import v from 'voca';
+import { ncp } from 'ncp';
+import { spawnSync } from "child_process";
+import _fs from "fs";
+import { getProjectRoot, loadAllFiles } from './generators/utils/files';
+
 ncp.limit = 16;
 
 const excludedPaths = [
@@ -13,19 +14,20 @@ const excludedPaths = [
 	'.extra.npmignore',
 	'.header.gitignore',
 	'bin',
-	'yarn.lock'
+	'yarn.lock',
+	'generators'
 ];
 
 const excludedSpecialPaths = [
 	'.DS_Store'
 ];
 
-module.exports = async ({ name }) => {
+export default async ({ name }) => {
 	if (!name) throw new Error('Missing project name.');
 
-	let destination = `${process.cwd()}/${name}`;
-	let terracePackage = spawnSync('which', ['terrace']).stdout.toString().slice(0, -1);
-	let source = _fs.realpathSync(terracePackage).split('/').slice(0, -2).join('/') + '/';
+	const terracePackage = spawnSync('which', ['terrace']).stdout.toString().slice(0, -1);	// Removed newline at the end of output
+	const destination = getProjectRoot();	// Destination Project Root path
+	const source = getProjectRoot(_fs.realpathSync(terracePackage));	// Project Root path
 
 	if (fs.existsSync(destination)) {
 		console.error(`Folder ${name} already exists at the current location.`);
@@ -35,7 +37,7 @@ module.exports = async ({ name }) => {
 	fs.mkdirSync(destination);
 
 	let i = 1;
-	let files = loadAllFiles(source).filter(file => {
+	let files = loadAllFiles(`${source}/`).filter(file => {
 		try {
 			return ![...excludedPaths, ...excludedSpecialPaths].includes(file.file) && fs.existsSync(file.full);
 		}
@@ -106,7 +108,3 @@ module.exports = async ({ name }) => {
 		}
 	}
 };
-
-function loadAllFiles(path) {
-	return [...ls(path + '.*'), ...ls(path + '*')];
-}

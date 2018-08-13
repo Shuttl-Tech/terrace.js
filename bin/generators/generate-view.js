@@ -1,27 +1,32 @@
 import v from 'voca';
-import { load, save } from "./utils/files";
+import { getProjectRoot, load, save } from "./utils/files";
 import { PatternMismatchError } from './utils/errors';
+import { spawnSync } from "child_process";
+import _fs from "fs";
 
-export const generateView = ({ name, reducerName, noReducer }) => {
+export const generateView = ({ name, reducerName, withoutReducer }) => {
+	const terracePackage = spawnSync('which', ['terrace']).stdout.toString().slice(0, -1);	// Removed newline at the end of output
+	const destination = getProjectRoot();	// Destination Project Root path
+	const source = getProjectRoot(_fs.realpathSync(terracePackage));	// Project Root path
+
 	if (!name) throw new Error('Missing View Name. Please specify a view name.');
 	let processedName = name.match(/^[a-z]([a-z0-9-]+)?/i);
 	if (!processedName) throw new PatternMismatchError;
 	name = processedName[0];
 
 	let data = prepareTemplateData({ name, reducerName });
-	const resourcePath = `./src/components/${data.titleCaseName}`;
+	const resourcePath = `${destination}/src/components/${data.titleCaseName}`;
 
 	try {
 		checkIfFolderExists(resourcePath, data.titleCaseName);
 	}
 	catch (e) {
-		runGenerator(data, { reducerName: data.lowerCaseResourceName, noReducer });
+		runGenerator(data, { reducerName: data.lowerCaseResourceName, withoutReducer, name, source, destination });
 	}
 };
 
 const prepareTemplateData = ({ name, reducerName }) => {
 	let titleCaseName = v.titleCase(name).replace(/-/g,'');
-	console.log(reducerName, typeof reducerName, reducerName.length, reducerName || name);
 	let _resourceName = reducerName || name;
 	let resourceName = v.upperCase(_resourceName).replace(/-/g,'_');
 	let lowerCaseResourceName = v.lowerCase(_resourceName);
@@ -39,9 +44,9 @@ const checkIfFolderExists = (resourcePath, titleCaseName) => {
 	console.error(`Folder for view ${titleCaseName} already exists. Please remove it and try again.`);
 };
 
-const runGenerator = (data, { reducerName, noReducer }) => {
-	const templatePath = 				'./generators/templates';
-	const resourcePath =				`./src/views/${data.titleCaseName}`;
+const runGenerator = (data, { reducerName, withoutReducer, source, destination }) => {
+	const templatePath = 				`${source}/bin/generators/templates`;
+	const resourcePath =				`${destination}/src/views/${data.titleCaseName}`;
 	const type =								'view';
 	const indexFileName = 			'index.js';
 	const actionsFileName = 		'actions.js';
@@ -60,7 +65,7 @@ const runGenerator = (data, { reducerName, noReducer }) => {
 	save(`${resourcePath}/${stylesFileName}`, styles);
 	save(`${resourcePath}/${testsDir}/${indexTestFileName}`, indexTest);
 
-	if (noReducer) return;
+	if (withoutReducer) return;
 
 	let actions = load(`${templatePath}/${type}/${actionsFileName}`).process(data);
 	let reducer = 	load(`${templatePath}/${type}/${reducerFileName}`).process(data);
