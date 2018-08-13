@@ -15,7 +15,6 @@ const excludedPaths = [
 	'.header.gitignore',
 	'bin',
 	'yarn.lock',
-	'generators'
 ];
 
 const excludedSpecialPaths = [
