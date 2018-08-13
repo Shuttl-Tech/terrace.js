@@ -2,7 +2,7 @@ import v from 'voca';
 import { load, save } from "./utils/files";
 import { PatternMismatchError } from './utils/errors';
 
-export const generateView = ({ name, reducerName }) => {
+export const generateView = ({ name, reducerName, noReducer }) => {
 	if (!name) throw new Error('Missing View Name. Please specify a view name.');
 	let processedName = name.match(/^[a-z]([a-z0-9-]+)?/i);
 	if (!processedName) throw new PatternMismatchError;
@@ -15,7 +15,7 @@ export const generateView = ({ name, reducerName }) => {
 		checkIfFolderExists(resourcePath, data.titleCaseName);
 	}
 	catch (e) {
-		runGenerator(data, { reducerName: data.lowerCaseResourceName });
+		runGenerator(data, { reducerName: data.lowerCaseResourceName, noReducer });
 	}
 };
 
@@ -39,7 +39,7 @@ const checkIfFolderExists = (resourcePath, titleCaseName) => {
 	console.error(`Folder for view ${titleCaseName} already exists. Please remove it and try again.`);
 };
 
-const runGenerator = (data, { reducerName }) => {
+const runGenerator = (data, { reducerName, noReducer }) => {
 	const templatePath = 				'./generators/templates';
 	const resourcePath =				`./src/views/${data.titleCaseName}`;
 	const type =								'view';
@@ -54,21 +54,21 @@ const runGenerator = (data, { reducerName }) => {
 
 	let index = 	load(`${templatePath}/${type}/${indexFileName}`).process(data);
 	let styles = 	load(`${templatePath}/${type}/${stylesFileName}`).process(data);
+	let indexTest = 	load(`${templatePath}/${type}/${testsDir}/${indexTestFileName}`).process(data);
+
+	save(`${resourcePath}/${indexFileName}`, index);
+	save(`${resourcePath}/${stylesFileName}`, styles);
+	save(`${resourcePath}/${testsDir}/${indexTestFileName}`, indexTest);
+
+	if (noReducer) return;
 
 	let actions = load(`${templatePath}/${type}/${actionsFileName}`).process(data);
 	let reducer = 	load(`${templatePath}/${type}/${reducerFileName}`).process(data);
 	let tasks = 	load(`${templatePath}/${type}/${tasksFileName}`).process(data);
-
-	let indexTest = 	load(`${templatePath}/${type}/${testsDir}/${indexTestFileName}`).process(data);
 	let reducerTest = 	load(`${templatePath}/${type}/${testsDir}/${reducerTestFileName}`).process(data);
-
-	save(`${resourcePath}/${indexFileName}`, index);
-	save(`${resourcePath}/${stylesFileName}`, styles);
 
 	save(`${resourcePath}/${reducerName + '-' || ''}${actionsFileName}`, actions);
 	save(`${resourcePath}/${reducerName + '-' || ''}${reducerFileName}`, reducer);
 	save(`${resourcePath}/${reducerName + '-' || ''}${tasksFileName}`, tasks);
-
-	save(`${resourcePath}/${testsDir}/${indexTestFileName}`, indexTest);
 	save(`${resourcePath}/${testsDir}/${reducerName + '-' || ''}${reducerTestFileName}`, reducerTest);
 };
