@@ -3,6 +3,7 @@ import { getProjectRoot, load, save } from "./utils/files";
 import { PatternMismatchError } from './utils/errors';
 import { spawnSync } from "child_process";
 import _fs from "fs";
+import { parseTemplateComments } from "./utils/template-comments-parser";
 
 export const generateView = ({ name, reducerName, withoutReducer }) => {
 	const terracePackage = spawnSync('which', ['terrace']).stdout.toString().slice(0, -1);	// Removed newline at the end of output
@@ -60,6 +61,9 @@ const runGenerator = (data, { reducerName, withoutReducer, source, destination }
 	let index = 	load(`${templatePath}/${type}/${indexFileName}`).process(data);
 	let styles = 	load(`${templatePath}/${type}/${stylesFileName}`).process(data);
 	let indexTest = 	load(`${templatePath}/${type}/${testsDir}/${indexTestFileName}`).process(data);
+
+	index = parseTemplateComments({ tokens: ['reducer-snippets'], file: index, invert: withoutReducer });
+	indexTest = parseTemplateComments({ tokens: ['reducer-snippets'], file: indexTest, invert: withoutReducer });
 
 	save(`${resourcePath}/${indexFileName}`, index);
 	save(`${resourcePath}/${stylesFileName}`, styles);

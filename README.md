@@ -152,3 +152,5 @@ async function getResource() {
 - [ ] Make terrace projects upgradable using the terrace cli.
 - [ ] Compatible with Windows.
 - [ ] Test that it works on Linux Distros.
+- [x] When a view is created in `--without-reducer` mode, ensure that reducer and actions imports in the view file are removed.
+- [x] Add some template parsing logic to generator system.
