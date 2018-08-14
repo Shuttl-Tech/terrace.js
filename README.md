@@ -19,6 +19,7 @@ yarn start
 # from anywhere inside your project directory
 terrace component component-name
 terrace view view-name [--reducer-name=some-reducer] [--without-reducer]
+terrace remove [component | view] entity-name
 ```
 
 Built on Environment:
