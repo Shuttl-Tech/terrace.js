@@ -4,7 +4,7 @@ import { ncp } from 'ncp';
 import { spawnSync, spawn } from 'child_process';
 import _fs from 'fs';
 import CliProgress from 'cli-progress';
-import { getProjectRoot, loadAllFiles } from './generators/utils/files';
+import { getProjectPaths, loadAllFiles } from './utils/files';
 
 ncp.limit = 16;
 
@@ -22,14 +22,13 @@ const excludedSpecialPaths = [
 	'.DS_Store'
 ];
 
-export default async ({ name }) => {
+export const createProject = async ({ name }) => {
 	if (!name) throw new Error('Missing project name.');
 
-	const terracePackage = spawnSync('which', ['terrace']).stdout.toString().slice(0, -1);	// Removed newline at the end of output
-	const destination = `${process.cwd()}/${name}`;	// Destination Project Root path
-	const source = getProjectRoot(_fs.realpathSync(terracePackage));	// Project Root path
+	let { source, destination } = getProjectPaths({ newProject: true });
+	destination = `${destination}/${name}`;
 
-	if (fs.existsSync(destination)) {
+	if (_fs.existsSync(destination)) {
 		console.error(`Folder ${name} already exists at the current location.`);
 		return;
 	}
@@ -38,7 +37,7 @@ export default async ({ name }) => {
 
 	let files = loadAllFiles(`${source}/`).filter(file => {
 		try {
-			return ![...excludedPaths, ...excludedSpecialPaths].includes(file.file) && fs.existsSync(file.full);
+			return ![...excludedPaths, ...excludedSpecialPaths].includes(file.file) && _fs.existsSync(file.full);
 		}
 		catch (e) {
 			return false;
@@ -54,7 +53,7 @@ export default async ({ name }) => {
 	progressBar.start(acceptedFilesLength, 0);
 
 	for(let file of files) {
-		let isDirectory = fs.lstatSync(file.full).isDirectory();
+		let isDirectory = _fs.lstatSync(file.full).isDirectory();
 		let _destination = isDirectory ? `${destination}/${file.file}/` : `${destination}/${file.file}`;
 
 		if (isDirectory) {
@@ -75,6 +74,7 @@ export default async ({ name }) => {
 					delete jsonFile.devDependencies['cli-progress'];
 					delete jsonFile.devDependencies['file-system'];
 					delete jsonFile.devDependencies['yargs'];
+					delete jsonFile.devDependencies['colors'];
 					delete jsonFile.scripts['write-npmignore'];
 					delete jsonFile.scripts['prepare'];
 					delete jsonFile.scripts['build-bin'];

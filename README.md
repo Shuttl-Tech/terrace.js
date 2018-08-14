@@ -155,3 +155,4 @@ async function getResource() {
 - [ ] Test that it works on Linux Distros.
 - [x] When a view is created in `--without-reducer` mode, ensure that reducer and actions imports in the view file are removed.
 - [x] Add some template parsing logic to the generator system.
+- [ ] Implement checking of whether the bin has been built or not by storing the last built hash in the `.terrace-cli` file.

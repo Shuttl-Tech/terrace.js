@@ -1,8 +1,10 @@
 import yargs from 'yargs';
+import 'colors';
 
-import createProject from './create-project';
-import { generateView } from "./generators/generate-view";
-import { generateComponent } from "./generators/generate-component";
+import { createProject } from './generators/create-project';
+import { generateView } from './generators/generate-view';
+import { generateComponent } from './generators/generate-component';
+import { removeEntity } from './generators/remove-entity';
 
 import './generators/prototype-extensions';
 
@@ -26,6 +28,16 @@ let argv = yargs.usage('$0 [args]')
 			describe: 'Creates a component with the given name'
 		});
 	}, generateComponent)
+	.command('remove [entity] [name]', 'Remove an entity (such as view or component)', (yargs) => {
+		yargs.positional('entity', {
+			type: 'string',
+			describe: 'Specify the entity type to remove. eg. view, component.'
+		});
+		yargs.positional('name', {
+			type: 'string',
+			describe: 'Specify the dasherized name of the entity to remove.'
+		});
+	}, removeEntity)
 	.option('reducer-name', {
 		alias: 'r',
 		default: false,
