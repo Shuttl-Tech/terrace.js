@@ -16,8 +16,9 @@ yarn start
 
 #### More project commands
 ```bash
-yarn generate component component-name
-yarn generate view view-name [--reducer-name=some-reducer] [--without-reducer]
+# from anywhere inside your project directory
+terrace component component-name
+terrace view view-name [--reducer-name=some-reducer] [--without-reducer]
 ```
 
 Built on Environment:
@@ -153,4 +154,4 @@ async function getResource() {
 - [ ] Compatible with Windows.
 - [ ] Test that it works on Linux Distros.
 - [x] When a view is created in `--without-reducer` mode, ensure that reducer and actions imports in the view file are removed.
-- [x] Add some template parsing logic to generator system.
+- [x] Add some template parsing logic to the generator system.
