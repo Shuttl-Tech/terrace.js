@@ -26,8 +26,8 @@ export class ___componentName___ extends Component<Props> {
 
 	// template-end reducer-snippets
 	render() {
-	// template-begin reducer-snippets keep
 		const { t } = this.props;
+	// template-begin reducer-snippets keep
 
 		switch(this.props.requestStatus) {
 			case REQUEST_STATE.SUCCESS:
