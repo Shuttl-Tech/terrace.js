@@ -41,13 +41,25 @@ let argv = yargs.usage('$0 [args]')
 	.option('reducer-name', {
 		alias: 'r',
 		default: false,
-		describe: 'Specify reducer name.\nIf not provided, the default names will be the lowercase view name suffixed with `-{actions,reducer,tasks}.js`\nWorks only with the `view` command.'
+		describe: 'Specify reducer name.'.bold.green + '\nIf not provided, the default names will be the lowercase view name suffixed with `-{actions,reducer,tasks}.js`\nWorks only with the `view` command.'
 	})
 	.option('without-reducer', {
 		alias: 'w',
 		default: false,
 		type: 'boolean',
-		describe: 'Create a view without a reducer, tasks, actions, and reducer test.\nWorks only with the `view` command.'
+		describe: 'Create a view ' + 'without a reducer'.bold.green + ', tasks, actions, and reducer test.\nWorks only with the `view` command.'
+	})
+	.option('without-githooks', {
+		alias: 'g',
+		default: false,
+		type: 'boolean',
+		describe: 'Create project without adding any ' + 'terrace githooks'.bold.green + '.\nWorks only with the `create` command.\n' + 'By default, the '.green + 'githooks will be included'.green.bold + ' and configured.'.green
+	})
+	.option('without-eslint', {
+		alias: 'e',
+		default: false,
+		type: 'boolean',
+		describe: 'Create project without adding any ' + 'extra eslint config'.bold.green + '.\nWorks only with the `create` command.' + '\n' + 'When this option is passed, githooks are automatically ignored because of current implementation logic.'.yellow
 	})
 	.help()
 	.demandCommand()

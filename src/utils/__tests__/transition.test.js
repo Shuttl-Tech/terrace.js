@@ -1,4 +1,4 @@
-import { parametrizePath, transitionTo } from '../transition';
+import { parametrizePath } from '../transition';
 
 it('parses paths and params correctly', () => {
 	expect(parametrizePath('/path/:param1/subpath/:param2', 'p1', 'p2')).toEqual('/path/p1/subpath/p2');

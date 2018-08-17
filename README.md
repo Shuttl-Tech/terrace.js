@@ -8,7 +8,7 @@ You can get started right-away with testing, files generation, http calls, state
 ## Project Init
 ```bash
 yarn global add terrace.js
-terrace create project-name
+terrace create project-name [--without-githooks] [--without-eslint]
 # ^ this takes care of project generation, packages installation, and directory change.
 yarn start
 ```
@@ -44,6 +44,8 @@ brew install watchman # https://github.com/facebook/create-react-app/issues/3006
 
 > Note: In `WebStorm`, mark `./src` as Resources Root. _(Rt. click > Mark directory as > Resources root)_
 
+> Note: A `pre-commit` hook (unless `--without-githooks` is specified) runs before every commit to ensure that any specified linters work as intended. Any hooks are defined in .githooks.
+
 ### File layout plan [.js]
 ```
 Library imports
@@ -53,8 +55,9 @@ Component imports
 import './styles.css';
 constant declarations
 
-Component declaration *
-Export declaration (* if not exported at component declaration)
+Component declaration and named export
+Default component export
+
 Component related functions
 ```
 

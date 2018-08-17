@@ -8,7 +8,7 @@ import { getProjectPaths, loadAllFiles } from './utils/files';
 
 ncp.limit = 16;
 
-const excludedPaths = [
+let excludedPaths = [
 	'.git',
 	'node_modules',
 	'.npmignore',
@@ -16,14 +16,29 @@ const excludedPaths = [
 	'.header.gitignore',
 	'bin',
 	'yarn.lock',
+	'.eslintignore'
 ];
 
-const excludedSpecialPaths = [
+let excludedSpecialPaths = [
 	'.DS_Store'
 ];
 
-export const createProject = async ({ name }) => {
+export const createProject = async ({ name, withoutGithooks, withoutEslint }) => {
 	if (!name) throw new Error('Missing project name.');
+
+	if (withoutEslint) {
+		excludedPaths = [...excludedPaths,
+			'.eslintrc.js'
+		];
+
+		withoutGithooks = true;
+	}
+
+	if (withoutGithooks) {
+		excludedPaths = [...excludedPaths,
+			'.githooks'
+		];
+	}
 
 	let { source, destination } = getProjectPaths({ newProject: true });
 	destination = `${destination}/${name}`;
@@ -60,7 +75,7 @@ export const createProject = async ({ name }) => {
 			fs.mkdirSync(_destination);
 			ncp(file.full, _destination, function (err) {
 				if (err) return console.error(err);
-				trackGeneratorProgress({ currentIndex: ++i, acceptedFilesLength, fileName: file.file, projectName: name, destination, source, progressBar });
+				trackGeneratorProgress({ currentIndex: ++i, acceptedFilesLength, fileName: file.file, projectName: name, destination, source, progressBar, withoutGithooks, withoutEslint });
 			});
 		}
 		else {
@@ -75,6 +90,17 @@ export const createProject = async ({ name }) => {
 					delete jsonFile.devDependencies['file-system'];
 					delete jsonFile.devDependencies['yargs'];
 					delete jsonFile.devDependencies['colors'];
+
+					if (withoutEslint) {
+						delete jsonFile.devDependencies['babel-eslint'];
+						delete jsonFile.devDependencies['eslint'];
+						delete jsonFile.devDependencies['eslint-config-react-app'];
+						delete jsonFile.devDependencies['eslint-plugin-flowtype'];
+						delete jsonFile.devDependencies['eslint-plugin-import'];
+						delete jsonFile.devDependencies['eslint-plugin-jsx-a11y'];
+						delete jsonFile.devDependencies['eslint-plugin-react'];
+					}
+
 					delete jsonFile.scripts['write-npmignore'];
 					delete jsonFile.scripts['prepare'];
 					delete jsonFile.scripts['build-bin'];
@@ -108,12 +134,12 @@ export const createProject = async ({ name }) => {
 				default: fs.writeFileSync(_destination, _file);
 			}
 
-			trackGeneratorProgress({ currentIndex: ++i, acceptedFilesLength, fileName: file.file, projectName: name, destination, source, progressBar });
+			trackGeneratorProgress({ currentIndex: ++i, acceptedFilesLength, fileName: file.file, projectName: name, destination, source, progressBar, withoutGithooks, withoutEslint });
 		}
 	}
 };
 
-function trackGeneratorProgress({ currentIndex, acceptedFilesLength, fileName, projectName, destination, source, progressBar }) {
+function trackGeneratorProgress({ currentIndex, acceptedFilesLength, fileName, projectName, destination, source, progressBar, withoutGithooks, withoutEslint }) {
 	if (currentIndex < acceptedFilesLength) {
 		progressBar.increment();
 	}
@@ -121,15 +147,34 @@ function trackGeneratorProgress({ currentIndex, acceptedFilesLength, fileName, p
 		progressBar.update(acceptedFilesLength);
 		progressBar.stop();
 
-		let postInstall = spawn('bash', [`${source}/bin/post-install.sh`, destination], { stdio: 'inherit' });
+		let postInstallArgs = [`${source}/bin/post-install.sh`, `--destination=${destination}`];
+
+		if (withoutGithooks) {
+			postInstallArgs = [...postInstallArgs, '--without-githooks'];
+		}
+
+		let postInstall = spawn('bash', postInstallArgs, { stdio: 'inherit' });
 		postInstall.on('close', (code) => {
-			if (code === 0) installCompleteHandler({ projectName, destination });
+			if (code === 0) installCompleteHandler({ projectName, destination, withoutGithooks, withoutEslint });
 		});
 	}
 }
 
-function installCompleteHandler({ projectName, destination}) {
+function installCompleteHandler({ projectName, destination, withoutGithooks, withoutEslint }) {
 	console.log(`🎉 Enjoy your terrace at ${projectName}! 🎉`);
+	if (!withoutEslint) {
+		console.log('\n');
+		console.log(`💡 Your project has been configured with eslint. Run it with 'yarn eslint .' 💡`);
+		console.log(`❓ Don't want the extra eslint? ❓`);
+		console.log(`🤷‍♀️ You can choose to not use it without affecting your work, or remove and create the terrace project with the '--without-eslint' option. 🤷‍♂️`);
+	}
+	if (!withoutGithooks) {
+		console.log('\n');
+		console.log(`👉 Your project has been configured with terrace's githooks.`);
+		console.log(`👉 See the .githooks folder to see the list of githooks added.`);
+		console.log(`❓ Don't want any preconfigured githooks? ❓`);
+		console.log(`🤷‍♀️ Remove the .githooks folder. You can create the .githooks folder and add githooks to it later. You can also use the '--without-githooks' option next time. 🤷‍♂️`);
+	}
 
 	spawnSync(process.env.SHELL, ['-i'], {
 		cwd: destination,
