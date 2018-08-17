@@ -49,6 +49,12 @@ let argv = yargs.usage('$0 [args]')
 		type: 'boolean',
 		describe: 'Create a view ' + 'without a reducer'.bold.green + ', tasks, actions, and reducer test.\nWorks only with the `view` command.'
 	})
+	.option('minimal', {
+		alias: 'm',
+		default: false,
+		type: 'boolean',
+		describe: 'Create a component with ' + 'as few things as possible.'.bold.green + '\nWorks only with the `component` command.'
+	})
 	.option('without-githooks', {
 		alias: 'g',
 		default: false,

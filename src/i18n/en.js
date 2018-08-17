@@ -1,6 +1,7 @@
 const strings = {
 	"hello-world": "Hello World! Welcome to the Terrace!",
 	"welcome-to-view": "Welcome to view {{view}}",
+	"welcome-to-comp": "Welcome to component {{comp}}",
 	"change-to-de": "Change to DE",
 	"change-to-en": "Change to EN",
 	"visit-path": "Visit Path for Item {{item}}",
