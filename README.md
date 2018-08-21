@@ -14,6 +14,11 @@ yarn start
 ```
 ⚠️ `Yarn` is an important pre-requisite.
 
+#### Some global pre-requisites that may not be obvious
+- Webpack 4 (for build)
+- Watchman ([for testing](https://github.com/facebook/create-react-app/issues/3006))
+- Yarn (no, you can't use npm commands as an alternative, not yet)
+
 #### More project commands
 ```bash
 # from anywhere inside your project directory
