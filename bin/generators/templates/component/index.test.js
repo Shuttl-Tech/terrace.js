@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { ___componentName___ } from '../../../../src/index';
+import { ___componentName___ } from './';
 
 it('___componentName___ tree looks like how it should', () => {
 	let props = {
