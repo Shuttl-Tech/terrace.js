@@ -14,6 +14,7 @@ execute_post_install ()
 
 	if [ -z $withoutgithooks ]; then
 		git init
+		chmod +x .githooks/*
 		git config core.hooksPath .githooks
 	fi;
 
