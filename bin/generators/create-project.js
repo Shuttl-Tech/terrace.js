@@ -85,11 +85,11 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint }) =>
 			switch (file.file) {
 				case 'package.json':
 					jsonFile = JSON.parse(_file);
-					delete jsonFile.devDependencies['ncp'];
 					delete jsonFile.devDependencies['cli-progress'];
-					delete jsonFile.devDependencies['file-system'];
-					delete jsonFile.devDependencies['yargs'];
 					delete jsonFile.devDependencies['colors'];
+					delete jsonFile.devDependencies['file-system'];
+					delete jsonFile.devDependencies['ncp'];
+					delete jsonFile.devDependencies['yargs'];
 
 					if (withoutEslint) {
 						delete jsonFile.devDependencies['babel-eslint'];
