@@ -5,6 +5,8 @@ import { spawnSync, spawn } from 'child_process';
 import _fs from 'fs';
 import CliProgress from 'cli-progress';
 import { getProjectPaths, loadAllFiles } from './utils/files';
+import { CriticalError } from './utils/error-handlers';
+import { MISSING_ARGUMENT } from './utils/error-codes';
 
 ncp.limit = 16;
 
@@ -24,7 +26,7 @@ let excludedSpecialPaths = [
 ];
 
 export const createProject = async ({ name, withoutGithooks, withoutEslint }) => {
-	if (!name) throw new Error('Missing project name.');
+	if (!name) CriticalError('🚨 Missing project name.', MISSING_ARGUMENT);
 
 	if (withoutEslint) {
 		excludedPaths = [...excludedPaths,
@@ -89,6 +91,7 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint }) =>
 					delete jsonFile.devDependencies['colors'];
 					delete jsonFile.devDependencies['file-system'];
 					delete jsonFile.devDependencies['ncp'];
+					delete jsonFile.devDependencies['pluralize'];
 					delete jsonFile.devDependencies['yargs'];
 
 					if (withoutEslint) {

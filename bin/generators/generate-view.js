@@ -7,15 +7,15 @@ import {
 	save,
 	ENTITY
 } from './utils/files';
-import { PatternMismatchError } from './utils/errors';
+import { MissingHandlerName, PatternMismatchError } from './utils/error-handlers';
 import { parseTemplateComments } from './utils/template-comments-parser';
 
 export const generateView = ({ name, reducerName, withoutReducer }) => {
 	let { source, destination } = getProjectPaths();
 
-	if (!name) throw new Error('⚠️ Missing View Name. Please specify a view name.');
+	if (!name) MissingHandlerName({ entity: 'view' });
 	let processedName = name.match(/^[a-z]([a-z0-9-]+)?/i);
-	if (!processedName) throw new PatternMismatchError;
+	if (!processedName) PatternMismatchError();
 	name = processedName[0];
 
 	let data = prepareTemplateData({ name, reducerName });

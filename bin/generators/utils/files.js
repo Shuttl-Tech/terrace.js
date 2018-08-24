@@ -3,6 +3,8 @@ import _fs from 'fs';
 import ls from 'ls';
 import { cli_file } from "../../constants";
 import { spawnSync } from "child_process";
+import { CriticalError } from './error-handlers';
+import { NO_PROJECT_ROOT, RESOURCE_EXISTS } from './error-codes';
 
 export const ENTITY = {
 	COMPONENTS: 'components',
@@ -29,7 +31,7 @@ export const getProjectRoot = (path = process.cwd()) => {
 	while(!loadAllFiles(`${path}/`).map(file => file.file).includes(cli_file)) {
 		path = `${path}/..`;
 
-		if (_fs.realpathSync(path) === '/') throw new Error('Project root wasn\'t found.');
+		if (_fs.realpathSync(path) === '/') CriticalError('Project root wasn\'t found.', NO_PROJECT_ROOT);
 	}
 	return _fs.realpathSync(path);
 };
@@ -44,7 +46,8 @@ export const getProjectPaths = ({ newProject = false } = {}) => {
 export const getAllFilesInGeneratedDirectory = (path) => {
 	let entityName = path.split('/').slice(-1).join('');
 	let command = spawnSync('find', [path]);
-	if (command.status) throw new Error(`Command failed.\n${command.stderr.toString()}`);
+	if (command.status) CriticalError(`Command failed.\n${command.stderr.toString()}`, command.status);
+
 	let output = command.stdout.toString().split('\n');
 	return output.filter(_ => _)
 		.filter(file => !_fs.lstatSync(file).isDirectory())
@@ -58,7 +61,7 @@ export const getAllFilesInGeneratedDirectory = (path) => {
 
 export const checkIfFolderExists = ({ resourcePath, titleCaseName, type }) => {
 	if (_fs.existsSync(resourcePath)) {
-		console.error(`Folder for ${type} ${titleCaseName.underline.bold} already exists.`.red, `Please remove it and try again.`.yellow);
+		CriticalError(`Folder for ${type} ${titleCaseName.underline.bold} already exists.`.red, `Please remove it and try again.`.yellow, RESOURCE_EXISTS);
 		return true;
 	}
 	return false;

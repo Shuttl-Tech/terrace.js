@@ -7,15 +7,15 @@ import {
 	save,
 	ENTITY
 } from './utils/files';
-import { PatternMismatchError } from './utils/errors';
+import { MissingHandlerName, PatternMismatchError } from './utils/error-handlers';
 import { parseTemplateComments } from './utils/template-comments-parser';
 
 export const generateComponent = ({ name, minimal }) => {
 	let { source, destination } = getProjectPaths();
 
-	if (!name) throw new Error('Missing Component Name. Please specify a component name.');
+	if (!name) MissingHandlerName({ entity: 'component' });
 	let processedName = name.match(/^[a-z]([a-z0-9-]+)?/i);
-	if (!processedName) throw PatternMismatchError;
+	if (!processedName) PatternMismatchError();
 	name = processedName[0];
 
 	let data = prepareTemplateData({ name });
