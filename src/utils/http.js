@@ -1,15 +1,17 @@
 import axios from 'axios';
 import { SCHEMA, normalize, serialize } from 'adapters/application';
+import { initializeRequestMocking } from 'mocks/requests';
 
-// Functions here are intended to return promises.
-// Any async/await or similar handling should be done at a level higher than here.
-
-// We don't need the namespacing here because we can pass in proxy to package.json.
-// export const NAMESPACE = "https://qasupply.goplus.in";
 export const NAMESPACE = "";
 export const REQUEST_TIMEOUT = 30000;
 
 const namespacedUrl = (url) => NAMESPACE + url;
+
+const doMockRequests = process.env.REACT_APP_MOCK_REQUESTS === 'true' || process.env.NODE_ENV === 'test';
+if (doMockRequests) { initializeRequestMocking(); }
+
+// Functions here are intended to return promises.
+// Any async/await or similar handling should be done at a level higher than here.
 
 /**
  * Return `fetch` API resource.
@@ -71,10 +73,7 @@ function modifyRequestOptions(options: Object = {}, schema: string = SCHEMA.GENE
 
 	let headers = modifyRequestHeaders(options || {});
 
-	options = {...options, body: normalize(options.body, schema) };
-
 	delete options.formData;	// non-standard optional property
-	delete options.body;	// option doesn't exist on axios lib, did on `fetch`
 
 	return {...options,
 		headers,
@@ -95,15 +94,13 @@ function modifyRequestOptions(options: Object = {}, schema: string = SCHEMA.GENE
  * Modify all request headers.
  *
  * For more details on headers, see: https://developer.mozilla.org/en-US/docs/Web/API/Headers
- * @param {object} headers
  * @returns {object} request headers
+ * @param options
  */
 function modifyRequestHeaders(options: {} = {}): {} {
 	let headers;
 	if (options.formData) {
 		headers = {...options.headers, "Content-Type": "application/x-www-form-urlencoded" };
 	}
-	return {...headers,
-		// "Cookie": document.cookie
-	};
+	return {...headers};
 }
