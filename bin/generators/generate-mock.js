@@ -5,8 +5,7 @@ const { plural, singular } = pluralize;
 const { snakeCase, lowerCase } = v;
 
 import {
-	checkIfNamePatternIsCorrectOrTerminateProgram,
-	getAllFilesInGeneratedDirectory,
+	checkIfNamePatternIsCorrectOrTerminateProgram, getFilePathWithParents,
 	getProjectPaths,
 	load,
 	save
@@ -16,7 +15,7 @@ import { BAD_ARGUMENT_PATTERN, MISSING_ARGUMENT } from './utils/error-codes';
 import { parseTemplateComments } from './utils/template-comments-parser';
 import { existsSync } from 'fs';
 
-const MOCKABLE_ENTITIES = {
+export const MOCKABLE_ENTITIES = {
 	RESOURCE: 'resource'
 };
 
@@ -47,5 +46,5 @@ export const generateMock = ({ entity, name }) => {
 	save(`${resourcePath}/${fileName}`, mock);
 
 	console.log('✅ Files created:'.bold.cyan.underline);
-	console.log(getAllFilesInGeneratedDirectory(resourcePath));
+	console.log(getFilePathWithParents(`${resourcePath}/${fileName}`, 2));
 };

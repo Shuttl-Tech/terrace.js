@@ -6,3 +6,7 @@ const TEMPLATE_VARIABLE_REGEX = /___([a-z]+)___/ig;
 String.prototype.process = function (data) {
 	return this.replace(TEMPLATE_VARIABLE_REGEX, (_, param) => data[param]);
 };
+
+Array.prototype.makePath = function () {
+	return this.join('/');
+};

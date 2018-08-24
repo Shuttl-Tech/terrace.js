@@ -7,6 +7,7 @@ const { plural, singular } = pluralize;
 import { ENTITY, getProjectPaths, SUPPORTED_ENTITIES } from './utils/files';
 import { CriticalError } from './utils/error-handlers';
 import { BAD_ARGUMENT_PATTERN, MISSING_ARGUMENT } from './utils/error-codes';
+import { MOCKABLE_ENTITIES } from './generate-mock';
 
 export const removeEntity = ({ entity, name_or_subtype: nameOrSubtype, name }) => {
 	let supportedEntities = SUPPORTED_ENTITIES.map(singular);
@@ -26,6 +27,9 @@ export const removeEntity = ({ entity, name_or_subtype: nameOrSubtype, name }) =
 	else {
 		subtype = nameOrSubtype;
 		if (!subtype) { CriticalError(`🚨 Missing ${entity.toLowerCase()} subtype. Please specify dasherized ${entity.toLowerCase()} subtype.`, MISSING_ARGUMENT); }
+		let supportedMockableEntities = Object.keys(MOCKABLE_ENTITIES).map(singular).map(v.lowerCase);
+		const supportedMockableEntitiesMessage = `Supported entities are: ${supportedMockableEntities.map(e => e.underline.bold).join(', ')}`.yellow;
+		if (!supportedMockableEntities.includes(subtype)) CriticalError(`⚠️  ${subtype.bold.underline} is not a valid entity.`.red + `\n${supportedMockableEntitiesMessage}`, BAD_ARGUMENT_PATTERN);
 	}
 
 	if (!name) { CriticalError(`🚨 Missing ${entity.toLowerCase()} name. Please specify dasherized ${entity.toLowerCase()} name.`, MISSING_ARGUMENT); }

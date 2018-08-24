@@ -27,7 +27,7 @@ export const loadAllFiles = (path) => {
 
 export const getProjectRoot = (path = process.cwd()) => {
 	let isDirectory = _fs.lstatSync(path).isDirectory();
-	path = isDirectory ? path : path.split('/').slice(0, -1).join('/');
+	path = isDirectory ? path : path.split('/').slice(0, -1).makePath();
 
 	while(!loadAllFiles(`${path}/`).map(file => file.file).includes(cli_file)) {
 		path = `${path}/..`;
@@ -56,8 +56,16 @@ export const getAllFilesInGeneratedDirectory = (path) => {
 			let splitPath = file.split('/');
 			let index = splitPath.indexOf(entityName) + 1;
 			splitPath = splitPath.slice(index);
-			return `${entityName.yellow.underline}/${splitPath.join('/').green.bold}`;
+			return `${entityName.yellow.underline}/${splitPath.makePath().green.bold}`;
 		}).join('\n').trim();
+};
+
+export const getFilePathWithParents = (file, parentsCount = 1) => {
+	parentsCount *= -1;
+	let splitPath = file.split('/');
+	let fileName = splitPath.splice(-1).makePath();
+	let parentPath = splitPath.slice(parentsCount).makePath();
+	return `${parentPath.yellow.underline}/${fileName.green.bold}`;
 };
 
 export const checkIfFolderExistsOrTerminateProgram = ({ resourcePath, titleCaseName, type }) => {
