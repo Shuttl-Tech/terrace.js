@@ -92,6 +92,7 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint }) =>
 					delete jsonFile.devDependencies['file-system'];
 					delete jsonFile.devDependencies['ncp'];
 					delete jsonFile.devDependencies['pluralize'];
+					delete jsonFile.devDependencies['readline-sync'];
 					delete jsonFile.devDependencies['yargs'];
 
 					if (withoutEslint) {

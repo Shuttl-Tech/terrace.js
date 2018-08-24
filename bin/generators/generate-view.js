@@ -1,6 +1,6 @@
 import v from 'voca';
 import {
-	checkIfFolderExists,
+	checkIfFolderExistsOrTerminateProgram,
 	getProjectPaths,
 	load,
 	getAllFilesInGeneratedDirectory,
@@ -22,7 +22,7 @@ export const generateView = ({ name, reducerName, withoutReducer }) => {
 	let type = ENTITY.VIEWS;
 	const resourcePath = `${destination}/src/${type}/${data.titleCaseName}`;
 
-	let folderExists = checkIfFolderExists({ resourcePath, titleCaseName: data.titleCaseName, type });
+	let folderExists = checkIfFolderExistsOrTerminateProgram({ resourcePath, titleCaseName: data.titleCaseName, type });
 	if (!folderExists) runGenerator(data, { reducerName: data.lowerCaseResourceName, withoutReducer, name, source, destination });
 };
 

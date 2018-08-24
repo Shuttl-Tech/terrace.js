@@ -3,14 +3,15 @@ import _fs from 'fs';
 import ls from 'ls';
 import { cli_file } from "../../constants";
 import { spawnSync } from "child_process";
-import { CriticalError } from './error-handlers';
+import { CriticalError, PatternMismatchError } from './error-handlers';
 import { NO_PROJECT_ROOT, RESOURCE_EXISTS } from './error-codes';
 
 export const ENTITY = {
 	COMPONENTS: 'components',
-	VIEWS: 'views'
+	VIEWS: 'views',
+	MOCKS: 'mocks'
 };
-export const SUPPORTED_ENTITIES = [ENTITY.COMPONENTS, ENTITY.VIEWS];
+export const SUPPORTED_ENTITIES = [ENTITY.COMPONENTS, ENTITY.VIEWS, ENTITY.MOCKS];
 
 export const load = (path) => {
 	return _fs.readFileSync(path).toString();
@@ -59,10 +60,20 @@ export const getAllFilesInGeneratedDirectory = (path) => {
 		}).join('\n').trim();
 };
 
-export const checkIfFolderExists = ({ resourcePath, titleCaseName, type }) => {
-	if (_fs.existsSync(resourcePath)) {
-		CriticalError(`Folder for ${type} ${titleCaseName.underline.bold} already exists.`.red, `Please remove it and try again.`.yellow, RESOURCE_EXISTS);
-		return true;
+export const checkIfFolderExistsOrTerminateProgram = ({ resourcePath, titleCaseName, type }) => {
+	if (!_fs.existsSync(resourcePath)) {
+		return false;
 	}
-	return false;
+	CriticalError(`Folder for ${type} ${titleCaseName.underline.bold} already exists.`.red, `Please remove it and try again.`.yellow, RESOURCE_EXISTS);
+};
+
+/**
+ * Return param is it matches the pattern, else exit program.
+ * @param name
+ * @returns {*}
+ */
+export const checkIfNamePatternIsCorrectOrTerminateProgram = ({ name }) => {
+	let processedName = name.match(/^[a-z]([a-z0-9-]+)?/i);
+	if (!processedName) PatternMismatchError();
+	return processedName[0];
 };

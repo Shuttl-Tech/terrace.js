@@ -1,28 +1,26 @@
 import v from 'voca';
 import {
-	checkIfFolderExists,
+	checkIfFolderExistsOrTerminateProgram,
 	getProjectPaths,
 	load,
 	getAllFilesInGeneratedDirectory,
 	save,
-	ENTITY
+	ENTITY, checkIfNamePatternIsCorrectOrTerminateProgram
 } from './utils/files';
-import { MissingHandlerName, PatternMismatchError } from './utils/error-handlers';
+import { MissingHandlerName } from './utils/error-handlers';
 import { parseTemplateComments } from './utils/template-comments-parser';
 
 export const generateComponent = ({ name, minimal }) => {
 	let { source, destination } = getProjectPaths();
 
 	if (!name) MissingHandlerName({ entity: 'component' });
-	let processedName = name.match(/^[a-z]([a-z0-9-]+)?/i);
-	if (!processedName) PatternMismatchError();
-	name = processedName[0];
+	name = checkIfNamePatternIsCorrectOrTerminateProgram({ name });
 
 	let data = prepareTemplateData({ name });
 	let type = ENTITY.COMPONENTS;
 	const resourcePath = `${destination}/src/${type}/${data.titleCaseName}`;
 
-	let folderExists = checkIfFolderExists({ resourcePath, titleCaseName: data.titleCaseName, type });
+	let folderExists = checkIfFolderExistsOrTerminateProgram({ resourcePath, titleCaseName: data.titleCaseName, type });
 	if (!folderExists) runGenerator(data, { source, destination, minimal });
 };
 

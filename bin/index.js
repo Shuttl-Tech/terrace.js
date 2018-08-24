@@ -4,13 +4,14 @@ import 'colors';
 import { createProject } from './generators/create-project';
 import { generateView } from './generators/generate-view';
 import { generateComponent } from './generators/generate-component';
+import { generateMock } from './generators/generate-mock';
 import { removeEntity } from './generators/remove-entity';
 
 import './generators/prototype-extensions';
 
 // noinspection JSUnusedLocalSymbols
 let argv = yargs.usage('$0 [args]')
-	.command('create [name]', 'Creates a loaded-up CRA project', (yargs) => {
+	.command('create [name]', 'Creates a loaded-up CRA project\n[--without-eslint] [--without-githooks]', (yargs) => {
 		yargs.positional('name', {
 			type: 'string',
 			describe: 'Name of your project'
@@ -45,7 +46,7 @@ let argv = yargs.usage('$0 [args]')
 			describe: 'Create a view ' + 'without a reducer'.bold.green + ', tasks, actions, and reducer test.'
 		});
 	}, generateView)
-	.command('component [name]', 'Generate a component', (yargs) => {
+	.command('component [name]', 'Generate a component\n[--minimal]', (yargs) => {
 		yargs.positional('name', {
 			type: 'string',
 			describe: 'Creates a component with the given name'
@@ -57,14 +58,28 @@ let argv = yargs.usage('$0 [args]')
 			describe: 'Create a component with ' + 'as few things as possible'.bold.green + '.'
 		});
 	}, generateComponent)
-	.command('remove [entity] [name]', 'Remove an entity (such as view or component)', (yargs) => {
+	.command('mock [entity] [name]', 'Generate a basic entity mock', (yargs) => {
+		yargs.positional('entity', {
+			type: 'string',
+			describe: 'Specify what to mock'
+		})
+		.positional('name', {
+			type: 'string',
+			describe: 'Specify name of mocked entity'
+		});
+	}, generateMock)
+	.command('remove [entity] [name_or_subtype] [name]', 'Remove an entity (such as view or component)', (yargs) => {
 		yargs.positional('entity', {
 			type: 'string',
 			describe: 'Specify the entity type to remove. eg. view, component.'
 		});
+		yargs.positional('name_or_type', {
+			type: 'string',
+			describe: 'Specify the dasherized name of the entity to remove, or the subtype.'
+		});
 		yargs.positional('name', {
 			type: 'string',
-			describe: 'Specify the dasherized name of the entity to remove.'
+			describe: 'Specify the dasherized name of the entity to remove, ' + 'if the previous argument was the subtype.'.bold
 		});
 	}, removeEntity)
 	.help()
