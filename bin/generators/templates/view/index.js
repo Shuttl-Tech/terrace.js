@@ -46,7 +46,7 @@ export class ___componentName___ extends Component<Props> {
 }
 // template-begin reducer-snippets keep
 
-const mapStateToProps = ({ ___resourceName___: { status } }) => {
+const mapStateToProps = ({ ___lowerCaseResourceName___: { status } }) => {
   return { requestStatus: status };
 };
 
