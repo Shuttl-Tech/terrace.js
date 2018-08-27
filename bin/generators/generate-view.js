@@ -31,12 +31,14 @@ const prepareTemplateData = ({ name, reducerName }) => {
 	let _resourceName = reducerName || name;
 	let resourceName = v.upperCase(_resourceName).replace(/-/g,'_');
 	let lowerCaseResourceName = v.lowerCase(_resourceName);
+	let camelCaseResourceName = v.camelCase(lowerCaseResourceName);
 	return {
 		name,
 		titleCaseName,
 		componentName: titleCaseName,
 		resourceName,
-		lowerCaseResourceName
+		lowerCaseResourceName,
+		camelCaseResourceName
 	};
 };
 
