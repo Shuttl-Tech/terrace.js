@@ -1,12 +1,15 @@
 import fs from 'file-system';
-import v from 'voca';
 import { ncp } from 'ncp';
-import { spawnSync, spawn } from 'child_process';
 import _fs from 'fs';
 import CliProgress from 'cli-progress';
-import { getProjectPaths, loadAllFiles } from './utils/files';
+import { getProjectPaths, load, loadAllFiles } from './utils/files';
 import { CriticalError } from './utils/error-handlers';
 import { MISSING_ARGUMENT } from './utils/error-codes';
+import { processPackageJson } from './file-specific-logic/package.json';
+import { processReadmeMd } from './file-specific-logic/readme.md';
+import { processGitIgnore } from './file-specific-logic/.extra.gitignore';
+import { processDotEnv } from './file-specific-logic/.env';
+import { trackGeneratorProgress } from './utils/cli-utils';
 
 ncp.limit = 16;
 
@@ -18,7 +21,8 @@ let excludedPaths = [
 	'.header.gitignore',
 	'bin',
 	'yarn.lock',
-	'.eslintignore'
+	'.eslintignore',
+	'terrace.log'
 ];
 
 let excludedSpecialPaths = [
@@ -81,58 +85,21 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint }) =>
 			});
 		}
 		else {
-			let _file = _fs.readFileSync(file.full).toString();
-			let processedFile, jsonFile, mdFile, txtFile;
+			let _file = load(file.full);
 
 			switch (file.file) {
+				case '.env':
+					fs.writeFileSync(_destination, processDotEnv({ file: _file, name }));
+					break;
 				case 'package.json':
-					jsonFile = JSON.parse(_file);
-					delete jsonFile.devDependencies['cli-progress'];
-					delete jsonFile.devDependencies['colors'];
-					delete jsonFile.devDependencies['file-system'];
-					delete jsonFile.devDependencies['ncp'];
-					delete jsonFile.devDependencies['pluralize'];
-					delete jsonFile.devDependencies['readline-sync'];
-					delete jsonFile.devDependencies['yargs'];
-
-					if (withoutEslint) {
-						delete jsonFile.devDependencies['babel-eslint'];
-						delete jsonFile.devDependencies['eslint'];
-						delete jsonFile.devDependencies['eslint-config-react-app'];
-						delete jsonFile.devDependencies['eslint-plugin-flowtype'];
-						delete jsonFile.devDependencies['eslint-plugin-import'];
-						delete jsonFile.devDependencies['eslint-plugin-jsx-a11y'];
-						delete jsonFile.devDependencies['eslint-plugin-react'];
-					}
-
-					delete jsonFile.scripts['write-npmignore'];
-					delete jsonFile.scripts['prepare'];
-					delete jsonFile.scripts['build-bin'];
-					delete jsonFile.scripts['write-gitignore-extra'];
-					delete jsonFile.scripts['preupdate'];
-					delete jsonFile.repository;
-					delete jsonFile.author;
-					delete jsonFile.bin;
-					jsonFile.name = name;
-					jsonFile.private = true;
-					jsonFile.version = '0.1.0';
-
-					processedFile = JSON.stringify(jsonFile, null, '\t');
-					fs.writeFileSync(_destination, processedFile);
+					fs.writeFileSync(_destination, processPackageJson({ file: JSON.parse(_file), withoutEslint, name }));
 					break;
 				case 'README.md':
-					mdFile = _file.split('\n');
-					mdFile[0] = `# ${v.titleCase(name)}`;
-					mdFile.splice(1, 2);
-					processedFile = mdFile.join('\n');
-					fs.writeFileSync(_destination, processedFile);
+					fs.writeFileSync(_destination, processReadmeMd({ file: _file, name }));
 					break;
 				case '.extra.gitignore':
 					_destination = `${destination}/.gitignore`;
-					txtFile = _file.split('\n');
-					txtFile.splice(0, 2);
-					processedFile = txtFile.join('\n');
-					fs.writeFileSync(_destination, processedFile);
+					fs.writeFileSync(_destination, processGitIgnore({ file: _file }));
 					file.file = '.gitignore';
 					break;
 				default: fs.writeFileSync(_destination, _file);
@@ -142,46 +109,3 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint }) =>
 		}
 	}
 };
-
-function trackGeneratorProgress({ currentIndex, acceptedFilesLength, fileName, projectName, destination, source, progressBar, withoutGithooks, withoutEslint }) {
-	if (currentIndex < acceptedFilesLength) {
-		progressBar.increment();
-	}
-	else {
-		progressBar.update(acceptedFilesLength);
-		progressBar.stop();
-
-		let postInstallArgs = [`${source}/bin/post-install.sh`, `--destination=${destination}`];
-
-		if (withoutGithooks) {
-			postInstallArgs = [...postInstallArgs, '--without-githooks'];
-		}
-
-		let postInstall = spawn('bash', postInstallArgs, { stdio: 'inherit' });
-		postInstall.on('close', (code) => {
-			if (code === 0) installCompleteHandler({ projectName, destination, withoutGithooks, withoutEslint });
-		});
-	}
-}
-
-function installCompleteHandler({ projectName, destination, withoutGithooks, withoutEslint }) {
-	console.log(`🎉 Enjoy your terrace at ${projectName}! 🎉`);
-	if (!withoutEslint) {
-		console.log('\n');
-		console.log(`💡 Your project has been configured with eslint. Run it with 'yarn eslint .' 💡`);
-		console.log(`❓ Don't want the extra eslint? ❓`);
-		console.log(`🤷‍♀️ You can choose to not use it without affecting your work, or remove and create the terrace project with the '--without-eslint' option. 🤷‍♂️`);
-	}
-	if (!withoutGithooks) {
-		console.log('\n');
-		console.log(`👉 Your project has been configured with terrace's githooks.`);
-		console.log(`👉 See the .githooks folder to see the list of githooks added.`);
-		console.log(`❓ Don't want any preconfigured githooks? ❓`);
-		console.log(`🤷‍♀️ Remove the .githooks folder. You can create the .githooks folder and add githooks to it later. You can also use the '--without-githooks' option next time. 🤷‍♂️`);
-	}
-
-	spawnSync(process.env.SHELL, ['-i'], {
-		cwd: destination,
-		stdio: 'inherit'
-	});
-}

@@ -1,10 +1,27 @@
 {
 	/**
 	* Terrace CLI file.
-	* This will be used in the future to hold configuration options.
-	* For now, this file is used to identify the project root.
+	* This is used to hold configuration options, and to identify the project root.
 	*
 	* To prevent your editor from identifying this file as erroneous, set syntax to `JSON5`.
+	*
+	* Changing values here will let you achieve certain functionality without having to repeatedly pass command line arguments.
+	*
+	* To know what changing the values under `defaults` might do, use `terrace <command> help`.
+	* Example: `terrace view help`
 	*/
-	viewDirectoryStructure: "withReducer" // This is the only option as of terrace.js@0.1.18
+	"defaults": {
+		"view": {
+			"withoutReducer": {
+				"use": false,
+				"value": true
+			}
+		},
+		"component": {
+			"minimal": {
+				"use": false,
+				"value": true
+			}
+		}
+	}
 }

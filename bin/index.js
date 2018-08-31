@@ -6,12 +6,26 @@ import { generateView } from './generators/generate-view';
 import { generateComponent } from './generators/generate-component';
 import { generateMock } from './generators/generate-mock';
 import { removeEntity } from './generators/remove-entity';
+import { injectTerraceCliOptions, getTerraceVersion } from './generators/utils/cli-utils';
+import { box } from './generators/utils/cli-box';
 
 import './generators/prototype-extensions';
-
+// TODO: Commit and build terrace
 // noinspection JSUnusedLocalSymbols
-let argv = yargs.usage('$0 [args]')
-	.command('create [name]', 'Creates a loaded-up CRA project\n[--without-eslint] [--without-githooks]', (yargs) => {
+let argv = yargs
+	.usage(box(
+		{
+			asText: true,
+			message:
+				'#ac^Terrace#^\n' +
+				`${getTerraceVersion({ boxFormatted: true })}\n` +
+				'Usage: terrace [args]\n' +
+				'#xg^A command line tool to create a create-react-app project for you,#^\nwith a bunch of pre-installed utilities to make your life easier. 🎉🎉\n' +
+				'#xg^ℹ️  Terrace provides a bunch of utilities and packages by default#^\nthat you\'re free to remove if you prefer.'
+			}
+		)
+	)
+	.command('create [name]', 'Creates a loaded-up CRA project'.blue + '\n[--without-eslint] [--without-githooks]', (yargs) => {
 		yargs.positional('name', {
 			type: 'string',
 			describe: 'Name of your project'
@@ -29,7 +43,7 @@ let argv = yargs.usage('$0 [args]')
 			describe: 'Create project without adding any ' + 'extra eslint config'.bold.green + '.' + '\nWhen this option is passed, githooks are automatically ignored because of current implementation logic.'.yellow
 		});
 	}, createProject)
-	.command('view [name]', 'Generate a view\n[--reducer-name=[value]] [--without-reducer]', (yargs) => {
+	.command('view [name]', 'Generate a view'.cyan + '\n[--reducer-name=[value]] [--without-reducer]', (yargs) => {
 		yargs.positional('name', {
 			type: 'string',
 			describe: 'Creates a view with the given name'
@@ -45,8 +59,8 @@ let argv = yargs.usage('$0 [args]')
 			type: 'boolean',
 			describe: 'Create a view ' + 'without a reducer'.bold.green + ', tasks, actions, and reducer test.'
 		});
-	}, generateView)
-	.command('component [name]', 'Generate a component\n[--minimal]', (yargs) => {
+	}, (...args) => injectTerraceCliOptions(generateView, ...args))
+	.command('component [name]', 'Generate a component'.green + '\n[--minimal]', (yargs) => {
 		yargs.positional('name', {
 			type: 'string',
 			describe: 'Creates a component with the given name'
@@ -57,8 +71,8 @@ let argv = yargs.usage('$0 [args]')
 			type: 'boolean',
 			describe: 'Create a component with ' + 'as few things as possible'.bold.green + '.'
 		});
-	}, generateComponent)
-	.command('mock [entity] [name]', 'Generate a basic entity mock', (yargs) => {
+	}, (...args) => injectTerraceCliOptions(generateComponent, ...args))
+	.command('mock [entity] [name]', 'Generate a basic entity mock'.yellow, (yargs) => {
 		yargs.positional('entity', {
 			type: 'string',
 			describe: 'Specify what to mock'
@@ -67,13 +81,13 @@ let argv = yargs.usage('$0 [args]')
 			type: 'string',
 			describe: 'Specify name of mocked entity'
 		});
-	}, generateMock)
-	.command('remove [entity] [name_or_subtype] [name]', 'Remove an entity (such as view or component)', (yargs) => {
+	}, (...args) => injectTerraceCliOptions(generateMock, ...args))
+	.command('remove [entity] [name_or_subtype] [name]', 'Remove an entity'.red + '\n(such as view or component)', (yargs) => {
 		yargs.positional('entity', {
 			type: 'string',
 			describe: 'Specify the entity type to remove. eg. view, component.'
 		});
-		yargs.positional('name_or_type', {
+		yargs.positional('name_or_subtype', {
 			type: 'string',
 			describe: 'Specify the dasherized name of the entity to remove, or the subtype.'
 		});
@@ -81,7 +95,17 @@ let argv = yargs.usage('$0 [args]')
 			type: 'string',
 			describe: 'Specify the dasherized name of the entity to remove, ' + 'if the previous argument was the subtype.'.bold
 		});
-	}, removeEntity)
-	.help()
-	.demandCommand()
+	}, (...args) => injectTerraceCliOptions(removeEntity, ...args))
+	.strict()
+	.option('ignore-defaults', {
+		alias: 'i',
+		default: false,
+		type: 'boolean',
+		describe: 'Ignore any defaults set in the .terrace-cli file for that command.'
+	})
+	.help().alias('h', 'help')
+	.version(getTerraceVersion()).alias('v', 'version')
+	.epilogue('For more information, find the documentation at https://github.com/Shuttl-Tech/terrace.js\n'.cyan +
+		'ℹ️  To set defaults for commands other than `create`, use the .terrace-cli file.'.yellow)
+	.demandCommand(1, 'You need to specify one of the listed commands.'.red.underline)
 	.argv;

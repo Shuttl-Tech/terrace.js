@@ -2,7 +2,7 @@ import { put } from 'redux-saga/effects';
 import { UNAUTHORIZED } from 'http-status-codes';
 
 import { get } from 'utils/http';
-import API from 'src/apis';
+import API from 'apis';
 import {
 	___resourceName____FETCH_SUCCESS, ___resourceName____FETCH_FAILURE
 } from './___lowerCaseResourceName___-actions';
