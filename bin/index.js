@@ -10,7 +10,7 @@ import { injectTerraceCliOptions, getTerraceVersion } from './generators/utils/c
 import { box } from './generators/utils/cli-box';
 
 import './generators/prototype-extensions';
-// TODO: Commit and build terrace
+
 // noinspection JSUnusedLocalSymbols
 let argv = yargs
 	.usage(box(

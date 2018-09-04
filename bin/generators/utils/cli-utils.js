@@ -28,7 +28,6 @@ export const injectTerraceCliOptions = (handler, ...[args]) => {
 	let { destination } = getProjectPaths();
 	let terraceCliFile = JSON.parse(stripJsonComments(load(`${destination}/.terrace-cli`)));
 
-	console.log(args);
 	let [ command ] = args._;
 	let { ignoreDefaults } = args;
 
