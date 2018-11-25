@@ -1,5 +1,4 @@
 import { put } from 'redux-saga/effects';
-import { UNAUTHORIZED } from 'http-status-codes';
 import cookie from 'js-cookie';
 
 import { get } from 'utils/http';
@@ -27,10 +26,7 @@ export function* validateToken() {
 		return yield put(SESSION_FETCH_SUCCESS({ token: session.token }));
 	}
 	catch (e) {
-		yield put(SESSION_FETCH_FAILURE());
-		switch (parseInt(e.message, 10)) {
-			case UNAUTHORIZED: throw new Error(UNAUTHORIZED);
-			default: throw e;
-		}
+		console.error(e);
+		return yield put(SESSION_FETCH_FAILURE());
 	}
 }
