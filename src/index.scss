@@ -1,8 +1,8 @@
 // Styles in this file are intended to be global.
 // In components or views, use `styles.module.scss` for development.
 
-@import 'globals/_variables';
-@import 'globals/_mixins';
+@import 'globals/variables';
+@import 'globals/mixins';
 
 html, body, #root {
 	height: 100vh;
