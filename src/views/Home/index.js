@@ -11,14 +11,13 @@ import { parametrizePath } from 'utils/transition';
 
 import ParametrizedView from 'components/ParametrizedView';
 
-import css from './styles.module.css';
-
+import css from './styles.module.scss';
 
 type Props = {
 	sessionStatus: string
 }
 
-export class component extends Component<Props> {
+class Home extends Component<Props> {
 	componentDidMount() {
 		let { authToken } = parse(window.location.search);
 		this.props.checkAuthentication(authToken);
@@ -51,12 +50,12 @@ export class component extends Component<Props> {
 
 const mapStateToProps = ({ session: { status } }) => {
   return { sessionStatus: status };
-}
+};
 
 const mapDispatchToProps = dispatch => {
 	return {
 		checkAuthentication: (token) => { dispatch(SESSION_FETCH_REQUEST({ token })) }
 	}
-}
+};
 
-export default translate()(withRouter(connect(mapStateToProps, mapDispatchToProps)(component)));
+export default translate()(withRouter(connect(mapStateToProps, mapDispatchToProps)(Home)));

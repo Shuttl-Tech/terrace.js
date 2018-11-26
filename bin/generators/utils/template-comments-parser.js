@@ -1,4 +1,4 @@
-const TEMPLATE_REGEX = /\/\/(?: +)?template-(begin|end|line) +([\w|\-]+)(?: +)?(\w+)?/igm;
+const TEMPLATE_REGEX = /\/\/(?:[ \-0-9]*)?template-(begin|end|line) +([\w|\-]+)(?: +)?(\w+)?/igm;
 
 const ACTION = {
 	KEEP: 'keep',

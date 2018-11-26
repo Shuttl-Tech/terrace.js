@@ -25,7 +25,7 @@ let argv = yargs
 			}
 		)
 	)
-	.command('create [name]', 'Creates a loaded-up CRA project'.blue + '\n[--without-eslint] [--without-githooks]', (yargs) => {
+	.command('create [name]', 'Creates a loaded-up CRA project'.blue, (yargs) => {
 		yargs.positional('name', {
 			type: 'string',
 			describe: 'Name of your project'
@@ -43,7 +43,7 @@ let argv = yargs
 			describe: 'Create project without adding any ' + 'extra eslint config'.bold.green + '.' + '\nWhen this option is passed, githooks are automatically ignored because of current implementation logic.'.yellow
 		});
 	}, createProject)
-	.command('view [name]', 'Generate a view'.cyan + '\n[--reducer-name=[value]] [--without-reducer]', (yargs) => {
+	.command('view [name]', 'Generate a view'.cyan, (yargs) => {
 		yargs.positional('name', {
 			type: 'string',
 			describe: 'Creates a view with the given name'
@@ -58,9 +58,21 @@ let argv = yargs
 			default: false,
 			type: 'boolean',
 			describe: 'Create a view ' + 'without a reducer'.bold.green + ', tasks, actions, and reducer test.'
+		})
+		.option('no-intl', {
+			alias: 'i',
+			default: false,
+			type: 'boolean',
+			describe: 'Create a view ' + 'without i18n support'.bold.green + '.'
+		})
+		.option('pure', {
+			alias: 'p',
+			default: false,
+			type: 'boolean',
+			describe: 'Create a view ' + 'with `PureComponent`'.bold.green + '.'
 		});
 	}, (...args) => injectTerraceCliOptions(generateView, ...args))
-	.command('component [name]', 'Generate a component'.green + '\n[--minimal]', (yargs) => {
+	.command('component [name]', 'Generate a component'.green, (yargs) => {
 		yargs.positional('name', {
 			type: 'string',
 			describe: 'Creates a component with the given name'
@@ -70,6 +82,25 @@ let argv = yargs
 			default: false,
 			type: 'boolean',
 			describe: 'Create a component with ' + 'as few things as possible'.bold.green + '.'
+		})
+		.option('no-intl', {
+			alias: 'i',
+			default: false,
+			type: 'boolean',
+			describe: 'Create a component ' + 'without i18n support'.bold.green + '.'
+		})
+		.option('pure', {
+			alias: 'p',
+			default: false,
+			type: 'boolean',
+			describe: 'Create a component ' + 'with `PureComponent`'.bold.green + '.'
+		})
+		.option('sfc', {
+			alias: 's',
+			default: false,
+			type: 'boolean',
+			describe: 'Create a component as a ' + 'stateless function component'.bold.green
+				+ '.\nCreates a tiny component with no i18n support.' + '\nOther flags are ignored when the -s flag is passed.'
 		});
 	}, (...args) => injectTerraceCliOptions(generateComponent, ...args))
 	.command('mock [entity] [name]', 'Generate a basic entity mock'.yellow, (yargs) => {

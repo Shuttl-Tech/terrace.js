@@ -11,7 +11,7 @@ import { I18nextProvider } from "react-i18next";
 import i18n from 'i18n';
 import rootReducer from 'reducers';
 import sagas from 'sagas';
-import './index.css';
+import './index.scss';
 import App from 'App';
 
 const isNotProd = process.env.NODE_ENV !== 'production';

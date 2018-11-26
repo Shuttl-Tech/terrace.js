@@ -1,5 +1,4 @@
-import { put } from 'redux-saga/effects';
-import { UNAUTHORIZED } from 'http-status-codes';
+import { put as putAction } from 'redux-saga/effects';
 
 import { get } from 'utils/http';
 import API from 'apis';
@@ -10,10 +9,10 @@ import {
 export function* fetchViewData() {
 	try {
 		let data = yield get(API.DUMMY);
-		return yield put(___resourceName____FETCH_SUCCESS({ data }));
+		return yield putAction(___resourceName____FETCH_SUCCESS({ data }));
 	}
 	catch (e) {
-		yield put(___resourceName____FETCH_FAILURE());
+		yield putAction(___resourceName____FETCH_FAILURE());
 
 		switch (e.message) {
 			default: throw e;

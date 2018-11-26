@@ -88,7 +88,8 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint }) =>
 			let _file = load(file.full);
 
 			switch (file.file) {
-				case '.env':
+				case '.env.development':
+				case '.env.production':
 					fs.writeFileSync(_destination, processDotEnv({ file: _file, name }));
 					break;
 				case 'package.json':

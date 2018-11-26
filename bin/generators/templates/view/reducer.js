@@ -1,10 +1,5 @@
 import { ACTIONS } from './___lowerCaseResourceName___-actions';
-
-export const REQUEST_STATE : {} = {
-	REQUEST: 'REQUEST',
-	SUCCESS: 'SUCCESS',
-	FAILURE: 'FAILURE'
-};
+import { REQUEST_STATE } from 'globals/constants';
 
 export const defaultState = {
 	data: {},

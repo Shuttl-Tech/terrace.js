@@ -10,7 +10,7 @@ import {
 import { MissingHandlerName, PatternMismatchError } from './utils/error-handlers';
 import { parseTemplateComments } from './utils/template-comments-parser';
 
-export const generateView = ({ name, reducerName, withoutReducer }) => {
+export const generateView = ({ name, reducerName, withoutReducer, noIntl, pure }) => {
 	let { source, destination } = getProjectPaths();
 
 	if (!name) MissingHandlerName({ entity: 'view' });
@@ -23,7 +23,7 @@ export const generateView = ({ name, reducerName, withoutReducer }) => {
 	const resourcePath = `${destination}/src/${type}/${data.titleCaseName}`;
 
 	let folderExists = checkIfFolderExistsOrTerminateProgram({ resourcePath, titleCaseName: data.titleCaseName, type });
-	if (!folderExists) runGenerator(data, { reducerName: data.lowerCaseResourceName, withoutReducer, name, source, destination });
+	if (!folderExists) runGenerator(data, { source, destination, reducerName: data.lowerCaseResourceName, withoutReducer, noIntl, pure });
 };
 
 const prepareTemplateData = ({ name, reducerName }) => {
@@ -42,7 +42,7 @@ const prepareTemplateData = ({ name, reducerName }) => {
 	};
 };
 
-const runGenerator = (data, { reducerName, withoutReducer, source, destination }) => {
+const runGenerator = (data, { source, destination, reducerName, withoutReducer, noIntl, pure }) => {
 	const templatePath = 				`${source}/bin/generators/templates`;
 	const resourcePath =				`${destination}/src/${ENTITY.VIEWS}/${data.titleCaseName}`;
 	const type =								'view';
@@ -60,7 +60,11 @@ const runGenerator = (data, { reducerName, withoutReducer, source, destination }
 	let indexTest = 	load(`${templatePath}/${type}/${testsDir}/${indexTestFileName}`).process(data);
 
 	index = parseTemplateComments({ tokens: ['reducer-snippets'], file: index, invert: withoutReducer });
+	index = parseTemplateComments({ tokens: ['intl-support'], file: index, invert: noIntl });
+	index = parseTemplateComments({ tokens: ['pure-component'], file: index, invert: !pure });
+
 	indexTest = parseTemplateComments({ tokens: ['reducer-snippets'], file: indexTest, invert: withoutReducer });
+	indexTest = parseTemplateComments({ tokens: ['intl-support'], file: indexTest, invert: noIntl });
 
 	save(`${resourcePath}/${indexFileName}`, index);
 	save(`${resourcePath}/${stylesFileName}`, styles);

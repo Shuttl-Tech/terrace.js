@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import css from './styles.module.css';
+import css from './styles.module.scss';
 
 export class ParametrizedView extends Component {
 	render() {

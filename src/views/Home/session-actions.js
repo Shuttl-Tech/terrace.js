@@ -12,38 +12,16 @@ export const ACTIONS = {
 	SESSION_FETCH_REQUEST: "SESSION_FETCH_REQUEST",
 	SESSION_FETCH_SUCCESS: "SESSION_FETCH_SUCCESS",
 	SESSION_FETCH_FAILURE: "SESSION_FETCH_FAILURE"
-}
-
-/*
- * Action Creator Template
- * -----------------------
-```
-export function --ACTION_NAME--(payload: {} = {}) : {} {
-	return {
-		type: ACTIONS.--ACTION_NAME--,
-		...payload
-	}
-}
-```
- */
+};
 
 export function SESSION_FETCH_REQUEST(payload: {} = {}) : {} {
-	return {
-		type: ACTIONS.SESSION_FETCH_REQUEST,
-		...payload
-	}
+	return { type: ACTIONS.SESSION_FETCH_REQUEST, payload }
 }
 
 export function SESSION_FETCH_SUCCESS(payload: {} = {}) : {} {
-	return {
-		type: ACTIONS.SESSION_FETCH_SUCCESS,
-		...payload
-	}
+	return { type: ACTIONS.SESSION_FETCH_SUCCESS, payload }
 }
 
 export function SESSION_FETCH_FAILURE(payload: {} = {}) : {} {
-	return {
-		type: ACTIONS.SESSION_FETCH_FAILURE,
-		...payload
-	}
+	return { type: ACTIONS.SESSION_FETCH_FAILURE, payload }
 }

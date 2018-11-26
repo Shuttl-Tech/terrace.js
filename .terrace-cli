@@ -15,10 +15,30 @@
 			"withoutReducer": {
 				"use": false,
 				"value": true
+			},
+			"noIntl": {
+				"use": false,
+				"value": true
+			},
+			"pure": {
+				"use": false,
+				"value": true
 			}
 		},
 		"component": {
 			"minimal": {
+				"use": false,
+				"value": true
+			},
+			"noIntl": {
+				"use": false,
+				"value": true
+			},
+			"pure": {
+				"use": false,
+				"value": true
+			},
+			"sfc": {
 				"use": false,
 				"value": true
 			}

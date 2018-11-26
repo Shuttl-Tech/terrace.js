@@ -19,6 +19,9 @@ export const processPackageJson = ({ file, withoutEslint, name }) => {
 		delete file.devDependencies['eslint-plugin-react'];
 	}
 
+	delete file.dependencies['ramda'];
+	delete file.dependencies['voca'];
+
 	delete file.scripts['write-npmignore'];
 	delete file.scripts['prepare'];
 	delete file.scripts['build-bin'];
