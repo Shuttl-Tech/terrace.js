@@ -9,10 +9,20 @@ $grid-standard: $grid-base-3x;
 $grid-block-spacing: $grid-standard * 2;
 
 // Font Sizes
+$font-small-3:  8px;
+$font-small-2:  10px;
 $font-small-1:  12px;
 $font-standard: 14px;
 $font-normal-1: 16px;
 $font-normal-2: 18px;
+$font-big:			20px;
+$font-big-1:		22px;
+
+// Font Weights
+$weight-light: 300;
+$weight-normal: 400;
+$weight-medium: 500;
+$weight-heavy: 600;
 
 // Border Properties
 $border-radius-standard: 4px;
@@ -20,53 +30,68 @@ $border-radius-standard: 4px;
 // Timings
 $animation-standard: 0.25s;
 
+// Easings
+$easing-smooth-ease-out: cubic-bezier(0.4, 1.03, 0.29, 0.99);
+
+// Animations
+$smooth-ease-out: ($animation-standard * 3) $easing-smooth-ease-out;
+$quick-ease-out: $animation-standard $easing-smooth-ease-out;
+
 // Colors
-$dark-grey-blue: 			rgb(52, 67, 94);
-$light-navy: 					rgb(20, 78, 147);
-$turquoise-blue: 			rgb(0, 173, 183);
-$turquoise-blue-two: 	rgb(1, 172, 183);
-$topaz: 							rgb(21, 206, 171);
 $dark-seafoam: 				rgb(26, 188, 134);
 $green-blue: 					rgb(0, 188, 129);
+$topaz: 							rgb(21, 206, 171);
 $green-teal: 					rgb(19, 190, 117);
+$green-800:						#2e7d32;
 $green-teal-30: 			rgba(19, 190, 117, 0.3);
+$green-teal-20: 			rgba(19, 190, 117, 0.2);
+$green-teal-10: 			rgba(19, 190, 117, 0.1);
+
+$turquoise-blue: 			rgb(0, 173, 183);
+$turquoise-blue-two: 	rgb(1, 172, 183);
+$blue-800:						#0277bd;
+$light-navy: 					rgb(20, 78, 147);
 $teal-blue-30: 				rgba(4, 151, 159, 0.3);
 
 $faded-pink: 					rgb(242, 224, 226);
-$orangeish-30: 				rgba(250, 152, 61, 0.3);
-$watermelon: 					rgb(246, 70, 90);
-$pumpkin-orange: 			rgb(250, 117, 40);
+$light-mustard: 			rgb(250, 217, 97);
+$yellow-700:					#fbc02d;
+$butterscotch: 				rgb(250, 182, 80);
 $mango: 							rgb(252, 157, 34);
 $light-orange: 				rgb(248, 165, 64);
-$butterscotch: 				rgb(250, 182, 80);
 $mango-two: 					rgb(255, 191, 50);
-$light-mustard: 			rgb(250, 217, 97);
+$orangeish-30: 				rgba(250, 152, 61, 0.3);
+$pumpkin-orange: 			rgb(250, 117, 40);
+$watermelon: 					rgb(246, 70, 90);
+$orange-900:					#bf360c;
 
 
 $white: 							rgb(255, 255, 255);
 $white-three: 				rgb(250, 250, 250);
-$white-four: 					rgb(245, 245, 245);
 $white-eight: 				rgb(248, 248, 248);
-$white-nine: 					rgb(243, 243, 243);
+$white-four: 					rgb(245, 245, 245);
 $white-ten: 					rgb(244, 244, 244);
+$white-nine: 					rgb(243, 243, 243);
 $white-seven: 				rgb(242, 242, 242);
+$pale-grey: 					rgb(233, 248, 249);
 $white-eleven: 				rgb(232, 232, 232);
 $white-two: 					rgb(227, 227, 227);
 $white-five: 					rgb(225, 225, 225);
 $white-six: 					rgb(216, 216, 216);
-$pale-grey: 					rgb(233, 248, 249);
 $light-blue-grey: 		rgb(228, 247, 248);
 $silver: 							rgb(199, 211, 216);
 $greyish: 						rgb(179, 179, 179);
-$warm-grey-three: 		rgb(151, 151, 151);
 $cool-grey: 					rgb(150, 168, 176);
-$warm-grey: 					rgb(128, 128, 128);
-$warm-grey-two: 			rgb(131, 131, 131);
+$warm-grey-three: 		rgb(151, 151, 151);
 $greyish-two: 				rgb(164, 164, 164);
 $greyish-three: 			rgb(163, 163, 163);
-$greyish-brown-two: 	rgb(65, 65, 65);
+$warm-grey-two: 			rgb(131, 131, 131);
+$warm-grey: 					rgb(128, 128, 128);
+$moderate-grey: 			rgb(110, 110, 110);
 $greyish-brown: 			rgb(87, 87, 87);
 $grey-black: 					rgb(74, 74, 74);
+$greyish-brown-two: 	rgb(65, 65, 65);
+$dark-grey-blue: 			rgb(52, 67, 94);
 $black-two: 					rgb(38, 38, 38);
 $black--5: 						rgba(0, 0, 0, 0.05);
 $black--10: 					rgba(0, 0, 0, 0.1);
@@ -79,3 +104,18 @@ $black--52: 					rgba(0, 0, 0, 0.52);
 $black--70: 					rgba(0, 0, 0, 0.7);
 $black--80: 					rgba(0, 0, 0, 0.8);
 $black: 							rgb(0, 0, 0);
+
+// Shadows
+$box-shadow-card: 0 4px 4px 0 $black--18;
+$box-shadow-card-higher: 0 2px 4px 0 $black--18;
+$box-shadow-toast: 0 2px 8px 0 $black--18;
+$box-shadow-thin: 0 1px 2px 0 $black--10;
+$box-shadow-thin-expanded: 0 4px 12px 0 $black--10;
+
+// Z-Indices
+$z--map:						0;
+$z--sidebar:				1;
+$z--modal:					100;
+$z--toast:					20000;
+$z--toast--active:	20001;
+$z--maximum: 				2147483647;
