@@ -1,12 +1,13 @@
-export const processPackageJson = ({ file, withoutEslint, name }) => {
+export const processPackageJson = ({ file, withoutEslint, name, withoutI18n }) => {
 	delete file.devDependencies['cli-progress'];
 	delete file.devDependencies['colors'];
 	delete file.devDependencies['emoji-regex'];
 	delete file.devDependencies['file-system'];
-	delete file.devDependencies['ncp'];
 	delete file.devDependencies['pluralize'];
 	delete file.devDependencies['readline-sync'];
+	delete file.devDependencies['recursive-copy'];
 	delete file.devDependencies['strip-json-comments'];
+	delete file.devDependencies['through2'];
 	delete file.devDependencies['yargs'];
 
 	if (withoutEslint) {
@@ -17,6 +18,12 @@ export const processPackageJson = ({ file, withoutEslint, name }) => {
 		delete file.devDependencies['eslint-plugin-import'];
 		delete file.devDependencies['eslint-plugin-jsx-a11y'];
 		delete file.devDependencies['eslint-plugin-react'];
+	}
+
+	if (withoutI18n) {
+		delete file.dependencies['i18next'];
+		delete file.dependencies['i18next-browser-languagedetector'];
+		delete file.dependencies['react-i18next'];
 	}
 
 	delete file.dependencies['ramda'];

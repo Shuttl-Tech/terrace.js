@@ -2,8 +2,10 @@ import 'raf/polyfill';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
+// template-begin with-i18n keep
 import i18n from 'i18n';
 
+// template-end with-i18n
 configure({ adapter: new Adapter() });
 
 const localStorageMock = {
@@ -22,6 +24,7 @@ const sessionStorageMock = {
 
 global.localStorage = localStorageMock;
 global.sessionStorage = sessionStorageMock;
+// template-begin with-i18n keep
 
 global.getTranslatedString = (key, ...rest) => i18n.t(key, ...rest);
 
@@ -32,3 +35,4 @@ jest.mock('react-i18next', () => ({
     return Component;
   },
 }));
+// template-end with-i18n

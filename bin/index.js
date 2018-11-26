@@ -41,6 +41,12 @@ let argv = yargs
 			default: false,
 			type: 'boolean',
 			describe: 'Create project without adding any ' + 'extra eslint config'.bold.green + '.' + '\nWhen this option is passed, githooks are automatically ignored because of current implementation logic.'.yellow
+		})
+		.option('without-i18n', {
+			alias: 'i',
+			default: false,
+			type: 'boolean',
+			describe: 'Create project without adding any ' + 'i18n support'.bold.green + '.' + '\nBy default, i18n packages and code would be added.'.yellow
 		});
 	}, createProject)
 	.command('view [name]', 'Generate a view'.cyan, (yargs) => {

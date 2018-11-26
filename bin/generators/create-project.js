@@ -1,5 +1,5 @@
 import fs from 'file-system';
-import { ncp } from 'ncp';
+import copy from 'recursive-copy';
 import _fs from 'fs';
 import CliProgress from 'cli-progress';
 import { getProjectPaths, load, loadAllFiles } from './utils/files';
@@ -10,8 +10,7 @@ import { processReadmeMd } from './file-specific-logic/readme.md';
 import { processGitIgnore } from './file-specific-logic/.extra.gitignore';
 import { processDotEnv } from './file-specific-logic/.env';
 import { trackGeneratorProgress } from './utils/cli-utils';
-
-ncp.limit = 16;
+import { subdirFilesTransformer } from './utils/subdir-files-transformer';
 
 let excludedPaths = [
 	'.git',
@@ -29,7 +28,9 @@ let excludedSpecialPaths = [
 	'.DS_Store'
 ];
 
-export const createProject = async ({ name, withoutGithooks, withoutEslint }) => {
+let excludedSubdirPaths = [];
+
+export const createProject = async ({ name, withoutGithooks, withoutEslint, withoutI18n }) => {
 	if (!name) CriticalError('🚨 Missing project name.', MISSING_ARGUMENT);
 
 	if (withoutEslint) {
@@ -43,6 +44,12 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint }) =>
 	if (withoutGithooks) {
 		excludedPaths = [...excludedPaths,
 			'.githooks'
+		];
+	}
+
+	if (withoutI18n) {
+		excludedSubdirPaths = [...excludedSubdirPaths,
+			'src/i18n'
 		];
 	}
 
@@ -79,10 +86,16 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint }) =>
 
 		if (isDirectory) {
 			fs.mkdirSync(_destination);
-			ncp(file.full, _destination, function (err) {
-				if (err) return console.error(err);
+			let options = {
+				filter: name => Boolean(!excludedSubdirPaths.filter(excludePath => `${file.full}/${name}`.includes(excludePath)).length),
+				transform: src => subdirFilesTransformer(src, { source, withoutI18n })
+			};
+
+			try {
+				await copy(file.full, _destination, options);
 				trackGeneratorProgress({ currentIndex: ++i, acceptedFilesLength, fileName: file.file, projectName: name, destination, source, progressBar, withoutGithooks, withoutEslint });
-			});
+			}
+			catch (err) { console.error(err); }
 		}
 		else {
 			let _file = load(file.full);
@@ -93,7 +106,7 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint }) =>
 					fs.writeFileSync(_destination, processDotEnv({ file: _file, name }));
 					break;
 				case 'package.json':
-					fs.writeFileSync(_destination, processPackageJson({ file: JSON.parse(_file), withoutEslint, name }));
+					fs.writeFileSync(_destination, processPackageJson({ file: JSON.parse(_file), withoutEslint, name, withoutI18n }));
 					break;
 				case 'README.md':
 					fs.writeFileSync(_destination, processReadmeMd({ file: _file, name }));
@@ -102,6 +115,13 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint }) =>
 					_destination = `${destination}/.gitignore`;
 					fs.writeFileSync(_destination, processGitIgnore({ file: _file }));
 					file.file = '.gitignore';
+					break;
+				case '.terrace-cli':
+					_file = JSON.parse(_file);
+					_file.defaults.view.noIntl.use = withoutI18n;
+					_file.defaults.component.noIntl.use = withoutI18n;
+					_file = JSON.stringify(_file, null, '\t');
+					fs.writeFileSync(_destination, _file);
 					break;
 				default: fs.writeFileSync(_destination, _file);
 			}

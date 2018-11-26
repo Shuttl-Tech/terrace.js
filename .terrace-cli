@@ -1,15 +1,4 @@
 {
-	/**
-	* Terrace CLI file.
-	* This is used to hold configuration options, and to identify the project root.
-	*
-	* To prevent your editor from identifying this file as erroneous, set syntax to `JSON5`.
-	*
-	* Changing values here will let you achieve certain functionality without having to repeatedly pass command line arguments.
-	*
-	* To know what changing the values under `defaults` might do, use `terrace <command> help`.
-	* Example: `terrace view help`
-	*/
 	"defaults": {
 		"view": {
 			"withoutReducer": {
