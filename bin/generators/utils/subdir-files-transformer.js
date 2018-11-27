@@ -7,6 +7,7 @@ export const subdirFilesTransformer = (src, { source, withoutI18n }) => {
 	return through((chunk, enc, done) => {
 		file = chunk.toString();
 		switch (subdirFileName) {
+			case 'src/index.js':
 			case 'src/setupTests.js':
 			case 'src/views/Home/index.js':
 			case 'src/components/ParametrizedView/index.js':
