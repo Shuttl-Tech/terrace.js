@@ -7,6 +7,8 @@ You can get started right-away with testing, files generation, http calls, state
 
 ![cli-snap](https://i.snag.gy/M0zoSB.jpg)
 
+> Dev Note: Don't attempt to `yarn start` inside terrace itself. See development instructions for more.
+
 ## Project Init
 ```bash
 yarn global add terrace.js
@@ -40,11 +42,19 @@ Git 2.18.0
 ## Development
 ### Init
 ```bash
-yarn install
-yarn start
-
 # Required utilities:
 brew install watchman # https://github.com/facebook/create-react-app/issues/3006
+
+
+yarn install
+yarn bin-dev
+
+# in another terminal but same directory
+yarn link
+# ensure you don't have terrace installed already before this
+
+# now you have the terrace binary available to use globally
+# you can go ahead and use terrace commands to run and test that the changes work as intended
 ```
 > Note: `NODE_PATH=src` is in effect. Use that to specify import paths in any JS files.
 
