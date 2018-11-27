@@ -6,7 +6,6 @@ export const processPackageJson = ({ file, withoutEslint, name, withoutI18n }) =
 	delete file.devDependencies['pluralize'];
 	delete file.devDependencies['readline-sync'];
 	delete file.devDependencies['recursive-copy'];
-	delete file.devDependencies['strip-json-comments'];
 	delete file.devDependencies['through2'];
 	delete file.devDependencies['yargs'];
 

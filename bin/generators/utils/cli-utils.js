@@ -1,5 +1,4 @@
 import { spawn, spawnSync } from 'child_process';
-import stripJsonComments from 'strip-json-comments';
 import { getProjectPaths, load } from '../utils/files';
 import { box } from './cli-box';
 
@@ -26,7 +25,7 @@ export const trackGeneratorProgress = ({ currentIndex, acceptedFilesLength, file
 
 export const injectTerraceCliOptions = (handler, ...[args]) => {
 	let { destination } = getProjectPaths();
-	let terraceCliFile = JSON.parse(stripJsonComments(load(`${destination}/.terrace-cli`)));
+	let terraceCliFile = JSON.parse(load(`${destination}/.terrace-cli`));
 
 	let [ command ] = args._;
 	let { ignoreDefaults } = args;
