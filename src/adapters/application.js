@@ -7,7 +7,9 @@ export const SCHEMA = {
  * @param {Object} payload
  * @param {String} schema
  */
-export const serialize = (payload: Object, schema: string = SCHEMA.GENERIC) => {
+export const serialize = (payload: string | Object, schema: string = SCHEMA.GENERIC) => {
+	payload = typeof payload === 'string' ? JSON.parse(payload) : payload;
+
 	switch(schema) {
 		case SCHEMA.GENERIC: return serialize_GENERIC(payload);
 		default: return payload;
