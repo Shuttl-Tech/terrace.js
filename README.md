@@ -1,11 +1,11 @@
 # Terrace.js
 _We built the house, so you can party on the terrace._
 
-A `create-react-app` based frontend starter project, using `custom-react-scripts`.
+A `create-react-app` based frontend starter project, using `react-scripts 2.0+`.
 
 You can get started right-away with testing, files generation, http calls, state-management (with store immutability checks via a plugin), internationalization, etc. handled for you right from the start.
 
-![cli-snap](https://i.snag.gy/OxqnJL.jpg)
+![cli-snap](https://i.snag.gy/M0zoSB.jpg)
 
 ## Project Init
 ```bash
@@ -24,9 +24,8 @@ yarn start
 #### More project commands
 ```bash
 # from anywhere inside your project directory
-terrace component component-name
-terrace view view-name [--reducer-name=some-reducer] [--without-reducer]
-terrace remove [component | view] entity-name
+terrace --help
+terrace [command] --help
 ```
 
 Built on Environment:
@@ -47,11 +46,18 @@ yarn start
 # Required utilities:
 brew install watchman # https://github.com/facebook/create-react-app/issues/3006
 ```
-> Note: `NODE_ENV=src` is in effect. Use that to specify import paths in any files.
+> Note: `NODE_PATH=src` is in effect. Use that to specify import paths in any JS files.
+
+> Note: `SASS=src:node_modules` is in effect. Use that to specify import paths in any SCSS files.
 
 > Note: In `WebStorm`, mark `./src` as Resources Root. _(Rt. click > Mark directory as > Resources root)_
 
-> Note: A `pre-commit` hook (unless `--without-githooks` is specified) runs before every commit to ensure that any specified linters work as intended. Any hooks are defined in .githooks.
+> Note: A `pre-commit` hook (unless `--without-githooks` is specified) runs before every commit to ensure that any specified linters work as intended. Any hooks are defined in .githooks.  
+> If githooks don't work, you can initialize them manually using the following commands (provided the project wasn't created with `--without-githooks`)
+```bash
+chmod +x .githooks/*
+git config core.hooksPath .githooks
+```
 
 ### File layout plan [.js]
 ```
