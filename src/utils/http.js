@@ -2,7 +2,7 @@ import axios from 'axios';
 import { SCHEMA, normalize, serialize } from 'adapters/application';
 import { initializeRequestMocking } from 'mocks/requests';
 
-export const NAMESPACE = "";
+export const NAMESPACE = '';
 export const REQUEST_TIMEOUT = 30000;
 
 const namespacedUrl = (url) => NAMESPACE + url;
@@ -41,8 +41,8 @@ export const getRaw = (url: string, options: Object = {}): Promise<Response> => 
  * @returns {Promise} `Promise<Response>`
  */
 export const get = async (url: string, options: Object = {}, schema: string = SCHEMA.GENERIC): Promise<Response> => {
-	options = modifyRequestOptions(options, schema);
-	let response = await axios.request({ url: namespacedUrl(url), method: 'get', ...options });
+	options = modifyRequestOptions({ ...options, method: 'get' }, schema);
+	let response = await axios({ url: namespacedUrl(url), ...options });
 	return response.data;
 };
 
@@ -55,8 +55,36 @@ export const get = async (url: string, options: Object = {}, schema: string = SC
  * @returns {Promise} `Promise<Response>`
  */
 export const post = async (url: string, options: Object = {}, schema: string = SCHEMA.GENERIC): Promise<Response> => {
-	options = modifyRequestOptions(options, schema);
-	let response = await axios.request({ url: namespacedUrl(url), method: 'post', ...options });
+	options = modifyRequestOptions({ ...options, method: 'post' }, schema);
+	let response = await axios({ url: namespacedUrl(url), ...options });
+	return response.data;
+};
+
+/**
+ * Return `axios` API resource.
+ * https://github.com/axios/axios#response-schema
+ * @param {String} url
+ * @param {Object} options
+ * @param {String} schema
+ * @returns {Promise} `Promise<Response>`
+ */
+export const put = async (url: string, options: Object = {}, schema: string = SCHEMA.GENERIC): Promise<Response> => {
+	options = modifyRequestOptions({ ...options, method: 'put' }, schema);
+	let response = await axios({ url: namespacedUrl(url), ...options });
+	return response.data;
+};
+
+/**
+ * Return `axios` API resource.
+ * https://github.com/axios/axios#response-schema
+ * @param {String} url
+ * @param {Object} options
+ * @param {String} schema
+ * @returns {Promise} `Promise<Response>`
+ */
+export const patch = async (url: string, options: Object = {}, schema: string = SCHEMA.GENERIC): Promise<Response> => {
+	options = modifyRequestOptions({ ...options, method: 'patch' }, schema);
+	let response = await axios({ url: namespacedUrl(url), ...options });
 	return response.data;
 };
 
@@ -70,23 +98,29 @@ export const post = async (url: string, options: Object = {}, schema: string = S
  * @returns {object} `fetch` options
  */
 function modifyRequestOptions(options: Object = {}, schema: string = SCHEMA.GENERIC): {} {
-
-	let headers = modifyRequestHeaders(options || {});
+	const headers = modifyRequestHeaders(options || {});
 
 	delete options.formData;	// non-standard optional property
 
-	return {...options,
+	let isGet = options.method === 'get';
+	if (isGet) {
+		options = { ...options, params: options.body }
+	} else {
+		options = { ...options, data: options.body }
+	}
+	delete options.body;  // non-standard optional property
+
+	return {
 		headers,
 		withCredentials: true,
-		data: options.body,
-		params: options.body,
 		transformRequest: [...axios.defaults.transformRequest, (data) => {
 			return normalize(data, schema);
 		}],
 		transformResponse: [...axios.defaults.transformResponse, (data) => {
 			return serialize(data, schema);
 		}],
-		timeout: REQUEST_TIMEOUT
+		timeout: REQUEST_TIMEOUT,
+		...options
 	};
 }
 
