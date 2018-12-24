@@ -46,21 +46,21 @@ const runGenerator = (data, { source, destination, reducerName, withoutReducer, 
 	const templatePath = 				`${source}/bin/generators/templates`;
 	const resourcePath =				`${destination}/src/${ENTITY.VIEWS}/${data.titleCaseName}`;
 	const type =								'view';
-	const indexFileName = 			'index.js';
-	const actionsFileName = 		'actions.js';
-	const reducerFileName = 		'reducer.js';
-	const tasksFileName = 			'tasks.js';
+	const indexFileName = 			'index.tsx';
+	const actionsFileName = 		'actions.ts';
+	const reducerFileName = 		'reducer.ts';
+	const tasksFileName = 			'tasks.ts';
 	const stylesFileName = 			'styles.module.scss';
 	const testsDir = 						'__tests__';
-	const indexTestFileName = 	'index.test.js';
-	const reducerTestFileName = 'reducer.test.js';
+	const indexTestFileName = 	'index.test.tsx';
+	const reducerTestFileName = 'reducer.test.ts';
 
 	let index = 	load(`${templatePath}/${type}/${indexFileName}`).process(data);
 	let styles = 	load(`${templatePath}/${type}/${stylesFileName}`).process(data);
 	let indexTest = 	load(`${templatePath}/${type}/${testsDir}/${indexTestFileName}`).process(data);
 
-	index = parseTemplateComments({ tokens: ['reducer-snippets'], file: index, invert: withoutReducer });
 	index = parseTemplateComments({ tokens: ['intl-support'], file: index, invert: noIntl });
+	index = parseTemplateComments({ tokens: ['reducer-snippets'], file: index, invert: withoutReducer });
 	index = parseTemplateComments({ tokens: ['pure-component'], file: index, invert: !pure });
 
 	indexTest = parseTemplateComments({ tokens: ['reducer-snippets'], file: indexTest, invert: withoutReducer });
@@ -76,10 +76,10 @@ const runGenerator = (data, { source, destination, reducerName, withoutReducer, 
 		let tasks = 	load(`${templatePath}/${type}/${tasksFileName}`).process(data);
 		let reducerTest = 	load(`${templatePath}/${type}/${testsDir}/${reducerTestFileName}`).process(data);
 
-		save(`${resourcePath}/${reducerName + '-' || ''}${actionsFileName}`, actions);
-		save(`${resourcePath}/${reducerName + '-' || ''}${reducerFileName}`, reducer);
-		save(`${resourcePath}/${reducerName + '-' || ''}${tasksFileName}`, tasks);
-		save(`${resourcePath}/${testsDir}/${reducerName + '-' || ''}${reducerTestFileName}`, reducerTest);
+		save(`${resourcePath}/${reducerName + '.' || ''}${actionsFileName}`, actions);
+		save(`${resourcePath}/${reducerName + '.' || ''}${reducerFileName}`, reducer);
+		save(`${resourcePath}/${reducerName + '.' || ''}${tasksFileName}`, tasks);
+		save(`${resourcePath}/${testsDir}/${reducerName + '.' || ''}${reducerTestFileName}`, reducerTest);
 	}
 
 	console.log('✅ Files created:'.bold.cyan.underline);

@@ -32,9 +32,9 @@ export const generateMock = ({ entity, name }) => {
 
 	let { source, destination } = getProjectPaths();
 
-	let templatePath = `${source}/bin/generators/templates/mocks/${plural(entity)}/generic.js`;
+	let templatePath = `${source}/bin/generators/templates/mocks/${plural(entity)}/generic.ts`;
 	let resourcePath = `${destination}/src/mocks/${plural(entity)}`;
-	let fileName = `${name}.js`;
+	let fileName = `${name}.ts`;
 
 	if (existsSync(`${resourcePath}/${fileName}`)) {
 		let doOverwrite = keyInYN('⚠️  File already exists. Overwrite? [Y/N] ');

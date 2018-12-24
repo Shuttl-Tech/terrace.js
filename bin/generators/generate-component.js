@@ -36,30 +36,36 @@ const prepareTemplateData = ({ name }) => {
 };
 
 const runGenerator = (data, { source, destination, sfc, minimal, noIntl, pure }) => {
-	const otherOptions = { minimal, noIntl, pure };
+	const isMinimalSfc = minimal && sfc;
+
 	const templatePath = 				`${source}/bin/generators/templates`;
 	const resourcePath =				`${destination}/src/${ENTITY.COMPONENTS}/${data.titleCaseName}`;
 	const type =								'component';
-	const indexFileName = 			sfc ? 'sfc.index.js' : 'index.js';
+	const indexFileName = 			sfc ? 'sfc.index.tsx' : 'index.tsx';
 	const stylesFileName = 			'styles.module.scss';
-	const indexTestFileName = 	'index.test.js';
+	const indexTestFileName = 	'index.test.tsx';
 
-	let index = 	load(`${templatePath}/${type}/${indexFileName}`).process(data);
-	let styles = 	load(`${templatePath}/${type}/${stylesFileName}`).process(data);
-	let indexTest = 	load(`${templatePath}/${type}/${indexTestFileName}`).process(data);
+	let index = 	    load(`${templatePath}/${type}/${indexFileName}`).process(data);
+	let styles = 	    isMinimalSfc ? null : load(`${templatePath}/${type}/${stylesFileName}`).process(data);
+	let indexTest = 	isMinimalSfc ? null : load(`${templatePath}/${type}/${indexTestFileName}`).process(data);
 
+	// Parse Index File comments
 	index = parseTemplateComments({ tokens: ['complete-component'], file: index, invert: minimal });
 	index = parseTemplateComments({ tokens: ['intl-support'], file: index, invert: noIntl });
 	index = parseTemplateComments({ tokens: ['pure-component'], file: index, invert: !pure });
 
-	save(`${resourcePath}/index.js`, index);
-	save(`${resourcePath}/${stylesFileName}`, styles);
-	save(`${resourcePath}/${indexTestFileName}`, indexTest);
+	save(`${resourcePath}/index.tsx`, index);
 
-	if (sfc && values(otherOptions).reduce((a,b) => a || b)) {
+	if (!isMinimalSfc) {
+		save(`${resourcePath}/${stylesFileName}`, styles);
+		save(`${resourcePath}/${indexTestFileName}`, indexTest);
+	}
+
+	const optionsIgnoredForSfcs = { noIntl, pure };
+	if (sfc && values(optionsIgnoredForSfcs).reduce((a,b) => a || b)) {
 		console.log('⚠️ Flags ignored:'.bold.cyan.underline
-			+ ` ${keys(otherOptions).filter(key => otherOptions[key]).join(', ')}`.bold.magenta
-			+ '. Other flags are ignored when the -s/--sfc flag is passed.`');
+			+ ` ${keys(optionsIgnoredForSfcs).filter(key => optionsIgnoredForSfcs[key]).join(', ')}`.bold.magenta
+			+ '. Other flags (except --minimal) are ignored when the -s/--sfc flag is passed.`');
 	}
 	console.log('✅ Files created:'.bold.cyan.underline);
 	console.log(getAllFilesInGeneratedDirectory(resourcePath));
