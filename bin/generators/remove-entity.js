@@ -1,6 +1,6 @@
 import v from 'voca';
 import { rmdirSync } from 'file-system';
-import { unlinkSync, lstatSync } from 'fs';
+import { unlinkSync, lstatSync, existsSync } from 'fs';
 import pluralize from 'pluralize';
 const { plural, singular } = pluralize;
 
@@ -17,9 +17,9 @@ export const removeEntity = ({ entity, name_or_subtype: nameOrSubtype, name }) =
 
 	if (!supportedEntities.includes(entity)) CriticalError(`⚠️  ${entity.bold.underline} is not a valid entity.`.red + `\n${supportedEntitiesMessage}`, BAD_ARGUMENT_PATTERN);
 
-	let hasSubtype, subtype, isSingleJSFile;
+	let hasSubtype, subtype, isSingleFile;
 	switch (entity) {
-		case singular(ENTITY.MOCKS): hasSubtype = isSingleJSFile = true; break;
+		case singular(ENTITY.MOCKS): hasSubtype = isSingleFile = true; break;
 		default: break;
 	}
 
@@ -39,7 +39,11 @@ export const removeEntity = ({ entity, name_or_subtype: nameOrSubtype, name }) =
 	let entityTargetName = hasSubtype ? name : v.titleCase(name).replace(/-/g, '');
 	let path = `${destination}/src/${plural(entity)}`
 		+ `${hasSubtype ? `/${plural(subtype)}` : ''}/${entityTargetName}`
-		+ `${isSingleJSFile ? '.js' : ''}`;
+		+ `${isSingleFile ? '.ts' : ''}`;
+
+	if (!existsSync(path)) {
+		return console.log(`No ${entity.bold.yellow} named ${name.bold.magenta} found.`);
+	}
 
 	console.log(`⏳ Removing ${entity} ${entityTargetName.underline}`.green.bold);
 	lstatSync(path).isDirectory() ? rmdirSync(path) : unlinkSync(path) ;
