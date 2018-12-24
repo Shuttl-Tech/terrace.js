@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="All SRC" pattern="!file[frontend-starter]:.idea/*&amp;&amp;(file:**/*.js||file:**/*.ts||file:**/*.tsx)&amp;&amp;file[terrace.js]:src//*" />
+</component>
