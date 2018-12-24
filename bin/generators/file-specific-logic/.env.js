@@ -1,5 +1,5 @@
 export const processDotEnv = ({ file, name }) => {
-	file = file.split('\n').map(line => {
+	file = file.slice(0, -1).split('\n').map(line => {
 		let [key, value] = line.split('=');
 
 		switch (key) {
