@@ -5,14 +5,14 @@ A `create-react-app` based frontend starter project, using `react-scripts 2.0+`.
 
 You can get started right-away with testing, files generation, http calls, state-management (with store immutability checks via a plugin), internationalization, etc. handled for you right from the start.
 
-![cli-snap](https://i.snag.gy/M0zoSB.jpg)
+![cli-snap](https://i.snag.gy/AJdekU.jpg)
 
-> Dev Note: Don't attempt to `yarn start` inside terrace itself. See development instructions for more.
+> Dev Note: Don't attempt to `react-scripts start` inside terrace itself. See development instructions for more.
 
 ## Project Init
 ```bash
 yarn global add terrace.js
-terrace create project-name [--without-githooks] [--without-eslint]
+terrace create project-name -gei
 # ^ this takes care of project generation, packages installation, and directory change.
 yarn start
 ```
@@ -47,7 +47,7 @@ brew install watchman # https://github.com/facebook/create-react-app/issues/3006
 
 
 yarn install
-yarn bin-dev
+yarn start
 
 # in another terminal but same directory
 yarn link
