@@ -33,6 +33,10 @@ export const processPackageJson = ({ file, withoutEslint, name, withoutI18n }) =
 	delete file.scripts['build-bin'];
 	delete file.scripts['write-gitignore-extra'];
 	delete file.scripts['preupdate'];
+
+	file.scripts['start'] = file.scripts['original-start'];
+	delete file.scripts['original-start'];
+
 	delete file.repository;
 	delete file.author;
 	delete file.bin;
