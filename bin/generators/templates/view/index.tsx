@@ -22,6 +22,8 @@ import { I18nProps } from 'types/i18n'; // template-line intl-support keep
 
 import css from './styles.module.scss';
 
+interface ComponentProps {}
+
 // template-begin reducer-snippets keep
 interface StateProps {
 	requestStatus: REQUEST_STATE,
@@ -31,12 +33,12 @@ interface DispatchProps {
 	fetchViewData: (id: string) => void
 }
 
-type Props = I18nProps & StateProps & DispatchProps & RouteComponentProps<{}>; // template-line intl-support keep
-type Props = StateProps & DispatchProps & RouteComponentProps<{}>; // template-line intl-support remove
+type Props = I18nProps & StateProps & DispatchProps & ComponentProps & RouteComponentProps<{}>; // template-line intl-support keep
+type Props = StateProps & DispatchProps & ComponentProps & RouteComponentProps<{}>; // template-line intl-support remove
 // template-end reducer-snippets
 // template-begin reducer-snippets remove
-type Props = I18nProps & RouteComponentProps<{}>; // template-line intl-support keep
-type Props = RouteComponentProps<{}>; // template-line intl-support remove
+type Props = I18nProps & ComponentProps & RouteComponentProps<{}>; // template-line intl-support keep
+type Props = ComponentProps & RouteComponentProps<{}>; // template-line intl-support remove
 // template-end reducer-snippets
 
 // template-begin pure-component keep
@@ -109,14 +111,14 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
 	}
 };
 
-export default translate()(withRouter<Props>(connect<StateProps, DispatchProps, Props, StateToProps>(mapStateToProps, mapDispatchToProps)(___componentName___)));
+export default translate()(withRouter(connect<StateProps, DispatchProps, ComponentProps, StateToProps>(mapStateToProps, mapDispatchToProps)(___componentName___)));
 // template-end reducer-snippets
 // template-begin reducer-snippets remove
 
 // --1 template-begin intl-support keep
-export default translate()(withRouter<Props>(___componentName___));
+export default translate()(withRouter(___componentName___));
 // --1 template-end intl-support
 // --2 template-begin intl-support remove
-export default withRouter<Props>(___componentName___);
+export default withRouter(___componentName___);
 // --2 template-end intl-support
 // template-end reducer-snippets

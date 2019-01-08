@@ -9,7 +9,7 @@ class App extends Component<Props> {
   render() {
     return (
       <Router>
-        <Home />
+        <Home/>
       </Router>
     );
   }

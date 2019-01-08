@@ -13,6 +13,10 @@ import { Dispatch } from 'redux';
 import ParametrizedView from 'components/ParametrizedView';
 import css from './styles.module.scss';
 
+interface ComponentProps {
+	id: number
+}
+
 interface StateProps {
 	sessionStatus: string,
 }
@@ -22,9 +26,9 @@ interface DispatchProps {
 }
 
 // @ts-ignore // template-line generic remove
-type Props = I18nProps & StateProps & DispatchProps & RouteComponentProps<{}>; // template-line with-i18n keep
+type Props = I18nProps & StateProps & DispatchProps & ComponentProps & RouteComponentProps<{}>; // template-line with-i18n keep
 // @ts-ignore // template-line generic remove
-type Props = StateProps & DispatchProps & RouteComponentProps<{}>; // template-line with-i18n remove
+type Props = StateProps & DispatchProps & ComponentProps & RouteComponentProps<{}>; // template-line with-i18n remove
 
 class Home extends Component<Props> {
 	componentDidMount() {
@@ -100,6 +104,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
 };
 
 // @ts-ignore // template-line generic remove
-export default translate()(withRouter<Props>(connect<StateProps, DispatchProps, Props, StateToProps>(mapStateToProps, mapDispatchToProps)(Home))); // template-line with-i18n keep
+export default translate()(withRouter(connect<StateProps, DispatchProps, ComponentProps, StateToProps>(mapStateToProps, mapDispatchToProps)(Home))); // template-line with-i18n keep
 // @ts-ignore // template-line generic remove
-export default withRouter<Props>(connect(mapStateToProps, mapDispatchToProps)(Home)); // template-line with-i18n remove
+export default withRouter(connect<StateProps, DispatchProps, ComponentProps, StateToProps>(mapStateToProps, mapDispatchToProps)(Home)); // template-line with-i18n remove
