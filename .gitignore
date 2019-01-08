@@ -23,6 +23,6 @@ src/views/**/*.css
 bin/generators/**/*.css
 src/App.css
 
-.idea/workspace.xml
-.idea/dictionaries/*
+.idea
+.vscode
 bin/_index.generated.js

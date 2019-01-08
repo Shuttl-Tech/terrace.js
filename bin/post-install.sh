@@ -12,13 +12,16 @@ execute_post_install ()
 	cd $destination;
 	[[ -n "$withoutgithooks" ]] && echo "--without-githooks specified. Not adding terrace's githooks."
 
+	yarn install;
+
+	git init;
+	git add .;
+	git commit -m "Initial commit.";
+
 	if [ -z $withoutgithooks ]; then
-		git init
 		chmod +x .githooks/*
 		git config core.hooksPath .githooks
 	fi;
-
-	yarn install;
 }
 
 execute_post_install "$@"
