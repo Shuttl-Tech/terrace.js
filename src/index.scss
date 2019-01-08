@@ -18,9 +18,9 @@ button {
 	height: 40px;
 	min-width: 60px;
 	border-radius: $border-radius-standard;
-	background-color: $turquoise-blue;
+	background-color: $blue-800;
 	padding: 9px 18px;
-	color: $silver;
+	color: $white;
 	overflow: hidden;
 	transition: $animation-standard background-color;
 	font-size: $font-normal-1;
@@ -29,6 +29,6 @@ button {
 	outline: none;
 
 	&:hover {
-		background-color: darken($turquoise-blue, 10%);
+		background-color: darken($blue-800, 10%);
 	}
 }
