@@ -135,7 +135,7 @@ let argv = yargs
 	}, (...args) => injectTerraceCliOptions(removeEntity, ...args))
 	.strict()
 	.option('ignore-defaults', {
-		alias: 'i',
+		alias: 'I',
 		default: false,
 		type: 'boolean',
 		describe: 'Ignore any defaults set in the .terrace-cli file for that command.'
