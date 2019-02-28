@@ -166,7 +166,7 @@ async function getResource() {
 ---
 
 ### Developer Notes
-1. Flow is added, but integration is very thin.
+1. Project runs on Typescript strict mode.
 2. Project Directory Structure is opinionated.
 3. Internationalization is enabled, and optional.
 4. Initial testing setup has been prepared, and some unit and integration tests added.
@@ -176,10 +176,11 @@ async function getResource() {
 - [x] Make this an installable project from npm.
 - [x] Make this project configurable during installation. (partly done)
 - [x] Move generators to terrace cli.
-- [ ] Improve flow integration.
 - [ ] Make terrace projects upgradable using the terrace cli.
 - [ ] Compatible with Windows.
 - [ ] Test that it works on Linux Distros.
 - [x] When a view is created in `--without-reducer` mode, ensure that reducer and actions imports in the view file are removed.
 - [x] Add some template parsing logic to the generator system.
 - [ ] Implement checking of whether the bin has been built or not by storing the last built hash in the `.terrace-cli` file.
+- [ ] Support React Hooks based views and components.
+- [ ] Implement functionality to support working with SSR. It currently does not work with SSR.
