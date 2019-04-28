@@ -19,3 +19,8 @@
 	height: $size;
 	width: $size;
 }
+
+@mixin circle($size: $grid-base-2x) {
+	@include square($size);
+	border-radius: 50%;
+}

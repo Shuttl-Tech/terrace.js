@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
 
-import session from 'views/Home/session.reducer';
+import session, { DefaultState as SessionState } from 'views/Home/session.reducer';
 
-export default combineReducers({
+export interface ReduxState {
+	session: SessionState
+}
+
+export default combineReducers<ReduxState>({
 	session
 });

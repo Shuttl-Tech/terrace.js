@@ -1,6 +1,20 @@
-import { ReactElementLike } from 'prop-types';
+import { CompositeUrl, ObjectUrl } from 'apis';
+import { History } from 'history';
 
 const ROUTE_PARAM_REGEX = /:([a-z](?:\w+)?|\?)+/ig;
+
+
+const HISTORY_INSTANCE_PROP = 'applicationHistoryInstance';
+
+export const getHistoryInstance = (): History => {
+	// @ts-ignore -- too trivial to bother typing this
+	return window[HISTORY_INSTANCE_PROP];
+};
+
+export const setHistoryInstance = (history: History) => {
+	// @ts-ignore -- too trivial to bother typing this
+	return window[HISTORY_INSTANCE_PROP] = history;
+};
 
 /**
  * Transition to a specified route.
@@ -12,16 +26,11 @@ const ROUTE_PARAM_REGEX = /:([a-z](?:\w+)?|\?)+/ig;
  * @param {string} route
  * @param params
  */
-export function transitionTo(ctx: ReactElementLike, route: string, ...params: string[]) : void {
-	if (!ctx || (ctx && !ctx.props)) {
-		throw new Error(`${ctx ? '`this`' : '`this.props`'} not found. Make sure to call this function in this way: \`transitionTo(this, <route>, ...<params>)\`.`);
-	}
-	if (!ctx.props.history) {
-		throw new Error('History object not found in `this.props`.\nYou need to ensure that the component is exported using `withRouter` from `react-router-dom`.');
-	}
-
+export function transitionTo(route: string, ...params: string[]) : void {
+	const history = getHistoryInstance();
+	if (!history) throw new Error('Ensure that history instance has been initialised, because it was not.');
 	let transitionRoute = parametrizePath(route, ...params);
-	ctx.props.history.push(transitionRoute);
+	history.push(transitionRoute);
 }
 
 /**
@@ -37,17 +46,36 @@ export function transitionTo(ctx: ReactElementLike, route: string, ...params: st
  * and the output is the same as the `/path/hello/subpath/world` example.
  * Ideally, we can just append them to the path after `join`ing them with `/`.
  *
- * @param {string} route
+ * @param {ObjectUrl} route
  * @param {arguments} params
  */
 type ReplacerParams = {[key: string]: string };
 
-export function parametrizePath(route: string, ...params: Array<string | number> | [ReplacerParams]) : string {
+export function parametrizePath(path: string, ...params: Array<string | number> | [ReplacerParams]) : string;
+export function parametrizePath(path: CompositeUrl, ...params: Array<string | number> | [ReplacerParams]) : CompositeUrl;
+export function parametrizePath(path: ObjectUrl, ...params: Array<string | number> | [ReplacerParams]) : ObjectUrl {
+	let stringPath: string = path as string;
+	let parametrizedPath = '';
+	const pathIsCompositeUrl = typeof path === 'object';
+
+	if (pathIsCompositeUrl) {
+		stringPath = (path as CompositeUrl).URL as string;
+	}
+
 	if (params[0] && typeof params[0] === 'object') {
 		let dictionary: ReplacerParams = params[0];
-		return route.replace(ROUTE_PARAM_REGEX, (match) => dictionary[match.slice(1)] || match);
+		parametrizedPath = stringPath.replace(ROUTE_PARAM_REGEX, (match) => dictionary[match.slice(1)] || match);
+	} else {
+		const stringParams = params as Array<string>;
+		let replaceIndex = 0;
+		parametrizedPath = stringPath.replace(ROUTE_PARAM_REGEX, (match) => stringParams[replaceIndex++] || match);
 	}
-	const stringParams = params as Array<string>;
-	let replaceIndex = 0;
-	return route.replace(ROUTE_PARAM_REGEX, (match) => stringParams[replaceIndex++] || match);
+
+	if (pathIsCompositeUrl) {
+		return { ...(path as CompositeUrl),
+			URL: parametrizedPath
+		};
+	}
+
+	return parametrizedPath;
 }

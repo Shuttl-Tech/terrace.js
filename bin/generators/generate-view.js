@@ -59,12 +59,12 @@ const runGenerator = (data, { source, destination, reducerName, withoutReducer, 
 	let styles = 	load(`${templatePath}/${type}/${stylesFileName}`).process(data);
 	let indexTest = 	load(`${templatePath}/${type}/${testsDir}/${indexTestFileName}`).process(data);
 
-	index = parseTemplateComments({ tokens: ['intl-support'], file: index, invert: noIntl });
+	index = parseTemplateComments({ tokens: ['with-i18n'], file: index, invert: noIntl });
 	index = parseTemplateComments({ tokens: ['reducer-snippets'], file: index, invert: withoutReducer });
 	index = parseTemplateComments({ tokens: ['pure-component'], file: index, invert: !pure });
 
 	indexTest = parseTemplateComments({ tokens: ['reducer-snippets'], file: indexTest, invert: withoutReducer });
-	indexTest = parseTemplateComments({ tokens: ['intl-support'], file: indexTest, invert: noIntl });
+	indexTest = parseTemplateComments({ tokens: ['with-i18n'], file: indexTest, invert: noIntl });
 
 	save(`${resourcePath}/${indexFileName}`, index);
 	save(`${resourcePath}/${stylesFileName}`, styles);

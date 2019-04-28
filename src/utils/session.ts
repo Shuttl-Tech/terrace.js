@@ -10,3 +10,7 @@ export function refreshSessionToken(token: string) {
 export function setSessionToken(token: string) {
 	cookie.set(TOKEN_COOKIE_NAME, token, { expires: 7 });
 }
+
+export function getSessionToken() {
+	return cookie.get(TOKEN_COOKIE_NAME);
+}

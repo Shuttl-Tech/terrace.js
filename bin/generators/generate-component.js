@@ -51,7 +51,7 @@ const runGenerator = (data, { source, destination, sfc, minimal, noIntl, pure })
 
 	// Parse Index File comments
 	index = parseTemplateComments({ tokens: ['complete-component'], file: index, invert: minimal });
-	index = parseTemplateComments({ tokens: ['intl-support'], file: index, invert: noIntl });
+	index = parseTemplateComments({ tokens: ['with-i18n'], file: index, invert: noIntl });
 	index = parseTemplateComments({ tokens: ['pure-component'], file: index, invert: !pure });
 
 	save(`${resourcePath}/index.tsx`, index);

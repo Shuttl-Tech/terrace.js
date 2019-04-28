@@ -18,7 +18,7 @@ export function* validateToken() {
 		// TODO: On your created project, remove the next two lines (and eslint-disable-line comment) to make this task function correctly.
 		const { session: { token: urlToken } } = store.getState();
 		let token = urlToken || cookie.get('authToken');
-		refreshSessionToken(token);
+		token && refreshSessionToken(token);
 		removeQueryParams('authToken');
 
 		let session = yield get(API.SESSION);

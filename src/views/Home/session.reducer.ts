@@ -9,6 +9,11 @@ export enum SESSION_STATE {
 	LOGGED_OUT = 'LOGGED_OUT'
 }
 
+export interface DefaultState {
+	token: string | null,
+	status: SESSION_STATE
+}
+
 export const defaultState = {
 	token: null,
 	status: SESSION_STATE.UNAUTHENTICATED

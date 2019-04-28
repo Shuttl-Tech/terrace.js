@@ -4,6 +4,5 @@
 .container {
 	@include expanded;
 	@include centered;
-	background-color: $greyish-two;
-	color: $black-two;
+	color: $greyscale-dark-4;
 }
