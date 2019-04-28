@@ -1,7 +1,11 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { SCHEMA, normalize, serialize } from 'adapters/application';
+import { normalize, serialize } from 'adapters/application';
 import { initializeRequestMocking } from 'mocks/requests';
+import { getSessionToken } from 'utils/session';
 import { ObjectUrl } from 'apis';
+import { handleHTTPErrors } from 'utils/error-handlers';
+import { SCHEMA } from 'adapters/adapter.types';
+import { CustomOptionsProps, ModifyRequestOptionsProps } from 'utils/http.types';
 
 export const NAMESPACE = 'api';
 export const REQUEST_TIMEOUT = 30000;
@@ -10,7 +14,7 @@ const VERSION = 'v1';
 const BASE = process.env.REACT_APP_API_BASE_URL;
 
 export const namespacedUrl = (url: string) : string => `${BASE}/${NAMESPACE}/${VERSION}${url}`;
-export const processedUrl = (url: string | { URL: string, OVERRIDE_BASE: boolean }) : string => {
+export const processedUrl = (url: ObjectUrl) : string => {
 	if (typeof url === 'string') {
 		return namespacedUrl(url);
 	}
@@ -18,22 +22,34 @@ export const processedUrl = (url: string | { URL: string, OVERRIDE_BASE: boolean
 	return namespacedUrl(url.URL);
 };
 
-const doMockRequests = process.env.REACT_APP_MOCK_REQUESTS === 'true' || process.env.NODE_ENV === 'test';
+export const doMockRequests = process.env.REACT_APP_MOCK_REQUESTS === 'true' || process.env.NODE_ENV === 'test';
 if (doMockRequests) { initializeRequestMocking(); }
+
+const handleRequestCore = async (url: ObjectUrl, options: AxiosRequestConfig) => {
+	try {
+		const request = axios({ url: processedUrl(url), ...options });
+		const response = await request;
+		return response.data;
+	}
+	catch (err) {
+		handleHTTPErrors(err);
+		throw err;
+	}
+};
 
 // Functions here are intended to return promises.
 // Any async/await or similar handling should be done at a level higher than here.
 
 /**
  * Return `fetch` API resource.
- * @param {String} url
- * @param options
- * @returns {Promise} `Promise<Response>`
+ * @param {ObjectUrl} url
+ * @param {object} options
+ * @returns {Promise<Response>} response
  */
 export const getRaw = (url: ObjectUrl, options: object = {}): Promise<Response> => {
 	return fetch(processedUrl(url), { credentials: 'include', ...options }).then(response => {
 		try {
-			if (!response.ok)	throw {status: response.status, data: response};
+			if (!response.ok)	throw Object({status: response.status, data: response});
 		}
 		catch (e) {
 			// do nothing as such
@@ -46,77 +62,61 @@ export const getRaw = (url: ObjectUrl, options: object = {}): Promise<Response> 
 /**
  * Return `axios` API resource.
  * https://github.com/axios/axios#response-schema
- * @param {String} url
- * @param {Object} options
- * @param {String} schema
- * @returns {Promise} `Promise<Response>`
+ * @param {ObjectUrl} url
+ * @param {object} options
+ * @param {SCHEMA} schema
+ * @returns {Promise<{ data: T }>} response
  */
-export const get = async (url: ObjectUrl, options: object = {}, schema: SCHEMA = SCHEMA.GENERIC): Promise<Response> => {
+export async function get<T>(url: ObjectUrl, options = {}, schema = SCHEMA.GENERIC): Promise<{ data: T }> {
 	options = modifyRequestOptions({ ...options, method: 'get' }, schema);
-	let response = await axios({ url: processedUrl(url), ...options });
-	return response.data;
-};
-
+	return await handleRequestCore(url, options);
+}
 /**
  * Return `axios` API resource.
  * https://github.com/axios/axios#response-schema
- * @param {String} url
- * @param {Object} options
- * @param {String} schema
- * @returns {Promise} `Promise<Response>`
+ * @param {ObjectUrl} url
+ * @param {object} options
+ * @param {SCHEMA} schema
+ * @returns {Promise<{ data: T }>} response
  */
-export const post = async (url: ObjectUrl, options: object = {}, schema: SCHEMA = SCHEMA.GENERIC): Promise<Response> => {
+export async function post<T>(url: ObjectUrl, options = {}, schema = SCHEMA.GENERIC): Promise<{ data: T }> {
 	options = modifyRequestOptions({ ...options, method: 'post' }, schema);
-	let response = await axios({ url: processedUrl(url), ...options });
-	return response.data;
-};
-
+	return await handleRequestCore(url, options);
+}
 /**
  * Return `axios` API resource.
  * https://github.com/axios/axios#response-schema
- * @param {String} url
- * @param {Object} options
- * @param {String} schema
- * @returns {Promise} `Promise<Response>`
+ * @param {ObjectUrl} url
+ * @param {object} options
+ * @param {SCHEMA} schema
+ * @returns {Promise<{ data: T }>} response
  */
-export const put = async (url: ObjectUrl, options: object = {}, schema: SCHEMA = SCHEMA.GENERIC): Promise<Response> => {
+export async function put<T>(url: ObjectUrl, options = {}, schema = SCHEMA.GENERIC): Promise<{ data: T }> {
 	options = modifyRequestOptions({ ...options, method: 'put' }, schema);
-	let response = await axios({ url: processedUrl(url), ...options });
-	return response.data;
-};
-
+	return await handleRequestCore(url, options);
+}
 /**
  * Return `axios` API resource.
  * https://github.com/axios/axios#response-schema
- * @param {String} url
- * @param {Object} options
- * @param {String} schema
- * @returns {Promise} `Promise<Response>`
+ * @param {ObjectUrl} url
+ * @param {object} options
+ * @param {SCHEMA} schema
+ * @returns {Promise<{ data: T }>} response
  */
-export const patch = async (url: ObjectUrl, options: object = {}, schema: SCHEMA = SCHEMA.GENERIC): Promise<Response> => {
+export async function patch<T>(url: ObjectUrl, options = {}, schema = SCHEMA.GENERIC): Promise<{ data: T }> {
 	options = modifyRequestOptions({ ...options, method: 'patch' }, schema);
-	let response = await axios({ url: processedUrl(url), ...options });
-	return response.data;
-};
-
+	return await handleRequestCore(url, options);
+}
 // Other utility functions
 /**
  * Modify all request options, such as headers, mode, credentials, body, etc.
  *
  * For more details on options, see: https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
- * @param {Object} options Has an additional non-standard `formData: Boolean` property, deleted before flight.
- * @param {String} schema
+ * @param {object} options Has an additional non-standard `formData: Boolean` property, deleted before flight.
+ * @param {SCHEMA} schema
  * @returns {object} `fetch` options
  */
-type CustomOptionsProps = {
-	formData?: boolean,
-	body?: any,
-	headers?: object
-};
-
-type ModifyRequestOptionsProps = AxiosRequestConfig & CustomOptionsProps;
-
-function modifyRequestOptions(options: ModifyRequestOptionsProps = {}, schema: SCHEMA = SCHEMA.GENERIC): {} {
+function modifyRequestOptions(options: ModifyRequestOptionsProps = {}, schema: SCHEMA = SCHEMA.GENERIC): AxiosRequestConfig {
 
 	let headers = modifyRequestHeaders(options || {});
 
@@ -134,10 +134,10 @@ function modifyRequestOptions(options: ModifyRequestOptionsProps = {}, schema: S
 		headers,
 		withCredentials: true,
 		transformRequest: [...axios.defaults.transformRequest, (data: object) => {
-			return normalize(data, schema);
+			return normalize(data, schema, options);
 		}],
 		transformResponse: [...axios.defaults.transformResponse, (data: any) => {
-			return serialize(data, schema);
+			return serialize(data, schema, options);
 		}],
 		timeout: REQUEST_TIMEOUT,
 		...options
@@ -149,12 +149,15 @@ function modifyRequestOptions(options: ModifyRequestOptionsProps = {}, schema: S
  *
  * For more details on headers, see: https://developer.mozilla.org/en-US/docs/Web/API/Headers
  * @returns {object} request headers
- * @param options
+ * @param {object} options
  */
 function modifyRequestHeaders(options: CustomOptionsProps = {}): {} {
 	let headers;
 	if (options.formData) {
 		headers = {...options.headers, 'Content-Type': 'application/x-www-form-urlencoded' };
 	}
+	headers = {...headers,
+		'x-session-id': getSessionToken()
+	};
 	return {...headers};
 }

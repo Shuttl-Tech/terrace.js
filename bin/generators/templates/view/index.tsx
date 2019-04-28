@@ -10,15 +10,15 @@ import { Dispatch } from 'redux';
 import { parse } from 'query-string';
 // template-end reducer-snippets
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-// template-begin intl-support keep
+// template-begin with-i18n keep
 import { translate } from 'react-i18next';
-// template-end intl-support
+// template-end with-i18n
 // template-begin reducer-snippets keep
 
 import { ___resourceName____FETCH_REQUEST } from './___lowerCaseResourceName___.actions';
 import { REQUEST_STATE } from 'globals/constants';
 // template-end reducer-snippets
-import { I18nProps } from 'types/i18n'; // template-line intl-support keep
+import { I18nProps } from 'types/i18n'; // template-line with-i18n keep
 
 import css from './styles.module.scss';
 
@@ -33,12 +33,12 @@ interface DispatchProps {
 	fetchViewData: (id: string) => void
 }
 
-type Props = I18nProps & StateProps & DispatchProps & ComponentProps & RouteComponentProps<{}>; // template-line intl-support keep
-type Props = StateProps & DispatchProps & ComponentProps & RouteComponentProps<{}>; // template-line intl-support remove
+type Props = I18nProps & StateProps & DispatchProps & ComponentProps & RouteComponentProps<{}>; // template-line with-i18n keep
+type Props = StateProps & DispatchProps & ComponentProps & RouteComponentProps<{}>; // template-line with-i18n remove
 // template-end reducer-snippets
 // template-begin reducer-snippets remove
-type Props = I18nProps & ComponentProps & RouteComponentProps<{}>; // template-line intl-support keep
-type Props = ComponentProps & RouteComponentProps<{}>; // template-line intl-support remove
+type Props = I18nProps & ComponentProps & RouteComponentProps<{}>; // template-line with-i18n keep
+type Props = ComponentProps & RouteComponentProps<{}>; // template-line with-i18n remove
 // template-end reducer-snippets
 
 // template-begin pure-component keep
@@ -57,12 +57,12 @@ class ___componentName___ extends Component<Props> {
 
 	// template-end reducer-snippets
 	render() {
-		// template-begin intl-support keep
+		// template-begin with-i18n keep
 		const { t } = this.props;
-		// template-end intl-support
+		// template-end with-i18n
 		// template-begin reducer-snippets keep
 
-		// --1 template-begin intl-support keep
+		// --1 template-begin with-i18n keep
 		switch(this.props.requestStatus) {
 			case REQUEST_STATE.SUCCESS:
 				return (t('view-data-loaded'));
@@ -71,8 +71,8 @@ class ___componentName___ extends Component<Props> {
 			default:
 				return (t('view-data-pending'));
 		}
-		// --1 template-end intl-support
-		// --2 template-begin intl-support remove
+		// --1 template-end with-i18n
+		// --2 template-begin with-i18n remove
 		switch(this.props.requestStatus) {
 			case REQUEST_STATE.SUCCESS:
 				return 'View data loaded.';
@@ -81,16 +81,16 @@ class ___componentName___ extends Component<Props> {
 			default:
 				return 'View data pending.';
 		}
-		// --2 template-end intl-support
+		// --2 template-end with-i18n
 		// template-end reducer-snippets
 		// template-begin reducer-snippets remove
 		// noinspection UnreachableCodeJS -- WebStorm syntax inspection comment // template-line generic remove
-		// --1 template-begin intl-support keep
+		// --1 template-begin with-i18n keep
 		return (t('view-data-loaded'));
-		// --1 template-end intl-support
-		// --2 template-begin intl-support remove
+		// --1 template-end with-i18n
+		// --2 template-begin with-i18n remove
 		return 'View data loaded.';
-		// --2 template-end intl-support
+		// --2 template-end with-i18n
 		// template-end reducer-snippets
 	}
 }
@@ -115,10 +115,10 @@ export default translate()(withRouter(connect<StateProps, DispatchProps, Compone
 // template-end reducer-snippets
 // template-begin reducer-snippets remove
 
-// --1 template-begin intl-support keep
+// --1 template-begin with-i18n keep
 export default translate()(withRouter(___componentName___));
-// --1 template-end intl-support
-// --2 template-begin intl-support remove
+// --1 template-end with-i18n
+// --2 template-begin with-i18n remove
 export default withRouter(___componentName___);
-// --2 template-end intl-support
+// --2 template-end with-i18n
 // template-end reducer-snippets

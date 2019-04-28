@@ -4,11 +4,11 @@ import React, { PureComponent } from 'react';
 // template-begin pure-component remove
 import React, { Component } from 'react';
 // template-end pure-component
-// template-begin intl-support keep
+// template-begin with-i18n keep
 import { translate } from 'react-i18next';
 
 import { I18nProps } from 'types/i18n';
-// template-end intl-support
+// template-end with-i18n
 
 import css from './styles.module.scss';
 
@@ -17,9 +17,9 @@ interface ComponentProps {
 }
 
 // @ts-ignore // template-line generic remove
-type Props = I18nProps & ComponentProps; // template-line intl-support keep
+type Props = I18nProps & ComponentProps; // template-line with-i18n keep
 // @ts-ignore // template-line generic remove
-type Props = ComponentProps; // template-line intl-support remove
+type Props = ComponentProps; // template-line with-i18n remove
 
 // template-begin pure-component keep
 class ___componentName___ extends PureComponent<Props> {
@@ -34,29 +34,29 @@ class ___componentName___ extends Component<Props> {
 
 	// template-end complete-component
 	render() {
-		// template-begin intl-support keep
+		// template-begin with-i18n keep
 		// template-begin complete-component keep
 		const { t, i18n, id } = this.props;
 		// template-end complete-component
 		// template-begin complete-component remove
 		const { t, id } = this.props;
 		// template-end complete-component
-		// template-end intl-support
-		// template-begin intl-support remove
+		// template-end with-i18n
+		// template-begin with-i18n remove
 		const { id } = this.props;
-		// template-end intl-support
+		// template-end with-i18n
 		// template-begin complete-component keep
-		// template-begin intl-support keep
+		// template-begin with-i18n keep
 
 		const changeLanguage = (lang: string) => {
 			i18n.changeLanguage(lang);
 		};
-		// template-end intl-support
+		// template-end with-i18n
 		// template-end complete-component
 
 		return (
 			<div className={css.container}>
-				// template-begin intl-support keep
+				// template-begin with-i18n keep
 				// template-begin complete-component keep
 				<span title={id}>{t('welcome-to-comp', { comp: '___componentName___' })}</span>
 				<div className={css['lang-toggle']}>
@@ -67,18 +67,18 @@ class ___componentName___ extends Component<Props> {
 				// template-begin complete-component remove
 				<span title={id}>{t('welcome-to-comp', { comp: '___componentName___' })}</span>
 				// template-end complete-component
-				// template-end intl-support
-				// template-begin intl-support remove
+				// template-end with-i18n
+				// template-begin with-i18n remove
 				<span title={id}>Welcome to component ___componentName___!</span>
-				// template-end intl-support
+				// template-end with-i18n
 			</div>
 		)
 	}
 }
 
-// template-begin intl-support keep
+// template-begin with-i18n keep
 export default translate()(___componentName___);
-// template-end intl-support
-// template-begin intl-support remove
+// template-end with-i18n
+// template-begin with-i18n remove
 export default ___componentName___;
-// template-end intl-support
+// template-end with-i18n

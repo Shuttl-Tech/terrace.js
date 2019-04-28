@@ -5,6 +5,7 @@ const strings = {
 	'change-to-de': 'Change to DE',
 	'change-to-en': 'Change to EN',
 	'visit-path': 'Visit Path for Item {{item}}',
+	'trigger-toast': 'Trigger Toast',
 	'auth-failed-msg': 'Authentication Failed...',
 	're-auth-needed': 'Reauthentication required.',
 	'auth-pending-msg': 'Authentication Pending...',

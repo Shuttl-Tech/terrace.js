@@ -17,6 +17,9 @@ export const processPackageJson = ({ file, withoutEslint, name, withoutI18n }) =
 		delete file.devDependencies['eslint-plugin-import'];
 		delete file.devDependencies['eslint-plugin-jsx-a11y'];
 		delete file.devDependencies['eslint-plugin-react'];
+		delete file.devDependencies['@typescript-eslint/eslint-plugin'];
+		delete file.devDependencies['@typescript-eslint/parser'];
+		delete file.devDependencies['eslint-plugin-react-hooks'];
 	}
 
 	if (withoutI18n) {

@@ -7,7 +7,7 @@ export const removeQueryParams = (...queryParams: string[]) => {
 	let { origin, pathname, search } = window.location;
 	let history = window.history;
 
-	let params = parse(search);
+	let params = { ...parse(search) };
 	queryParams.map(qp => delete params[qp]);
 	let result = stringify(params);
 

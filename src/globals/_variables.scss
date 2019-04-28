@@ -1,31 +1,41 @@
 // Layout Properties
-$grid-base: 4px;
-$grid-base-2x: $grid-base * 2;
-$grid-base-3x: $grid-base * 3;
-$grid-base-4x: $grid-base * 4;
-$grid-base-5x: $grid-base * 5;
-$grid-base-6x: $grid-base * 6;
-$grid-standard: $grid-base-3x;
-$grid-block-spacing: $grid-standard * 2;
+$grid-base:						4px;
+$grid-base-1x:				$grid-base;
+$grid-base-2x:				$grid-base * 2;
+$grid-base-3x:				$grid-base * 3;
+$grid-base-4x:				$grid-base * 4;
+$grid-base-5x:				$grid-base * 5;
+$grid-base-6x:				$grid-base * 6;
+$grid-standard:				$grid-base-3x;
+$grid-block-spacing:	$grid-standard * 2;
 
 // Font Sizes
-$font-small-3:  8px;
-$font-small-2:  10px;
-$font-small-1:  12px;
-$font-standard: 14px;
-$font-normal-1: 16px;
-$font-normal-2: 18px;
-$font-big:			20px;
-$font-big-1:		22px;
+$font-small-3:		8px;
+$font-small-2:		10px;
+$font-small-1:		12px;
+$font-standard:		14px;
+$font-normal-1:		16px;
+$font-normal-2:		18px;
+$font-big:				20px;
+$font-big-1:			24px;
+$font-big-2:			30px;
+$font-title:			36px;
+$font-title-1:		48px;
+$font-title-2:		60px;
+$font-maxima:			72px;
 
 // Font Weights
-$weight-light: 300;
-$weight-normal: 400;
-$weight-medium: 500;
-$weight-heavy: 600;
+$weight-hairline: 100;
+$weight-light:    300;
+$weight-normal:   400;
+$weight-medium:   500;
+$weight-heavy:    600;
+$weight-bold:     700;
+$weight-black:    900;
 
 // Border Properties
-$border-radius-standard: 4px;
+$border-radius-standard: $grid-base;
+$border-radius-small: $grid-base / 2;
 
 // Timings
 $animation-standard: 0.25s;
@@ -34,88 +44,94 @@ $animation-standard: 0.25s;
 $easing-smooth-ease-out: cubic-bezier(0.4, 1.03, 0.29, 0.99);
 
 // Animations
-$smooth-ease-out: ($animation-standard * 3) $easing-smooth-ease-out;
-$quick-ease-out: $animation-standard $easing-smooth-ease-out;
+$smooth-ease-out:		($animation-standard * 3) $easing-smooth-ease-out;
+$quick-ease-out:		$animation-standard $easing-smooth-ease-out;
 
 // Colors
-$dark-seafoam: 				rgb(26, 188, 134);
-$green-blue: 					rgb(0, 188, 129);
-$topaz: 							rgb(21, 206, 171);
-$green-teal: 					rgb(19, 190, 117);
-$green-800:						#2e7d32;
-$green-teal-30: 			rgba(19, 190, 117, 0.3);
-$green-teal-20: 			rgba(19, 190, 117, 0.2);
-$green-teal-10: 			rgba(19, 190, 117, 0.1);
+$blue-dark-4:						hsl(205, 100%, 21%);
+$blue-dark-3:						hsl(205, 87%, 29%);
+$blue-dark-2:						hsl(205, 82%, 33%);
+$blue-dark-1:						hsl(205, 76%, 39%);
+$blue-standard:					hsl(205, 67%, 45%);
+$blue-light-1:					hsl(205, 65%, 55%);
+$blue-light-2:					hsl(205, 74%, 65%);
+$blue-light-3:					hsl(205, 84%, 74%);
+$blue-light-4:					hsl(205, 97%, 85%);
+$blue-light-5:					hsl(205, 79%, 92%);
 
-$turquoise-blue: 			rgb(0, 173, 183);
-$turquoise-blue-two: 	rgb(1, 172, 183);
-$blue-800:						#0277bd;
-$light-navy: 					rgb(20, 78, 147);
-$teal-blue-30: 				rgba(4, 151, 159, 0.3);
+$yellow-dark-4:					hsl(15, 86%, 30%);
+$yellow-dark-3:					hsl(22, 82%, 39%);
+$yellow-dark-2:					hsl(29, 80%, 44%);
+$yellow-dark-1:					hsl(36, 77%, 49%);
+$yellow-standard:				hsl(42, 87%, 55%);
+$yellow-light-1:				hsl(44, 92%,63%);
+$yellow-light-2:				hsl(48, 94%, 68%);
+$yellow-light-3:				hsl(48, 95%, 76%);
+$yellow-light-4:				hsl(48, 100%, 88%);
+$yellow-light-5:				hsl(49, 100%, 96%);
 
-$faded-pink: 					rgb(242, 224, 226);
-$light-mustard: 			rgb(250, 217, 97);
-$yellow-700:					#fbc02d;
-$butterscotch: 				rgb(250, 182, 80);
-$mango: 							rgb(252, 157, 34);
-$light-orange: 				rgb(248, 165, 64);
-$mango-two: 					rgb(255, 191, 50);
-$orangeish-30: 				rgba(250, 152, 61, 0.3);
-$pumpkin-orange: 			rgb(250, 117, 40);
-$watermelon: 					rgb(246, 70, 90);
-$orange-900:					#bf360c;
+$blue-grey-dark-4:			hsl(209, 61%, 16%);
+$blue-grey-dark-3:			hsl(211, 39%, 23%);
+$blue-grey-dark-2:			hsl(209, 34%, 30%);
+$blue-grey-dark-1:			hsl(209, 28%, 39%);
+$blue-grey-standard:		hsl(210, 22%, 49%);
+$blue-grey-light-1:			hsl(209, 23%, 60%);
+$blue-grey-light-2:			hsl(211, 27%, 70%);
+$blue-grey-light-3:			hsl(210, 31%, 80%);
+$blue-grey-light-4:			hsl(212, 33%, 89%);
+$blue-grey-light-5:			hsl(210, 36%, 96%);
 
+$cyan-dark-4:						hsl(184, 91%, 17%);
+$cyan-dark-3:						hsl(185, 84%, 25%);
+$cyan-dark-2:						hsl(185, 81%, 29%);
+$cyan-dark-1:						hsl(184, 77%, 34%);
+$cyan-standard:					hsl(185, 62%, 45%);
+$cyan-light-1:					hsl(185, 57%, 50%);
+$cyan-light-2:					hsl(184, 65%, 59%);
+$cyan-light-3:					hsl(184, 80%, 74%);
+$cyan-light-4:					hsl(185, 94%, 87%);
+$cyan-light-5:					hsl(186, 100%, 94%);
 
-$white: 							rgb(255, 255, 255);
-$white-three: 				rgb(250, 250, 250);
-$white-eight: 				rgb(248, 248, 248);
-$white-four: 					rgb(245, 245, 245);
-$white-ten: 					rgb(244, 244, 244);
-$white-nine: 					rgb(243, 243, 243);
-$white-seven: 				rgb(242, 242, 242);
-$pale-grey: 					rgb(233, 248, 249);
-$white-eleven: 				rgb(232, 232, 232);
-$white-two: 					rgb(227, 227, 227);
-$white-five: 					rgb(225, 225, 225);
-$white-six: 					rgb(216, 216, 216);
-$light-blue-grey: 		rgb(228, 247, 248);
-$silver: 							rgb(199, 211, 216);
-$greyish: 						rgb(179, 179, 179);
-$cool-grey: 					rgb(150, 168, 176);
-$warm-grey-three: 		rgb(151, 151, 151);
-$greyish-two: 				rgb(164, 164, 164);
-$greyish-three: 			rgb(163, 163, 163);
-$warm-grey-two: 			rgb(131, 131, 131);
-$warm-grey: 					rgb(128, 128, 128);
-$moderate-grey: 			rgb(110, 110, 110);
-$greyish-brown: 			rgb(87, 87, 87);
-$grey-black: 					rgb(74, 74, 74);
-$greyish-brown-two: 	rgb(65, 65, 65);
-$dark-grey-blue: 			rgb(52, 67, 94);
-$black-two: 					rgb(38, 38, 38);
-$black--5: 						rgba(0, 0, 0, 0.05);
-$black--10: 					rgba(0, 0, 0, 0.1);
-$black--14: 					rgba(0, 0, 0, 0.14);
-$black--18: 					rgba(0, 0, 0, 0.18);
-$black--31: 					rgba(0, 0, 0, 0.31);
-$black--40: 					rgba(0, 0, 0, 0.4);
-$black--50: 					rgba(0, 0, 0, 0.5);
-$black--52: 					rgba(0, 0, 0, 0.52);
-$black--70: 					rgba(0, 0, 0, 0.7);
-$black--80: 					rgba(0, 0, 0, 0.8);
-$black: 							rgb(0, 0, 0);
+$red-dark-4:						hsl(360, 92%, 20%);
+$red-dark-3:						hsl(360, 85%, 25%);
+$red-dark-2:						hsl(360, 79%, 32%);
+$red-dark-1:						hsl(360, 72%, 38%);
+$red-standard:					hsl(360, 67%, 44%);
+$red-light-1:						hsl(360, 64%, 55%);
+$red-light-2:						hsl(360, 71%, 66%);
+$red-light-3:						hsl(360, 77%, 78%);
+$red-light-4:						hsl(360, 82%, 89%);
+$red-light-5:						hsl(360, 100%, 97%);
 
-// Shadows
-$box-shadow-card: 0 4px 4px 0 $black--18;
-$box-shadow-card-higher: 0 2px 4px 0 $black--18;
-$box-shadow-toast: 0 2px 8px 0 $black--18;
-$box-shadow-thin: 0 1px 2px 0 $black--10;
-$box-shadow-thin-expanded: 0 4px 12px 0 $black--10;
+$greyscale-dark-4:			#303030;
+$greyscale-dark-3:			#686868;
+$greyscale-dark-2:			#8D8D8D;
+$greyscale-dark-1:			#A4A4A4;
+$greyscale-standard:		#B6B6B6;
+$greyscale-light-1:			#CBCBCB;
+$greyscale-light-2:			#E0E0E0;
+$greyscale-light-3:			#F0F0F0;
+$greyscale-light-4:			#F3F3F3;
+$greyscale-light-5:			#FAFAFA;
+
+// Generic Colour Set
+$green-1: 							#219653;
+$green-2: 							#27ae60;
+$green-3: 							#6fcf97;
 
 // Z-Indices
-$z--map:						0;
+$z--base:						0;
 $z--sidebar:				1;
+$z--search-overlay:	49;
+$z--search:					50;
 $z--modal:					100;
 $z--toast:					20000;
 $z--toast--active:	20001;
 $z--maximum: 				2147483647;
+
+// Box Shadows
+@mixin shadow-1 { box-shadow: 0 $grid-base $grid-base rgba(0, 0, 0, 0.25); }
+@mixin shadow-2 { box-shadow: 0 $grid-base $grid-base-3x rgba(0, 0, 0, 0.25), 0 2px $grid-base rgba(0, 0, 0, 0.25); }
+
+// Selectors
+$mui-element: ">div[class^='Mui'], >div[class^='jss']";
