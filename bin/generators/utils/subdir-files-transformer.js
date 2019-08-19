@@ -1,7 +1,7 @@
 import through from 'through2';
 import { parseTemplateComments } from './template-comments-parser';
 
-export const subdirFilesTransformer = (src, { source, withoutI18n }) => {
+export const subdirFilesTransformer = (src, { source, withoutI18N }) => {
   const subdirFileName = src.slice(source.length + 1, src.lastIndexOf('.'));
   let file;
   return through((chunk, enc, done) => {
@@ -14,7 +14,7 @@ export const subdirFilesTransformer = (src, { source, withoutI18n }) => {
   		case 'src/views/Home/index':
   		case 'src/components/ParametrizedView/index':
   		case 'src/views/Home/__tests__/index.test':
-  			file = parseTemplateComments({ tokens: ['with-i18n'], file, invert: withoutI18n });
+  			file = parseTemplateComments({ tokens: ['with-i18n'], file, invert: withoutI18N });
   			break;
   		default: break;
   	}

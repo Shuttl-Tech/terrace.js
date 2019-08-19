@@ -30,7 +30,7 @@ let excludedSpecialPaths = [
 
 let excludedSubdirPaths = [];
 
-export const createProject = async ({ name, withoutGithooks, withoutEslint, withoutI18n }) => {
+export const createProject = async ({ name, withoutGithooks, withoutEslint, withoutI18N }) => {
   if (!name) CriticalError('🚨 Missing project name.', MISSING_ARGUMENT);
 
   if (withoutEslint) {
@@ -47,7 +47,7 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint, with
   	];
   }
 
-  if (withoutI18n) {
+  if (withoutI18N) {
   	excludedSubdirPaths = [...excludedSubdirPaths,
   		'src/i18n'
   	];
@@ -88,7 +88,7 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint, with
   		fs.mkdirSync(_destination);
   		let options = {
   			filter: name => Boolean(!excludedSubdirPaths.filter(excludePath => `${file.full}/${name}`.includes(excludePath)).length),
-  			transform: src => subdirFilesTransformer(src, { source, withoutI18n })
+  			transform: src => subdirFilesTransformer(src, { source, withoutI18N })
   		};
 
   		try {
@@ -106,7 +106,7 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint, with
   				fs.writeFileSync(_destination, processDotEnv({ file: _file, name }));
   				break;
   			case 'package.json':
-  				fs.writeFileSync(_destination, processPackageJson({ file: JSON.parse(_file), withoutEslint, name, withoutI18n }));
+  				fs.writeFileSync(_destination, processPackageJson({ file: JSON.parse(_file), withoutEslint, name, withoutI18N }));
   				break;
   			case 'README.md':
   				fs.writeFileSync(_destination, processReadmeMd({ file: _file, name }));
@@ -118,8 +118,8 @@ export const createProject = async ({ name, withoutGithooks, withoutEslint, with
   				break;
   			case '.terrace-cli':
   				_file = JSON.parse(_file);
-  				_file.defaults.view.noIntl.use = withoutI18n;
-  				_file.defaults.component.noIntl.use = withoutI18n;
+  				_file.defaults.view.noIntl.use = withoutI18N;
+  				_file.defaults.component.noIntl.use = withoutI18N;
   				_file = JSON.stringify(_file, null, '\t');
   				fs.writeFileSync(_destination, _file);
   				break;

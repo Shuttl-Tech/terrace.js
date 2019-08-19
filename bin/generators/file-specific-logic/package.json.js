@@ -1,4 +1,4 @@
-export const processPackageJson = ({ file, withoutEslint, name, withoutI18n }) => {
+export const processPackageJson = ({ file, withoutEslint, name, withoutI18N }) => {
   delete file.devDependencies['cli-progress'];
   delete file.devDependencies['colors'];
   delete file.devDependencies['emoji-regex'];
@@ -22,7 +22,7 @@ export const processPackageJson = ({ file, withoutEslint, name, withoutI18n }) =
   	delete file.devDependencies['eslint-plugin-react-hooks'];
   }
 
-  if (withoutI18n) {
+  if (withoutI18N) {
   	delete file.dependencies['i18next'];
   	delete file.dependencies['i18next-browser-languagedetector'];
   	delete file.dependencies['react-i18next'];
