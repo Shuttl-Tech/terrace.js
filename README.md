@@ -56,6 +56,14 @@ yarn link
 # now you have the terrace binary available to use globally
 # you can go ahead and use terrace commands to run and test that the changes work as intended
 ```
+
+### Publish
+```bash
+yarn preupdate
+yarn publish [--major|--minor|--patch]
+
+```
+
 > Note: `NODE_PATH=src` is in effect. Use that to specify import paths in any JS files.
 
 > Note: `SASS=src:node_modules` is in effect. Use that to specify import paths in any SCSS files.
