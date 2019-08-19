@@ -1,6 +1,6 @@
 {
   "name": "terrace.js",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "private": false,
   "scripts": {
     "bin-dev": "nodemon --ignore bin/index.generated.js --ignore bin/_index.generated.js --exec 'yarn build-bin'",
