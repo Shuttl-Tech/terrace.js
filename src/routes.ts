@@ -1,11 +1,11 @@
 export const BASEPATH = '';
 
 export const ROUTES = {
-	BASE: '/',
+  BASE: '/',
 
-	ITEMS: `${BASEPATH}/items`
+  ITEMS: `${BASEPATH}/items`
 }
 
 export const PARAMETRIZED_ROUTES = {
-	ITEM: `${BASEPATH}/item/:id`
+  ITEM: `${BASEPATH}/item/:id`
 }

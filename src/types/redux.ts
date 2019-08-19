@@ -1,4 +1,4 @@
 export interface ReduxAction {
-	type: string,
-	payload?: any
+  type: string,
+  payload?: any
 }

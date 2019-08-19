@@ -26,11 +26,11 @@ interface ComponentProps {}
 
 // template-begin reducer-snippets keep
 interface StateProps {
-	requestStatus: REQUEST_STATE,
+  requestStatus: REQUEST_STATE,
 }
 
 interface DispatchProps {
-	fetchViewData: (id: string) => void
+  fetchViewData: (id: string) => void
 }
 
 type Props = I18nProps & StateProps & DispatchProps & ComponentProps & RouteComponentProps<{}>; // template-line with-i18n keep
@@ -47,58 +47,58 @@ class ___componentName___ extends PureComponent<Props> {
 // template-begin pure-component remove
 class ___componentName___ extends Component<Props> {
 // template-end pure-component
-	// template-begin reducer-snippets keep
-	componentDidMount() {
-		let { id } = parse(window.location.search);
-		if (id && typeof id === 'string') {
-			this.props.fetchViewData(id);
-		}
-	}
+  // template-begin reducer-snippets keep
+  componentDidMount() {
+  	let { id } = parse(window.location.search);
+  	if (id && typeof id === 'string') {
+  		this.props.fetchViewData(id);
+  	}
+  }
 
-	// template-end reducer-snippets
-	render() {
-		// template-begin with-i18n keep
-		const { t } = this.props;
-		// template-end with-i18n
-		// template-begin reducer-snippets keep
+  // template-end reducer-snippets
+  render() {
+  	// template-begin with-i18n keep
+  	const { t } = this.props;
+  	// template-end with-i18n
+  	// template-begin reducer-snippets keep
 
-		// --1 template-begin with-i18n keep
-		switch(this.props.requestStatus) {
-			case REQUEST_STATE.SUCCESS:
-				return (t('view-data-loaded'));
-			case REQUEST_STATE.FAILURE:
-				return (t('view-data-failed'));
-			default:
-				return (t('view-data-pending'));
-		}
-		// --1 template-end with-i18n
-		// --2 template-begin with-i18n remove
-		switch(this.props.requestStatus) {
-			case REQUEST_STATE.SUCCESS:
-				return 'View data loaded.';
-			case REQUEST_STATE.FAILURE:
-				return 'View data failed.';
-			default:
-				return 'View data pending.';
-		}
-		// --2 template-end with-i18n
-		// template-end reducer-snippets
-		// template-begin reducer-snippets remove
-		// noinspection UnreachableCodeJS -- WebStorm syntax inspection comment // template-line generic remove
-		// --1 template-begin with-i18n keep
-		return (t('view-data-loaded'));
-		// --1 template-end with-i18n
-		// --2 template-begin with-i18n remove
-		return 'View data loaded.';
-		// --2 template-end with-i18n
-		// template-end reducer-snippets
-	}
+  	// --1 template-begin with-i18n keep
+  	switch(this.props.requestStatus) {
+  		case REQUEST_STATE.SUCCESS:
+  			return (t('view-data-loaded'));
+  		case REQUEST_STATE.FAILURE:
+  			return (t('view-data-failed'));
+  		default:
+  			return (t('view-data-pending'));
+  	}
+  	// --1 template-end with-i18n
+  	// --2 template-begin with-i18n remove
+  	switch(this.props.requestStatus) {
+  		case REQUEST_STATE.SUCCESS:
+  			return 'View data loaded.';
+  		case REQUEST_STATE.FAILURE:
+  			return 'View data failed.';
+  		default:
+  			return 'View data pending.';
+  	}
+  	// --2 template-end with-i18n
+  	// template-end reducer-snippets
+  	// template-begin reducer-snippets remove
+  	// noinspection UnreachableCodeJS -- WebStorm syntax inspection comment // template-line generic remove
+  	// --1 template-begin with-i18n keep
+  	return (t('view-data-loaded'));
+  	// --1 template-end with-i18n
+  	// --2 template-begin with-i18n remove
+  	return 'View data loaded.';
+  	// --2 template-end with-i18n
+  	// template-end reducer-snippets
+  }
 }
 // template-begin reducer-snippets keep
 type StateToProps = {
-	leaderboard: {
-		status: REQUEST_STATE
-	}
+  leaderboard: {
+  	status: REQUEST_STATE
+  }
 }
 
 const mapStateToProps = ({ ___camelCaseResourceName___: { status } }: StateToProps) => {
@@ -106,9 +106,9 @@ const mapStateToProps = ({ ___camelCaseResourceName___: { status } }: StateToPro
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
-	return {
-		fetchViewData: (id) => { dispatch(___resourceName____FETCH_REQUEST({ id })) }
-	}
+  return {
+  	fetchViewData: (id) => { dispatch(___resourceName____FETCH_REQUEST({ id })) }
+  }
 };
 
 export default translate()(withRouter(connect<StateProps, DispatchProps, ComponentProps, StateToProps>(mapStateToProps, mapDispatchToProps)(___componentName___)));

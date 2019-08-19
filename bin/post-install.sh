@@ -8,20 +8,20 @@ source ${DIR}/lib/cli-options.sh;
 
 execute_post_install ()
 {
-	eval $(parse_params "$@")
-	cd $destination;
-	[[ -n "$withoutgithooks" ]] && echo "--without-githooks specified. Not adding terrace's githooks."
+  eval $(parse_params "$@")
+  cd $destination;
+  [[ -n "$withoutgithooks" ]] && echo "--without-githooks specified. Not adding terrace's githooks."
 
-	yarn install;
+  yarn install;
 
-	git init;
-	git add .;
-	git commit -m "Initial commit.";
+  git init;
+  git add .;
+  git commit -m "Initial commit.";
 
-	if [ -z $withoutgithooks ]; then
-		chmod +x .githooks/*
-		git config core.hooksPath .githooks
-	fi;
+  if [ -z $withoutgithooks ]; then
+  	chmod +x .githooks/*
+  	git config core.hooksPath .githooks
+  fi;
 }
 
 execute_post_install "$@"

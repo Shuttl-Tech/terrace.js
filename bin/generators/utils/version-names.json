@@ -1,12 +1,12 @@
 {
-	"0.1": "Faraday",
-	"0.2": "Pasteur",
-	"0.3": "Berners-Lee",
-	"0.4": "Einstein",
-	"0.5": "Newton",
-	"0.6": "Copernicus",
-	"0.7": "Galileo",
-	"0.8": "Curie",
-	"0.9": "Nobel",
-	"1.0": "Tesla"
+  "0.1": "Faraday",
+  "0.2": "Pasteur",
+  "0.3": "Berners-Lee",
+  "0.4": "Einstein",
+  "0.5": "Newton",
+  "0.6": "Copernicus",
+  "0.7": "Galileo",
+  "0.8": "Curie",
+  "0.9": "Nobel",
+  "1.0": "Tesla"
 }

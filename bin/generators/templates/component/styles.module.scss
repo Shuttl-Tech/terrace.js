@@ -2,7 +2,7 @@
 @import 'globals/mixins';
 
 .container {
-	@include expanded;
-	@include centered;
-	color: $greyscale-dark-4;
+  @include expanded;
+  @include centered;
+  color: $greyscale-dark-4;
 }

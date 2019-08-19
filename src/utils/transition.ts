@@ -7,13 +7,13 @@ const ROUTE_PARAM_REGEX = /:([a-z](?:\w+)?|\?)+/ig;
 const HISTORY_INSTANCE_PROP = 'applicationHistoryInstance';
 
 export const getHistoryInstance = (): History => {
-	// @ts-ignore -- too trivial to bother typing this
-	return window[HISTORY_INSTANCE_PROP];
+  // @ts-ignore -- too trivial to bother typing this
+  return window[HISTORY_INSTANCE_PROP];
 };
 
 export const setHistoryInstance = (history: History) => {
-	// @ts-ignore -- too trivial to bother typing this
-	return window[HISTORY_INSTANCE_PROP] = history;
+  // @ts-ignore -- too trivial to bother typing this
+  return window[HISTORY_INSTANCE_PROP] = history;
 };
 
 /**
@@ -27,10 +27,10 @@ export const setHistoryInstance = (history: History) => {
  * @param params
  */
 export function transitionTo(route: string, ...params: string[]) : void {
-	const history = getHistoryInstance();
-	if (!history) throw new Error('Ensure that history instance has been initialised, because it was not.');
-	let transitionRoute = parametrizePath(route, ...params);
-	history.push(transitionRoute);
+  const history = getHistoryInstance();
+  if (!history) throw new Error('Ensure that history instance has been initialised, because it was not.');
+  let transitionRoute = parametrizePath(route, ...params);
+  history.push(transitionRoute);
 }
 
 /**
@@ -54,28 +54,28 @@ type ReplacerParams = {[key: string]: string };
 export function parametrizePath(path: string, ...params: Array<string | number> | [ReplacerParams]) : string;
 export function parametrizePath(path: CompositeUrl, ...params: Array<string | number> | [ReplacerParams]) : CompositeUrl;
 export function parametrizePath(path: ObjectUrl, ...params: Array<string | number> | [ReplacerParams]) : ObjectUrl {
-	let stringPath: string = path as string;
-	let parametrizedPath = '';
-	const pathIsCompositeUrl = typeof path === 'object';
+  let stringPath: string = path as string;
+  let parametrizedPath = '';
+  const pathIsCompositeUrl = typeof path === 'object';
 
-	if (pathIsCompositeUrl) {
-		stringPath = (path as CompositeUrl).URL as string;
-	}
+  if (pathIsCompositeUrl) {
+  	stringPath = (path as CompositeUrl).URL as string;
+  }
 
-	if (params[0] && typeof params[0] === 'object') {
-		let dictionary: ReplacerParams = params[0];
-		parametrizedPath = stringPath.replace(ROUTE_PARAM_REGEX, (match) => dictionary[match.slice(1)] || match);
-	} else {
-		const stringParams = params as Array<string>;
-		let replaceIndex = 0;
-		parametrizedPath = stringPath.replace(ROUTE_PARAM_REGEX, (match) => stringParams[replaceIndex++] || match);
-	}
+  if (params[0] && typeof params[0] === 'object') {
+  	let dictionary: ReplacerParams = params[0];
+  	parametrizedPath = stringPath.replace(ROUTE_PARAM_REGEX, (match) => dictionary[match.slice(1)] || match);
+  } else {
+  	const stringParams = params as Array<string>;
+  	let replaceIndex = 0;
+  	parametrizedPath = stringPath.replace(ROUTE_PARAM_REGEX, (match) => stringParams[replaceIndex++] || match);
+  }
 
-	if (pathIsCompositeUrl) {
-		return { ...(path as CompositeUrl),
-			URL: parametrizedPath
-		};
-	}
+  if (pathIsCompositeUrl) {
+  	return { ...(path as CompositeUrl),
+  		URL: parametrizedPath
+  	};
+  }
 
-	return parametrizedPath;
+  return parametrizedPath;
 }

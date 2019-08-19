@@ -7,12 +7,12 @@ import { SCHEMA } from 'adapters/adapter.types';
  * @param {String} schema
  */
 export const serialize = (payload: any, schema: SCHEMA, options: ModifyRequestOptionsProps): object => {
-	payload = typeof payload === 'string' ? JSON.parse(payload) : payload;
+  payload = typeof payload === 'string' ? JSON.parse(payload) : payload;
 
-	switch(schema) {
-		case SCHEMA.GENERIC: return serialize_GENERIC(payload);
-		default: return payload;
-	}
+  switch(schema) {
+  	case SCHEMA.GENERIC: return serialize_GENERIC(payload);
+  	default: return payload;
+  }
 };
 
 /**
@@ -21,10 +21,10 @@ export const serialize = (payload: any, schema: SCHEMA, options: ModifyRequestOp
  * @param {String} schema
  */
 export const normalize = (payload: any, schema: SCHEMA, options: ModifyRequestOptionsProps): object  => {
-	switch(schema) {
-		case SCHEMA.GENERIC: return normalize_GENERIC(payload);
-		default: return payload;
-	}
+  switch(schema) {
+  	case SCHEMA.GENERIC: return normalize_GENERIC(payload);
+  	default: return payload;
+  }
 };
 
 export const serialize_GENERIC = (payload: object) => payload;

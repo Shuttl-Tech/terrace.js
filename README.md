@@ -135,8 +135,8 @@ import { get } from 'utils/http';
 import API from 'apis';
 
 async function getResource() {
-	let response = load(API.DUMMY) || await get(API.DUMMY);
-	cache(API.DUMMY, response);
+  let response = load(API.DUMMY) || await get(API.DUMMY);
+  cache(API.DUMMY, response);
 }
 ```
 
@@ -158,8 +158,8 @@ import { get } from 'utils/http';
 import API from 'apis';
 
 async function getResource() {
-	let resource = await get(API.DUMMY, { /* options */ }, SCHEMA.GENERIC);
-	// ...
+  let resource = await get(API.DUMMY, { /* options */ }, SCHEMA.GENERIC);
+  // ...
 }
 ```
 

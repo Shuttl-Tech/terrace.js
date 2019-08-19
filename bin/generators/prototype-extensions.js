@@ -4,9 +4,9 @@ const TEMPLATE_VARIABLE_REGEX = /___([a-z]+)___/ig;
 // so here's hoping that there's never a `process` method on the String prototype.
 // Syntactical sugar y'all.
 String.prototype.process = function (data) {
-	return this.replace(TEMPLATE_VARIABLE_REGEX, (_, param) => data[param]);
+  return this.replace(TEMPLATE_VARIABLE_REGEX, (_, param) => data[param]);
 };
 
 Array.prototype.makePath = function () {
-	return this.join('/');
+  return this.join('/');
 };

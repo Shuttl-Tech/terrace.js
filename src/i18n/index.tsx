@@ -6,31 +6,31 @@ import en from './en';
 import de from './de';
 
 i18n
-	.use(LanguageDetector)
-	.use(initReactI18next)
-	.init({
-		// we init with resources
-		resources: {
-			en: { translations: en },
-			de: { translations: de }
-		},
-		fallbackLng: 'en',
-		debug: process.env.NODE_ENV === 'development',
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+  	// we init with resources
+  	resources: {
+  		en: { translations: en },
+  		de: { translations: de }
+  	},
+  	fallbackLng: 'en',
+  	debug: process.env.NODE_ENV === 'development',
 
-		// have a common namespace used around the full app
-		ns: ['translations'],
-		defaultNS: 'translations',
+  	// have a common namespace used around the full app
+  	ns: ['translations'],
+  	defaultNS: 'translations',
 
-		keySeparator: false, // we use content as keys
+  	keySeparator: false, // we use content as keys
 
-		interpolation: {
-			escapeValue: false, // not needed for react as it escapes by default
-			formatSeparator: ','
-		},
+  	interpolation: {
+  		escapeValue: false, // not needed for react as it escapes by default
+  		formatSeparator: ','
+  	},
 
-		react: {
-			wait: true
-		}
-	});
+  	react: {
+  		wait: true
+  	}
+  });
 
 export default i18n;

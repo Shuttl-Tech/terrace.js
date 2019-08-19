@@ -27,8 +27,8 @@ middlewares = isNotProd ? [reduxImmutableStateInvariant(), ...middlewares] : mid
 
 
 export const store = createStore(
-	rootReducer,
-	composeWithDevTools(
+  rootReducer,
+  composeWithDevTools(
     applyMiddleware(...middlewares)
   )
 );
@@ -36,10 +36,10 @@ export const store = createStore(
 sagas.map(saga.run);
 
 ReactDOM.render(
-	<StoreContext.Provider value={store}>
-		<Router>
-			<Home/>
-		</Router>
-	</StoreContext.Provider>
-	, document.getElementById('root'));
+  <StoreContext.Provider value={store}>
+  	<Router>
+  		<Home/>
+  	</Router>
+  </StoreContext.Provider>
+  , document.getElementById('root'));
 registerServiceWorker();

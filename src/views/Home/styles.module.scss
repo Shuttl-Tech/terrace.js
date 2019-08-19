@@ -2,77 +2,77 @@
 @import 'globals/mixins';
 
 .primary-layout-container {
-	@include expanded;
-	@include centered;
+  @include expanded;
+  @include centered;
 }
 
 .routes-wrapper {
-	@include expanded;
-	display: flex;
-	flex-direction: column;
+  @include expanded;
+  display: flex;
+  flex-direction: column;
 }
 
 
 .toasts-list-container {
-	width: auto;
-	position: fixed;
-	bottom: 32px;
-	right: 32px;
+  width: auto;
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
 }
 
 .toast-container {
-	background-color: transparent;
-	padding: 0;
-	min-height: unset;
-	border-radius: $border-radius-standard;
+  background-color: transparent;
+  padding: 0;
+  min-height: unset;
+  border-radius: $border-radius-standard;
 }
 
 .toast-body {
-	margin: 0;
+  margin: 0;
 }
 
 .toast-content {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .toast-icon {
-	margin-right: $grid-base-2x;
+  margin-right: $grid-base-2x;
 }
 
 div.toast {
-	padding-bottom: 6px + 5px; // 6 is default, 5 is height of progress bar
-	padding-left: $grid-base-4x;
-	padding-right: $grid-base * 10;
-	font-family: 'Roboto Slab', sans-serif;
-	letter-spacing: 0.25px;
+  padding-bottom: 6px + 5px; // 6 is default, 5 is height of progress bar
+  padding-left: $grid-base-4x;
+  padding-right: $grid-base * 10;
+  font-family: 'Roboto Slab', sans-serif;
+  letter-spacing: 0.25px;
 
-	&.toast-variation{
-		&--success {
-			background-color: $cyan-dark-2;
-		}
-		&--warning {
-			background-color: $yellow-light-1;
-			color: $blue-grey-dark-4;
-		}
-		&--error {
-			background-color: $red-standard;
-		}
-		&--info {
-			background-color: $blue-grey-dark-2;
-		}
-		&--sticky {
-			padding-bottom: 6px;
-		}
-	}
+  &.toast-variation{
+  	&--success {
+  		background-color: $cyan-dark-2;
+  	}
+  	&--warning {
+  		background-color: $yellow-light-1;
+  		color: $blue-grey-dark-4;
+  	}
+  	&--error {
+  		background-color: $red-standard;
+  	}
+  	&--info {
+  		background-color: $blue-grey-dark-2;
+  	}
+  	&--sticky {
+  		padding-bottom: 6px;
+  	}
+  }
 }
 
 .toast-message {
-	margin-top: 1px;
+  margin-top: 1px;
 }
 
 .close {
-	position: absolute;
-	right: $grid-base-3x;
-	top: $grid-base-3x + 2px;
+  position: absolute;
+  right: $grid-base-3x;
+  top: $grid-base-3x + 2px;
 }

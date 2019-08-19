@@ -17,8 +17,8 @@ const localStorageMock = {
   setItem: jest.fn(),
   removeItem: jest.fn(),
   clear: jest.fn(),
-	key: jest.fn(),
-	length: 0
+  key: jest.fn(),
+  length: 0
 };
 
 const sessionStorageMock = {
@@ -26,8 +26,8 @@ const sessionStorageMock = {
   setItem: jest.fn(),
   removeItem: jest.fn(),
   clear: jest.fn(),
-	key: jest.fn(),
-	length: 0
+  key: jest.fn(),
+  length: 0
 };
 
 global.localStorage = localStorageMock;

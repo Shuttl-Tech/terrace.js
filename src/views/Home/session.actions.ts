@@ -10,19 +10,19 @@
 import { ReduxAction } from 'types/redux';
 
 export const ACTIONS = {
-	SESSION_FETCH_REQUEST: 'SESSION_FETCH_REQUEST',
-	SESSION_FETCH_SUCCESS: 'SESSION_FETCH_SUCCESS',
-	SESSION_FETCH_FAILURE: 'SESSION_FETCH_FAILURE'
+  SESSION_FETCH_REQUEST: 'SESSION_FETCH_REQUEST',
+  SESSION_FETCH_SUCCESS: 'SESSION_FETCH_SUCCESS',
+  SESSION_FETCH_FAILURE: 'SESSION_FETCH_FAILURE'
 };
 
 export function SESSION_FETCH_REQUEST(payload: {} = {}) : ReduxAction {
-	return { type: ACTIONS.SESSION_FETCH_REQUEST, payload }
+  return { type: ACTIONS.SESSION_FETCH_REQUEST, payload }
 }
 
 export function SESSION_FETCH_SUCCESS(payload: {} = {}) : ReduxAction {
-	return { type: ACTIONS.SESSION_FETCH_SUCCESS, payload }
+  return { type: ACTIONS.SESSION_FETCH_SUCCESS, payload }
 }
 
 export function SESSION_FETCH_FAILURE(payload: {} = {}) : ReduxAction {
-	return { type: ACTIONS.SESSION_FETCH_FAILURE, payload }
+  return { type: ACTIONS.SESSION_FETCH_FAILURE, payload }
 }
